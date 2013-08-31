@@ -12,13 +12,12 @@ var app = express();
 var config = require('./appConfig')
   , appVer = require('./appStatic');
 
-
 // all environments
 app.set('port', config.appPort);
 app.set('views', __dirname + '/views');
-//app.set('view engine', 'jade');
-//app.use(express.favicon());
-//app.use(express.logger('dev'));
+app.set('view engine', 'html');
+app.use(express.favicon());
+app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser(config.cookieSecret));
