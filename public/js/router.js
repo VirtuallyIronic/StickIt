@@ -2,10 +2,26 @@ define([
         'jquery',
         'underscore',
         'backbone',
-        ], function($, _, Bacbone){
+        'views/login/loginView'
+        ], function($, _, Bacbone, LoginView){
+	
+	$.ajaxSetup({
+	    statusCode: {
+	        401: function(){
+	            // Redirec the to the login page.
+	            window.location.replace('#login');
+	         
+	        },
+	        403: function() {
+	            // 403 -- Access denied
+	            window.location.replace('#denied');
+	        }
+	    }
+	});
 	
 	var AppRouter = Backbone.Router.extend({
 		routes: {
+			'login': 'login',
 			'test': 'testAction',
 			'*actions': 'defaultAction'
 		}
@@ -14,6 +30,11 @@ define([
 	var initialize = function(){
 	
 		var appRouter = new AppRouter;
+		
+		appRouter.on('route:login', function(){
+			var loginView = new LoginView();
+			loginView.render();
+		});
 		
 		appRouter.on('route:testAction', function(){
 			console.log('Testing!');

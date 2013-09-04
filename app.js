@@ -2,7 +2,7 @@
 /**
  * StickIt by Virtually Ironic
  * Filename:		app.js
- * Date Last Mod:	3/9/13
+ * Date Last Mod:	4/9/13
  * Purpose:			Core application file called by node.
  * Author:			Evan Scown
  * Contributors:	Evan Scown 
@@ -51,7 +51,8 @@ app.get('/api', function(req, res) {
 	res.send('StickIt by Virtually Ironic');
 });
 
-var auth = require('./routes/auth');
+// import the api
+var api = require('./routes')(app, passport);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('StickIt listening on port ' + app.get('port'));
