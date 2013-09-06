@@ -12,7 +12,9 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , passport = require('passport');
+  , passport = require('passport')
+  , bcrypt = require('bcrypt')
+  , appVersion = "0.9.0";
 
 // configuration
 var appConfig = require('config').app;
@@ -45,6 +47,15 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+/**
+bcrypt.hash('Qwerty1!', 12, function(err, hash){
+	console.log("Qwerty1!" + hash);
+});
+
+bcrypt.hash('Qwerty2!', 12, function(err, hash){
+	console.log("Qwerty2!" + hash);
+});
+**/
 
 // default route as branding 
 app.get('/api', function(req, res) {
@@ -55,5 +66,5 @@ app.get('/api', function(req, res) {
 var api = require('./routes')(app, passport);
 
 http.createServer(app).listen(app.get('port'), function(){
-	console.log('StickIt listening on port ' + app.get('port'));
+	console.log('StickIt v' + appVersion + ' listening on port ' + app.get('port'));
 });

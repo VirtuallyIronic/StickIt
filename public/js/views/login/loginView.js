@@ -6,7 +6,7 @@ define([
         ], function($, _, Backbone, loginTemplate){
 	var loginView = Backbone.View.extend({
 		
-		el: $("#page"),
+		el: $('html'),
 		
 		
 		initialize:function(){
@@ -42,7 +42,7 @@ define([
 						$('.alert-error').text(data.error.text).show();
 					}
 					else {
-						windows.location.replace('/#login/success');
+						window.location.replace('/#login/success');
 					}
 				}
 			});

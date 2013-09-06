@@ -25,12 +25,13 @@ if(!MODULE_VERSION_APPEND) {
 
 // route modules
 var LocalStrategy = require('passport-local').Strategy
+  , bcrypt = require('bcrypt')
   , dbConfig = require('config').db;
 
 // temporary users
 var users = [
-	{ id: 1, username: 'evan', password: 'Qwerty1!', email: 'ev@test.com'}
-  , { id: 2, username: 'bob', password: 'Qwerty2!', email: 'bob@test.com'}
+	{ id: 1, username: 'evan', password: '$2a$12$Bp0tWdg7OagSs0DzQsBz1ulPcCshYZz/UNXIhSDSR1qHak3ol7vc.', email: 'ev@test.com'}
+  , { id: 2, username: 'bob', password: '$2a$12$lYbFwynvoyLTxHRzvMlYmOw3DykppDLguFlUszrXbPK0Ku.N0gReG', email: 'bob@test.com'}
   ];
 
 module.exports = function(app, passport) {
@@ -79,7 +80,7 @@ module.exports = function(app, passport) {
 						console.log('Unknown user ' + username);
 						return done(null, false, { message: 'Unknown user ' + username });
 					}
-					if(user.password != password) {
+					if(!bcrypt.compareSync(password, user.password)) {
 						console.log('Invalid password' + password)
 						return done(null, false, { message: 'Invalid password' });
 					}
