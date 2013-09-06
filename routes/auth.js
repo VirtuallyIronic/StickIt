@@ -95,7 +95,7 @@ module.exports = function(app, passport) {
 		if(req.isAuthenticated()) {
 			return next();
 		}
-		res.redirect('/#login');
+		res.redirect('/#/login');
 	}
 	
 	app.post('/auth/login', passport.authenticate('local'), function(req, res){

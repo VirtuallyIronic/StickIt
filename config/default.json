@@ -2,5 +2,12 @@
 	"app": {
 		"port": "3001",
 		"cookieSecret": "isnt$t!CkitC00l?"
+	},
+	"database": {
+		"host":	"localhost",
+		"name": "DEV3StickIt",
+		"username":	"devuser",
+		"password": "Qwerty1!",
+		"port":	"3306"
 	}
 }

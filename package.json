@@ -10,9 +10,9 @@
     "css": "*",
     "passport": "*",
     "passport-local": "*",
-    "sequelize-mysql": "1.7.0-beta.0",
+    "sequelize": "1.7.0-beta.0",
+    "mysql": "~2.0.0-alpha8",
     "bcrypt": "*",
-    "sequelize-mysql": "*",
     "shortid": "*",
     "random-string": "*",
     "config": "*"

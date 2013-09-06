@@ -14,6 +14,7 @@ var express = require('express')
   , path = require('path')
   , passport = require('passport')
   , bcrypt = require('bcrypt')
+  , shortId = require('shortid')
   , appVersion = "0.9.0";
 
 // configuration
@@ -47,15 +48,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-/**
-bcrypt.hash('Qwerty1!', 12, function(err, hash){
-	console.log("Qwerty1!" + hash);
-});
-
-bcrypt.hash('Qwerty2!', 12, function(err, hash){
-	console.log("Qwerty2!" + hash);
-});
-**/
 
 // default route as branding 
 app.get('/api', function(req, res) {
@@ -64,6 +56,9 @@ app.get('/api', function(req, res) {
 
 // import the api
 var api = require('./routes')(app, passport);
+
+var models = require('./models');
+var User = models.User;
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('StickIt v' + appVersion + ' listening on port ' + app.get('port'));

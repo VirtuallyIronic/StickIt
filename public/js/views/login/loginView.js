@@ -39,11 +39,15 @@ define([
 				success:function(data){
 					console.log(["Login request details: ", data]);
 					if(data.error){
+						console.log("error: " + data.error.text);
 						$('.alert-error').text(data.error.text).show();
 					}
 					else {
-						window.location.replace('/#login/success');
+						window.location.replace('/#/login/success');
 					}
+				},
+				error:function(data){
+					window.location.replace('/#/login/failure');
 				}
 			});
 		}
