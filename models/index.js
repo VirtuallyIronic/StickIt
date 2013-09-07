@@ -23,7 +23,14 @@ var sequelize = new Sequelize(
 			host: db.host,
 			port: db.port,
 			dialect: 'mysql',
-			sync: { force: true }
+			maxConcurrentQueries: 100,
+			define: {
+				timestamps: false
+			},
+			sync: {
+				force: true
+			},
+			pool: { maxConnections: 5, maxIdleTime: 30}
 		}
 	);
 
@@ -36,7 +43,6 @@ var models = [
 models.forEach(function(model){
 	module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
-
 
 // export connection
 module.exports.sequelize = sequelize;

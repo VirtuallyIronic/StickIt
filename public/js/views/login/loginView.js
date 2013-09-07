@@ -37,7 +37,6 @@ define([
 				dataType:"json",
 				data: formValues,
 				success:function(data){
-					console.log(["Login request details: ", data]);
 					if(data.error){
 						console.log("error: " + data.error.text);
 						$('.alert-error').text(data.error.text).show();
@@ -46,7 +45,7 @@ define([
 						window.location.replace('/#/login/success');
 					}
 				},
-				error:function(data){
+				error:function(error){
 					window.location.replace('/#/login/failure');
 				}
 			});

@@ -28,31 +28,33 @@ var LocalStrategy = require('passport-local').Strategy
   , bcrypt = require('bcrypt')
   , dbConfig = require('config').db;
 
+var models = require('../models');
+var User = models.User;
+
+/*
 // temporary users
 var users = [
 	{ id: 1, username: 'evan', password: '$2a$12$Bp0tWdg7OagSs0DzQsBz1ulPcCshYZz/UNXIhSDSR1qHak3ol7vc.', email: 'ev@test.com'}
   , { id: 2, username: 'bob', password: '$2a$12$lYbFwynvoyLTxHRzvMlYmOw3DykppDLguFlUszrXbPK0Ku.N0gReG', email: 'bob@test.com'}
   ];
+*/
 
 module.exports = function(app, passport) {
 	function findById(id, fn) {
-		var idx = id - 1;
-		if(users[idx]) {
-			fn(null, users[idx]);
-		}
-		else {
-			fn(new Error('User ' + id + ' does not exist'));
-		}
+		User.find(id).success(function(user){
+			return fn(null, user);
+		}).error(function(error){
+			return fn(err, null);
+		});
 	}
 
 	function findByUsername(username, fn) {
-		for (var i = 0; i < users.length; i++) {
-			var user = users[i];
-			if(user.username === username) {
-				return fn(null, user);
-			}
-		}
-		return fn(null, null);
+		User.find({ where: {username: username} }).success(function(user){
+			fn(null, user);
+		}).error(function(error){
+			console.log(error);
+			fn(null, null);
+		});
 	}
 	// end temp users
 
@@ -63,29 +65,31 @@ module.exports = function(app, passport) {
 
 	passport.deserializeUser(function(id, done){
 		findById(id, function(err, user){
-			done(err, user);
+			if(err) {
+				return done(err, null);
+			}
+			return done(null, user);
 		});
 	});
 
 	// passport local strategy setup
 	passport.use(new LocalStrategy(
 		function(username, password, done){
-			process.nextTick(function(){
-				findByUsername(username, function(err, user){
-					if(err) {
-						console.log(err);
-						return done(err);
-					}
-					if(!user) {
-						console.log('Unknown user ' + username);
-						return done(null, false, { message: 'Unknown user ' + username });
-					}
-					if(!bcrypt.compareSync(password, user.password)) {
-						console.log('Invalid password' + password)
-						return done(null, false, { message: 'Invalid password' });
-					}
-					return done(null, user);
-				})
+			findByUsername(username, function(err, user){
+				if(err) {
+					console.log('error');
+					console.log(err);
+					return done(err);
+				}
+				if(!user) {
+					console.log('Unknown user ' + username);
+					return done(null, false, { message: 'Unknown user ' + username });
+				}
+				if(!bcrypt.compareSync(password, user.password)) {
+					console.log('Invalid password ' + password)
+					return done(null, false, { message: 'Invalid password' });
+				}
+				return done(null, user);
 			});
 		}
 	));
@@ -98,12 +102,34 @@ module.exports = function(app, passport) {
 		res.redirect('/#/login');
 	}
 	
+	/**
+	app.post('/auth/login', function(req, res, next){
+		passport.authenticate('local', function(err, user, info){
+			if(err) {
+				return next(err);
+			}
+			if(!user) {
+				return res.send(401);
+			}
+			req.login(user, function(err){
+				if(err) { return next(err); }
+				console.log('here');
+				return res.send(200);
+			});
+		})(req, res, next);
+	});
+	**/
+	
 	app.post('/auth/login', passport.authenticate('local'), function(req, res){
-		console.log('here');
 		res.json(req.user);
 	});
 	
+	app.get('/auth/logout', function(req, res){
+		req.logout();
+		res.redirect('/');
+	});
+	
 	app.get('/auth/me', function(req, res){
-		console.log(req.user);
+		res.json(req.user);
 	});
 };

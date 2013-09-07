@@ -26,6 +26,7 @@ var app = express();
 // environment variables
 app.set('port', appConfig.port);
 app.set('view engine', 'html');
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -35,13 +36,6 @@ app.use(express.session({secret: 'abc'}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
-
-// redirects to backbone's hash route if express route doesn't exist
-app.use(function(req, res){
-	return res.redirect('/#' + req.url);
-});
-
 
 // development only
 if ('development' == app.get('env')) {
@@ -57,8 +51,11 @@ app.get('/api', function(req, res) {
 // import the api
 var api = require('./routes')(app, passport);
 
-var models = require('./models');
-var User = models.User;
+//redirects to backbone's hash route if express route doesn't exist
+app.use(function(req, res){
+	return res.redirect('/#' + req.url);
+});
+
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('StickIt v' + appVersion + ' listening on port ' + app.get('port'));
