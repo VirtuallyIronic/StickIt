@@ -32,7 +32,7 @@
 					<li class="listitem">
 						<h3>Add a Note</h3>
 						<div>
-							<button id='add'>New Note</button>
+							<button id='add' onclick='popMenu()'>New Note</button>
 							<p> Add a new note.</p>
 							<!--<button id="newNoteButton" onclick="newNote('undefined')">New Note</button>-->
 
@@ -47,50 +47,8 @@
 			<!-- place title placeholders here 
 
 			-->
-				<ul class="titleDisplay">
-					<li class="titleDisplay">
-						<div class="laneTitle" >
-							<button id="newLaneBut" onclick="moreLanes()">NEW LANES</button>
-							<button id="newLaneBut" onclick="deleteme(this)">DELETE LANES</button>
-						</div>
-					</li>
-					<li class="titleDisplay"> 
-						<div class="laneTitle" >
-							<button id="newLaneBut" onclick="moreLanes()">NEW LANES</button>
-							<button id="newLaneBut" onclick="deleteme(this)">DELETE LANES</button>
-						</div>
-					</li>
-					<li class="titleDisplay">
-						<div class="laneTitle" >
-							<button id="newLaneBut" onclick="moreLanes()">NEW LANES</button>
-							<button id="newLaneBut" onclick="deleteme(this)">DELETE LANES</button>
-						</div>
-					</li>
-					<li class="titleDisplay">
-						<div class="laneTitle" >
-							<button id="newLaneBut" onclick="moreLanes()">NEW LANES</button>
-							<button id="newLaneBut" onclick="deleteme(this)">DELETE LANES</button>
-						</div>
-					</li>
-					<li class="titleDisplay">
-						<div class="laneTitle" >
-							<button id="newLaneBut" onclick="moreLanes()">NEW LANES</button>
-							<button id="newLaneBut" onclick="deleteme(this)">DELETE LANES</button>
-						</div>
-					</li>
-					<li class="titleDisplay">
-						<div class="laneTitle" >
-							<button id="newLaneBut" onclick="moreLanes()">NEW LANES</button>
-							<button id="newLaneBut" onclick="deleteme(this)">DELETE LANES</button>
-						</div>
-					</li>
-					<li class="titleDisplay">
-						<div class="laneTitle" >
-							<button id="newLaneBut" onclick="moreLanes()">NEW LANES</button>
-							<button id="newLaneBut" onclick="deleteme(this)">DELETE LANES</button>
-						</div>
-					</li>
-					
+				<ul id="laneHeadings" class="titleDisplay">
+				
 				</ul>
 			</div>
 			<div class="gridster">
@@ -98,36 +56,6 @@
 				</ul>
 			</div>
 		</section>
-		<!--
-		<ul id="groupItems1" class="itemsList">  
-			<li class="list_title">
-				<h3>Lane 1</h3> 
-				<button class="laneEdit" onclick="notWorking()">Edit Lane</button>
-			</li>
-		</ul> 
-		
-		<ul id="groupItems2" class="itemsList">  
-			<li class="list_title">
-				<h3>Lane 2</h3>
-				<button class="laneEdit" onclick="notWorking()">Edit Lane</button>
-			</li>
-			
-		</ul>  
-		
-		<ul id="groupItems3" class="itemsList">  
-			<li class="list_title">
-				<h3>Lane 3</h3>
-				<button class="laneEdit" onclick="notWorking()">Edit Lane</button>
-			</li>
-		</ul>  
-		
-		<ul id="groupItems4" class="itemsList"> 
-			<li class="list_title">
-				<h3>Lane 4</h3>
-				<button class="laneEdit" onclick="notWorking()">Edit Lane</button>
-			</li>
-		</ul>  
-		-->
 	</div>
 				
 	<div class="sidebar">
@@ -137,7 +65,7 @@
 					<h3>^^^^</h3>
 					<div>
 						<button id="newNoteButton" onclick="clearWall()">Clear Wall</button>
-						<button id="newLaneButton" onclick="addLane()">New Lane</button>
+						<button id="newLaneBut" onclick="moreLanes('0')">NEW LANES</button>
 						<p> Vertical bar slider. Here will go the various wall settings and options. such as reseting, saving, or adding to the wall.</p>
 						<p></p>
 					</div>

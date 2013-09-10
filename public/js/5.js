@@ -11,11 +11,27 @@
 	
 	var gridster;
 	var lanes;
+		
+	/*
+	Remove all notes on wall
+	*/
+	function clearWall()
+	{
+		var r=confirm("Delete ALL Notes?");
+		if (r==true)
+		{
+			var rr=confirm("Are you sure?");
+			if (rr==true)
+			{
+				/*$(".note").each(function(){
+					$(this).parent().remove();
+				});*/
+			}
+		}
+	}
 	
 	$(function(){
 		/**/
-		var obj = jQuery.parseJSON('{"name":"John"}');
-		//alert( obj.name === "John" );
 		$.ajaxSetup( { "async": false } );
 		var details = {};
 		var request = $.getJSON( "database.json", function(data) {
@@ -31,11 +47,13 @@
 				alert("success");
 			}
 			, error: function(jqXHR, textStatus, err){
-				alert('text status '+textStatus+', err '+err)
+				//alert('text status '+textStatus+', err '+err);
+				lanes = 7;
 			}
 		});
-		var strings = JSON.stringify(details.note);		
-		var notes = JSON.parse(strings);
+		
+		//var strings = JSON.stringify(details.note);		
+		var notes = details.note;//JSON.parse(strings);
 		//lanes = details.totalCols;
 
 		var col = lanes;
@@ -51,20 +69,25 @@
 			draggable: {
 				stop: function(event, ui){
 					var temp = this.$el.children()[0];
-					var col = this.$helper.context.attributes[1].nodeValue;
+					var out = {};
+					
+					var cul = this.$helper.context.attributes[1].nodeValue;
 					var row = this.$helper.context.attributes[2].nodeValue;
-					$(temp).trigger('custom', [col, row]);
+					out[0] = cul;
+					out[1] = row;
+					$(temp).trigger('movePos', out);//, row]);
 				}
 			}
 		}).data('gridster');
 
+		//createHeadings(col);
 		
 		// `Backbone.sync`: Overrides persistence storage with dummy function. This enables use of `Model.destroy()` without raising an error.
-		Backbone.sync = function(method, model, success, error){
+		/*Backbone.sync = function(method, model, success, error){
 			alert(method+" method");
 			alert(model+" model");
 			success();
-		}
+		}*/
 
 		noteFormat = Backbone.Model.extend({
 			defaults: {
@@ -92,17 +115,17 @@
 				'click button.deleteButton': 'remove',//'remove',
 				'click button.editButton': 'editMe',
 				'click button.expandButton': 'expanding',
-				'click button.confirmEdit': 'prepareEdit',
-				'gridster.stop': 'dragStop'
+				
 			},
 			
 			// `initialize()` now binds model change/removal to the corresponding handlers below.
 			initialize: function(){
-			 // every function that uses 'this' as the current object should be in here
-				_.bindAll(this, 'render','editMe', 'unrender','remove', 'expanding','prepareEdit', 'dragStop');
+				// every function that uses 'this' as the current object should be in here
+				_.bindAll(this, 'render','editMe', 'unrender','removenoprompt','updatePos','processing', 'remove', 'expanding');
 
 				//this.model.bind('change', this.render);
 				this.model.bind('remove', this.unrender);
+				this.model.on('laneRemove', this.removenoprompt);
 			},
 			
 			// `render()` now includes two extra `span`s corresponding to the actions swap and delete.
@@ -110,10 +133,6 @@
 				Note(this);
 				//Ttest(this);
 				return this; // for chainable calls, like .render().el
-			},
-			
-			dragStop: function(){
-				alert('STOPPED');
 			},
 			
 			expanding: function(){
@@ -128,34 +147,53 @@
 			unrender: function(){
 				removeWidgets($(this.el));
 			},
-			// `swap()` will interchange an `Item`'s attributes. When the `.set()` model function is called, the event `change` will be triggered.
-
+			
+			updatePos: function(data){
+				//alert(data);
+				var newCol = data.currentTarget.attributes[1].nodeValue;
+				var newRow = data.currentTarget.attributes[2].nodeValue;
+				this.model.set('col', newCol);
+				this.model.set('row', newRow);
+			},
+			
+			processing: function(){
+				var data = confirmEdit(this);
+				if (data != null)
+				{
+					var textEdit = data[0];
+					this.$el.children('.edit').children(".editSpan").text( textEdit);
+					linkify(this.$el.children('.edit').children(".editSpan"));
+					this.model.set('text', textEdit);
+					/* HOW TO MOVE WIDGET ????*/
+					//field.model.set('col', col);
+				}
+				closeMenu();
+			},
 			// `remove()`: We use the method `destroy()` to remove a model from its collection. Normally this would also delete the record from its persistent storage, but we have overridden that (see above).
 			remove: function(){
-				//alert($(this.el).parent());
-				this.model.destroy();
+				var r=confirm("Delete note?");
+				if (r==true)
+				{
+					this.model.destroy();
+				}			
 			},
-						
-			prepareEdit: function(){
-				//alert("ACTIVATE");
-				/*var textEdit = document.getElementById('formText').val();
-				this.$el.children('.edit').children(".editSpan").text(textEdit);
-				//linkify(this.$el.children('.edit').children(".editSpan"));
-				this.modal.set('text', textEdit);*/
-				closeMenu();
-			}
+			removenoprompt: function(){
+				this.model.destroy();
+			}			
+
 		});
 
 		// Because the new features (swap and delete) are intrinsic to each `Item`, there is no need to modify `ListView`.
 		ListView = Backbone.View.extend({
-			el: $('body'), // el attaches to existing element
+			el: $('.wall'), // el attaches to existing element
 			events: {
 				'click button#add': 'addItem',
-				'click button#confirmPopup': 'prepareItem'
+				'click button#confirmPopup': 'prepareItem',
+				'click button.deleteLane': 'removeLane'
 			},
 			
 			initialize: function(){
-				_.bindAll(this, 'render', 'addItem', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
+				_.bindAll(this, 'render', 'addItem', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
 				this.collection = new noteList();
 				this.collection.bind('add', this.appendItem); // collection event binder
 				this.render();
@@ -164,26 +202,82 @@
 			render: function(){
 				var self = this;
 				
-				for (var i=0; i<notes.length; i++)
+				for (var i=0; i<col; i++)
+				{
+					var $laneHead = jQuery('<li/>', {
+						class: 'titleDisplay'
+					});
+					$($laneHead).appendTo("#laneHeadings");
+					
+					var $headDetails = jQuery('<div/>', {
+						class: 'laneTitle'
+					});
+					$($headDetails).appendTo($laneHead);
+					var $tSpan = jQuery('<span/>', {
+						class:'titleSpan',
+					});
+					$($tSpan).text(i);
+					$($tSpan).appendTo($headDetails);
+					var varvar = i+1
+					$("<button value="+varvar+" class='deleteLane'>DELETE LANES</button>").appendTo($headDetails);
+					$("<button class='editLaneBut'>EDIT LANES</button>").appendTo($headDetails);
+				}
+
+				for (var w=0; w<notes.length; w++)
 				{
 					var item = new noteFormat();
 					item.set({
-						'col': notes[i].col,
-						'row': notes[i].row,
-						'text': notes[i].text
+						'col': notes[w].col,
+						'row': notes[w].row,
+						'text': notes[w].text
 						// modify item defaults
 					});
 					this.collection.add(item);
-					//alert(notes[i].col);
-					//self.appendItem(notes[i]);
 				}
-				/*_(this.collection.models).each(function(item){ // in case collection is not empty
-					self.appendItem(item);
-				}, this);*/
 			},
 			
+			//---------BROKEN!!!---------------
 			addItem: function(){
+				alert('!!!!');
 				popMenu(this);
+			},
+			
+			removeLane: function(ev){
+				var r=confirm("Delete lane? ");
+				if (r==true)
+				{
+					var colID = $(ev.target).val();
+					//var data = this.collection.where({col:colID}));
+					
+					//move all notes to the left one
+					for (var q=colID; q<=lanes;q++)
+					{
+						if (q==colID)
+						{
+							var colData = this.collection.where({'col': colID});
+							for (var i=0; i<colData.length; i++)
+							{
+								var testing = colData[i];
+								testing.trigger('laneRemove');
+							}
+						}
+						else
+						{
+							var colMove = this.collection.where({'col': q});
+							for (var i=0; i<colMove.length; i++)
+							{
+								//Move all notes to the left.
+								//alert(colData[q].model.get('col');
+							}
+						}
+					}
+					//remove Heading  --  unneeded
+					$(ev.target).remove();
+					
+					//AJAX: SET SERVER COL NUMBER TO 1 LESS
+					moreLanes();
+					alert("DELETE WALL CODE HERE ");
+				}
 			},
 			
 			prepareItem: function(){
@@ -219,7 +313,6 @@
 
 		var listView = new ListView();
 	})(jQuery);
-	//*/
 	
 	function closeMenu()
 	{
@@ -232,7 +325,7 @@
 	//	widgetTest();
 		var edit = true;
 		var bonusTry = data;
-		if (data.$el.selector == 'body')
+		if (data.$el.selector == '.wall')
 		{
 			edit = false;
 		}
@@ -255,26 +348,29 @@
 		$textEdit.appendTo("#formDetails");
 		$("<div id='sideBar'></div>").appendTo("#formDetails");
 		
-		var $laneSelect = jQuery('<select/>', {
-			id: 'laneDrop',
-		});
-		$laneSelect.appendTo("#sideBar");
+
 		if (edit == true)
 		{
 			$textEdit.val(data.model.get('text'));
 		}
-		
-		$("<p>lol</p>").appendTo("#sideBar");
 
-		for (i=1; i<=7; i++)
+		if (edit != true)
 		{
-			$("<option value="+i+">"+i+"</option>").appendTo("#laneDrop");
+			var $laneSelect = jQuery('<select/>', {
+				id: 'laneDrop',
+			});
+			$laneSelect.appendTo("#sideBar");
+			$("<p>lol</p>").appendTo("#sideBar");
+
+			for (i=1; i<=7; i++)
+			{
+				$("<option value="+i+">"+i+"</option>").appendTo("#laneDrop");
+			}
 		}
-		
-		if (edit == true)
+		/*if (edit == true)
 		{
 			$("#laneDrop > [value='"+data.model.get('col')+"']").attr("selected", "true");
-		}
+		}*/
 		
 		$("<p>TAGS</p>").appendTo("#sideBar");
 		$("<select id='tagDrop'></select>").appendTo("#sideBar");
@@ -284,37 +380,25 @@
 		{
 			$("<option value="+i+">"+i+"</option>").appendTo("#tagDrop");
 		}
-		
+			
 		$("<button id='tagButton' onclick='addTagButton()'>Add Tag</button>").appendTo("#sideBar");
-
+		
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		$("<span class='tagLink' onclick='addTag(this)'>TAG 1 </span>").appendTo("#bottomBar");
-		$("<span class='tagLink' onclick='addTag(this)'>TAG 2 </span>").appendTo("#bottomBar");
-		$("<span class='tagLink' onclick='addTag(this)'>TAG 3 </span>").appendTo("#bottomBar");
 		$("<span class='tagLink' onclick='addTag(this)'>TAG 4 </span>").appendTo("#bottomBar");
 		$("<span class='tagLink' onclick='addTag(this)'>TAG CLICK ME FOR 5 </span>").appendTo("#bottomBar");
 		$("<span class='tagLink' onclick='addTag(this)'>TAG 6 </span>").appendTo("#bottomBar");
-		
-		//$("<button id='confirmPopup' >Confirm</button>").appendTo("#bottomBar");
-		
-		if (edit === false)
-		{
-			$("<button id='confirmPopup' >Confirm</button>").appendTo("#bottomBar");
-			//$("<button id='confirmPopup' onclick='newNote()'>Confirm</button>").appendTo("#bottomBar");
-		}
+			
 		if (edit === true)
 		{
-			//alert('correct button');
-			//$("<button id='confirmEdit' onclick='confirmEdit(this)'>Confirm</button>").appendTo("#bottomBar");
-			$("<button class='confirmEdit' >Confirm</button>").appendTo("#bottomBar");
-			$('.confirmEdit').bind('click',function(e){
-				confirmEdit(data);
-			});
+			$("<button id='confirmEdit' >Confirm</button>").appendTo("#bottomBar");
+			$('#confirmEdit').on('click', data.processing);
+		}		
+		//if (edit === false)
+		else {
+			$("<button id='confirmPopup' >Confirm</button>").appendTo("#bottomBar");
 		}
-		//*/
-		
 		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
-		//$mainMenu.draggable();//{ cancel: ".tagLink", cancel: "#formText", containment: ".wall" });
 	}
 	
 	/*
@@ -326,29 +410,15 @@
 		$('#formText').val($('#formText').val()+" "+tagText);
 	}
 	
-	function editCheck(output)
-	{
-		var textEdit = output[0];
-		var col = output[1];
-		var field = output[2]
-		//var temp = field.$el.children('.edit').children('.editSpan').text();
-		field.$el.children('.edit').children(".editSpan").text( textEdit);
-		linkify(field.$el.children('.edit').children(".editSpan"));
-		field.model.set('text', textEdit);
-		/* HOW TO MOVE WIDGET ????*/
-		field.model.set('col', col);
-		closeMenu();
-	}
-	
 	function confirmEdit(field)
 	{
-		var currentLane = field.model.get('col');
-		var lanePos = document.getElementById('laneDrop').value;
-		var newLane = 0;
+		//var currentLane = field.model.get('col');
+		//var lanePos = document.getElementById('laneDrop').value;
+		/*var newLane = 0;
 		if (lanePos != currentLane)
 		{
 			newLane = lanePos;
-		}
+		}*/
 
 		var fullTextCurrent = field.model.get('text');
 		var fieldText = document.getElementById('formText').value;
@@ -363,41 +433,24 @@
 			};
 		}
 		
-		if ((newLane != 0) || (subText != null))
+		if (/*(newLane != 0) || */subText != null)
 		{
 			var r=confirm("Confirm?");
 			if (r==true)
 			{
 				var output = [];
-				output[1] = lanePos;
+				//output[1] = lanePos;
 				output[0] = fieldText;
-				output[2] = field;
+				//output[1] = field;
 				//closeMenu();
-				editCheck(output);
+				return output;
 			}
 		}
 		else
 		{
-			closeMenu();
+			return null;
+			//closeMenu();
 		}
-	}
-	
-	function calltoDB()
-	{
-		//collect DB data
-		//foreach note returned
-		var count = 3;
-		var test = new Array(count);
-		for (var i=0; i<test.length; i++)
-		{
-			test[i] = new Array(5);
-			test[i][0] = "HI GUYS "+i;//text;
-			test[i][1] = 1//col;
-			test[i][2] = 1//row;
-			test[i][3] = "NO ONE"//user;
-			test[i][4] = i//id;
-		}
-		return test;
 	}
 	
 	function removeWidgets(field)
@@ -408,11 +461,12 @@
 	function Note(input)
 	{
 		var noteEle = $(input.$el);
-		$(noteEle).on('custom', function(event, col, row) {
-			input.model.set('col', col);
-			input.model.set('row', row);
-		});
+		//$(noteEle).on('movePos', input.updatePos);
 		
+		$(noteEle).on('movePos', function(event, obj) {
+			input.model.set('col', obj[0]);
+			input.model.set('row', obj[1]);
+		});
 		var x = input.model.get('text');
 		var lanePos = input.model.get('col');
 		
@@ -471,12 +525,26 @@
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
 	}
-	function moreLanes()
+	
+	function moreLanes(postType)
 	{
+		
 		alert(lanes);
-		lanes=lanes+1;
+		if (postType == '0')
+		{
+			alert('ajax');
+			var sendURL = '/ajax';	
+			lanes=lanes+1;
+		}
+		else
+		{
+			alert('decLane');
+			var sendURL = '/decLan';
+			lanes=lanes-1;
+		}
+		
 		$.ajax({ 
-			url: '/ajax',
+			url: sendURL,
 			type: 'POST',
 			cache: false, 
 			dataType: 'json',
