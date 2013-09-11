@@ -1,0 +1,274 @@
+/*
+design template CSS sheet.
+29/07/2013
+v2.0
+*/
+
+{
+  margin:0;
+  padding:0;
+  height:100%; 
+  width:100%;
+}
+
+.itemsList {
+	white-space: nowrap; 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0 0 2.5em; 
+	float: left;
+	margin-right: 10px; 
+	overflow: hidden;
+	background-color: rgb(255, 240, 200);
+	min-width: 205px;
+	min-height: 255px;
+	display: inline;
+}
+
+.list_title{
+	text-align:center;
+}
+
+.item{
+	margin: 0 5px 5px 5px; 
+	padding: 5px; 
+	font-size: 1.2em; 
+	width: 205px; 
+	height: 255px; 
+}
+
+body{
+  font-family:arial,sans-serif;
+  font-size:100%;
+  margin-left:0em;
+  margin-right: 0em;
+  margin-top: 0em;
+  background-color:#8ca1ef;
+  border-radius: 15px; 
+}
+
+#fullscreen {
+	display:none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:9999;
+	background-color:#C0C0C0;
+	opacity:0.4;
+}
+#expandFulltext{
+	display:inline-block;
+	outline: none;
+	width: 80%;
+	height: 200px;
+	padding-left: 5px;
+	overflow: hidden;
+	text-wrap:normal;
+	white-space:pre-wrap;
+}
+
+.popupMenu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -160px;
+	opacity:1.0;
+	background-color: rgb(255, 240, 70);
+    height: 400px;
+    width: 400px;
+	padding: 10px;
+	z-index:99999;
+	border-style:solid;
+	border-width:2px;
+    -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+	word-wrap:break-word;
+}
+
+#formDetails{
+	width: 100%;
+	height: 205px;
+}
+
+#sideBar{
+    position:absolute;
+	right: 25%;
+    top: 10%;
+	height: 100%;
+    width: 40px;
+}
+
+#formText{
+	resize: none;
+}
+
+#popBox{
+	width: 190px;
+	height: 200px;
+}
+
+#titlebar{
+  font-family:arial,sans-serif;
+  font-size:100%;
+  background-color:#999;
+  color:#fff;
+}
+
+h2,p{
+  font-size:100%;
+  font-weight:normal;
+}
+
+.topmenu  {
+  width: 100%;
+  height: 200px;
+  margin-right:auto;
+  margin-left:auto;
+  position: relative;
+   border: 1px solid #071e3c;
+ background-color: #071e3c;
+}
+
+.topmenu img{
+ 
+}
+
+.topmenu span{
+ 
+  text-align: center;
+  margin: auto;
+   z-index: 100;
+}
+
+.menu {
+	width:33px;
+	height:33px;
+	position:absolute;
+	background:#0F0;
+	overflow:hidden;
+	z-index:3;
+	transition: width 1s;
+	-moz-transition: width 1s;
+	-webkit-transition: width 1s;
+	-o-transition: width 1s;
+	right:49%;
+}
+
+.menu:hover {
+	width:180px;
+}
+
+.sidebar {
+  float: right;
+  display: inline-block;
+  margin-left: ;
+  
+  width: 39px;
+  height: 30px;
+  position: relative;
+  border: 1px solid #071e3c;
+  background-color: #071e3c;
+}
+
+.wall {
+	position:absolute;
+	display: inline;
+	width: 100%;
+	height: 100%;
+}
+
+.note {
+    background-color: rgb(255, 240, 70);
+    height: 250px;
+    position: absolute;
+    width: 200px;
+	border-style:solid;
+	border-width:2px;
+    -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.edit {
+    outline: none;
+	width: 199px;
+	overflow: hidden;
+	word-break: break-all;
+	padding-top:27px;
+}
+
+.editSpan {
+	display:inline-block;
+	outline: none;
+	width: 195px;
+	max-height: 200px;
+	padding-left: 5px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space:pre-wrap;
+}
+
+.lane {
+	display: inline-block;
+	position: absolute;
+	background: url(../images/mooning.png) repeat bottom left;
+	height: 400px;
+	width: 10px;
+	background-color: red;
+}
+
+.dragbar{
+    position: absolute;
+	left: 0px;
+    right: 0px;
+    top: 0px;
+	height: 25px;
+    background-color: #db0;
+    border-top: 1px solid #a80;
+    padding: 2px 4px;
+    text-align: right;
+}
+
+.toolbar{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    font-size: 9px;
+    background-color: #db0;
+    color: white;
+    border-top: 1px solid #a80;
+    padding: 2px 4px;
+    text-align: right;
+	height: 25px;
+}
+
+#loginlogo{
+	-webkit-border-radius: 0em 0em 5em 5em;
+	width: 100%;
+	min-height: 100px;
+	max-height: 200px;
+	border: 1px solid #071e3c;
+	background-color: #071e3c; 
+	text-align: left;
+}
+
+#loginlogo img{ 
+  min-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#titlebar{ 
+	font-family:arial,sans-serif;
+	font-size:100%;
+	background-color:#999;
+	color:#fff;
+}
+
+.footer{
+	bottom: 0;
+	position: fixed;
+	font-style: italic;
+	font-size: 70%;
+}

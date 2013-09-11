@@ -26,6 +26,12 @@ var app = express();
 // environment variables
 app.set('port', appConfig.port);
 app.set('view engine', 'html');
+app.use(function(req, res, next){
+	// eye candy for a new X-Powered-By header
+	app.disable('x-powered-by');
+	res.set('X-Powered-By', 'StickIt/' + appVersion);
+	next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -37,6 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
 
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
@@ -45,7 +52,7 @@ if ('development' == app.get('env')) {
 
 // default route as branding 
 app.get('/api', function(req, res) {
-	res.send('StickIt by Virtually Ironic');
+	res.send('StickIt v' + appVersion + ' by Virtually Ironic');
 });
 
 // import the api

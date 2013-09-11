@@ -1,0 +1,99 @@
+.horizontalaccordion>ul {
+    margin: 0;
+    padding: 0;
+    list-style:none;
+   	height: 300px;
+}
+
+.horizontalaccordion>ul>li {
+    display:block;
+	overflow: hidden;
+    float:left;
+    margin: 0;
+    padding: 0;
+    list-style:none;
+	width:40px;
+	height: 300px;
+
+    /* Decorative CSS */
+    background:#f0f0f0;
+
+    /* CSS3 Transitions */
+    transition: width 0.3s ease-in-out;
+    -moz-transition: width 0.3s ease-in-out;
+    -webkit-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+}
+
+.horizontalaccordion>ul>li>h3 {
+    display:block;
+    float:left;
+    margin: 0;
+    padding:10px;
+    height:19px;
+    width:280px;
+
+    /* Decorative CSS */
+    border-left:#f0f0f0 1px solid;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration:none;
+    text-transform:uppercase;
+    color: #000;
+    background:#cccccc;
+
+    /* CSS3 Transform Rotate & Translate */
+    white-space:nowrap;
+    -moz-transform: rotate(90.0deg) translate(-40px,0px);  /* FF3.5+ */
+    -moz-transform-origin: 0 100%;
+    -o-transform: rotate(90.0deg) translate(-40px,0px);  /* Opera 10.5 */
+    -o-transform-origin: 0 100%;
+    -webkit-transform: rotate(90.0deg) translate(-40px,0px);  /* Saf3.1+, Chrome */
+    -webkit-transform-origin: 0 100%;
+    transform: rotate(90.0deg) translate(-40px,0px);  /* Saf3.1+, Chrome */
+    transform-origin: 0 100%;
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1.0);  /* IE6,IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1.0)"; /* IE8 */
+
+    /* CSS3 Gradient Effect */
+    background: -moz-linear-gradient( top, #999999, #cccccc);
+    background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#cccccc));
+}
+
+.horizontalaccordion>ul>li>div {
+    display:none;
+    float:left;
+	overflow: auto;
+    position:relative;
+    top:-40px;
+    left:40px;
+    *top:0px;       /* IE7 Hack */
+    *left:0px;      /* IE7 Hack */
+    margin:0;
+    width:320px;
+    height:280px;
+    padding:10px;
+}
+
+.horizontalaccordion>ul>li:hover {
+    overflow: hidden;
+	width: 380px;
+}
+
+.horizontalaccordion:hover>ul>li:hover>h3 {
+    /* Decorative CSS */
+    color:#fff;
+    background:#000000;
+
+    /* CSS3 Gradient Effect */
+    background: -moz-linear-gradient( top, #454545, #000000); /* FF, Flock */
+    background: -webkit-gradient(linear, left top, left bottom, from(#454545), to(#000000)); /* Safari, Chrome */
+}
+
+.horizontalaccordion:hover>ul>li:hover>div {
+    display:block;
+}
+
+.horizontalaccordion>ul>li>h3:hover {
+    cursor:pointer;
+}
+

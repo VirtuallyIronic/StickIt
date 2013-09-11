@@ -1,6 +1,6 @@
 {
   "name": "stickit",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -12,6 +12,7 @@
     "passport-local": "*",
     "sequelize": "1.7.0-beta.0",
     "mysql": "~2.0.0-alpha8",
+    "validator": "*",
     "bcrypt": "*",
     "shortid": "*",
     "random-string": "*",

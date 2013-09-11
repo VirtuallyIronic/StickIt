@@ -2,8 +2,10 @@ define([
         'jquery',
         'underscore',
         'backbone',
+        'utils/backbone.min',
+        'utils/settingsMenu',
         'text!templates/login/loginTemplate.html'
-        ], function($, _, Backbone, loginTemplate){
+        ], function($, _, Backbone, Bootstrap, settingsMenu, loginTemplate){
 	var loginView = Backbone.View.extend({
 		
 		el: $('html'),
@@ -27,8 +29,8 @@ define([
 			var url = '/auth/login';
 			console.log('Logging In...');
 			var formValues = {
-					username: $('#inputUsername').val(),
-					password: $('#inputPassword').val()
+					username: $('#username').val(),
+					password: $('#password').val()
 			};
 			
 			$.ajax({
