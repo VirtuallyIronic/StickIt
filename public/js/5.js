@@ -22,7 +22,7 @@
 	var gridster;
 	var lanes;
 	var globalData = {};
-	
+	var randomName = 0;
 	/*
 	Remove all notes on wall
 	*/
@@ -42,9 +42,6 @@
 					var widget = gridster.is_widget(col,row);
 					gridster.remove_widget(widget);
 				}
-				/*$(".note").each(function(){
-					$(this).parent().remove();
-				});*/
 			}
 		}
 	}
@@ -99,15 +96,17 @@
 		}
 
 		noteFormat = Backbone.Model.extend({
-			defaults: {
-				'col': '1',
-				'row': '1',
-				'text': '',
-				"css": {
-					'colour-note': 'yellow',
-					'colour-bar': 'dark yellow',
+			defaults: function(){
+				return {
+					'col': '1',
+					'row': '1',
+					'text': '',
+					'votes': 0,
+					'voted': new Array(),
+					'colour-note': 'white',
+					'colour-bar': 'yellow',
 					'font': '',
-					'font-size': 12
+					'font-size': 18
 				}
 			}
 		});
@@ -127,13 +126,14 @@
 			events: {
 				'click button.deleteButton': 'remove',//'remove',
 				'click button.editButton': 'editMe',
-				'click button.expandButton': 'expanding'		
+				'click button.expandButton': 'expanding',
+				'click button.voteButton': 'voting'
 			},
 			
 			// `initialize()` now binds model change/removal to the corresponding handlers below.
 			initialize: function(){
 				// every function that uses 'this' as the current object should be in here
-				_.bindAll(this, 'render','editMe', 'unrender','moveNote','removenoprompt','updatePos','processing', 'remove', 'expanding');
+				_.bindAll(this, 'render','editMe', 'unrender','voting','moveNote','removenoprompt','updatePos','processing', 'remove', 'expanding');
 
 				this.model.bind('remove', this.unrender);
 				this.model.on('laneRemove', this.removenoprompt);
@@ -150,6 +150,27 @@
 			//------OPENS EXPANDED TEXT BOX--------
 			expanding: function(){
 				expandNote(this);
+			},
+			
+			//------+1 Vote--------
+			voting: function(){
+				var votes = this.model.get('votes');
+				votes = (votes+1);//.toString();
+				var voted = this.model.get('voted');
+				var tat = _.size(voted);//.length;
+				if (tat === 0)
+				{
+					voted[0] = "who ever is logged in";
+				}
+				else
+				{
+					voted[tat] = "who ever is logged in";
+				}
+				this.model.set('votes', votes);
+				this.model.set('voted', voted);
+				this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").remove();
+				this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
+				
 			},
 
 			//------OPENS EDIT MENU--------
@@ -177,10 +198,18 @@
 				if (data != null)
 				{
 					var textEdit = data[0];
-					/*this.$el.children('.note').children('.edit').children(".editSpan").text( textEdit);
-					linkify(this.$el.children('.note').children('.edit').children(".editSpan"));*/
-					this.$el.children('.edit').children(".editSpan").text( textEdit);
-					linkify(this.$el.children('.edit').children(".editSpan"));
+					var colour = data[1];
+					var fontSize = data[2];
+					this.$el.children('.cssnote').children('.edit').children(".editSpan").text( textEdit);
+					linkify(this.$el.children('.cssnote').children('.edit').children(".editSpan"));
+					/*this.$el.children('.edit').children(".editSpan").text( textEdit);
+					linkify(this.$el.children('.edit').children(".editSpan"));*/
+					//$($note).css("background-color", input.model.get('colour-note'));
+					this.$el.children('.cssnote').css('background-color', colour);
+					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontSize', fontSize+"px");
+					
+					this.model.set('font-size', fontSize);
+					this.model.set('colour-note', colour);
 					this.model.set('text', textEdit);
 					/* HOW TO MOVE WIDGET ????*/
 					//field.model.set('col', col);
@@ -325,12 +354,19 @@
 				var col = document.getElementById('laneDrop').value;
 				var row = 1;
 				var text = document.getElementById('formText').value;
+				var colour = document.getElementById('colourDrop').value;
+				var fontSize = document.getElementById('sizeDrop').value;
+				while (gridster.is_widget(col,row))
+				{
+					++row;
+				};
 				var item = new noteFormat();
 				item.set({
 					'col': col,
 					'row': row,
-					'text': text
-					// modify item defaults
+					'text': text,
+					'colour-note': colour,
+					'font-size': fontSize
 				});
 				this.collection.add(item);
 				closeMenu();
@@ -340,10 +376,6 @@
 			appendItem: function(item){
 				var col = item.get('col');
 				var row = item.get('row');
-				while (gridster.is_widget(col,row))
-				{
-					++row;
-				};
 				var itemView = new ItemView({
 					model: item
 				});
@@ -390,7 +422,8 @@
 		$("<div id='popupDetails'></div>").appendTo(".popupMenu");
 		
 		$("<div id='formDetails'></div>").appendTo("#popupDetails");
-			var $textEdit = jQuery('<textarea/>', {
+		
+		var $textEdit = jQuery('<textarea/>', {
 			id: 'formText',
 			rows: '10',
 			cols: '24',
@@ -406,24 +439,57 @@
 		//------------------------------------------------
 		if (edit != true)
 		{
+			$("<p>Lane</p>").appendTo("#sideBar");
 			var $laneSelect = jQuery('<select/>', {
 				id: 'laneDrop',
 			});
 			$laneSelect.appendTo("#sideBar");
-			$("<p>lol</p>").appendTo("#sideBar");
 
 			for (i=1; i<=7; i++)
 			{
 				$("<option value="+i+">"+i+"</option>").appendTo("#laneDrop");
 			}
+
+		}
+					
+		$("<p>Colour</p>").appendTo("#sideBar");
+
+		var $colourSelect = jQuery('<select/>', {
+			id: 'colourDrop',
+		});
+		$colourSelect.appendTo("#sideBar");
+
+		$("<option value='white'>white</option>").appendTo("#colourDrop");
+		$("<option value='yellow'>yellow</option>").appendTo("#colourDrop");
+		$("<option value='brown'>brown</option>").appendTo("#colourDrop");
+		$("<option value='pink'>pink</option>").appendTo("#colourDrop");
+		$("<option value='red'>red</option>").appendTo("#colourDrop");
+		
+		$("<p>Colour</p>").appendTo("#sideBar");
+
+		var $sizeSelect = jQuery('<select/>', {
+			id: 'sizeDrop',
+		});
+		$sizeSelect.appendTo("#sideBar");
+		
+		var sizeFont = 15;
+		for (var i=0; i<17; i++)
+		{
+			$("<option value='"+sizeFont+"'>"+sizeFont+"</option>").appendTo("#sizeDrop");
+			sizeFont = sizeFont+5;
 		}
 		
-		/*if (edit == true)
+		if (edit == true)
 		{
-			$("#laneDrop > [value='"+data.model.get('col')+"']").attr("selected", "true");
-		}*/
+			$("#colourDrop > [value='"+data.model.get('colour-note')+"']").attr("selected", "true");
+			$("#sizeDrop > [value='"+data.model.get('font-size')+"']").attr("selected", "true");
+		}
 		
-		$("<p>TAGS</p>").appendTo("#sideBar");
+		//------------------------------------------------
+		$("<p>TAG</p>").appendTo("#sideBar");
+		/*
+		**List is available if we can get a list of those with access to the wall
+		**else Text box for tagging, can check text later to see if user exists.
 		$("<select id='tagDrop'></select>").appendTo("#sideBar");
 		//ADD A LIST OF TAGS HERE
 		//option value etc.
@@ -431,14 +497,16 @@
 		{
 			$("<option value="+i+">"+i+"</option>").appendTo("#tagDrop");
 		}
-			
-		$("<button id='tagButton' onclick='addTagButton()'>Add Tag</button>").appendTo("#sideBar");
+		*/
+		$('<input id="user" type="text" name="user">').appendTo('#sideBar');
+		$("<button id='tagButton' onclick='addTag(this)'>Add Tag</button>").appendTo("#sideBar");
 		//------------------------------------------------
+		
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
-		$("<span class='tagLink' onclick='addTag(this)'>www.google.com </span>").appendTo("#bottomBar");
-		$("<span class='tagLink' onclick='addTag(this)'>http://www.google.com </span>").appendTo("#bottomBar");
-		$("<span class='tagLink' onclick='addTag(this)'>http://test.com </span>").appendTo("#bottomBar");
-		$("<span class='tagLink' onclick='addTag(this)'>www.random.org </span>").appendTo("#bottomBar");
+		$("<span class='tagLink' onclick='addTag(this)'>www.google.com </span><br/>").appendTo("#bottomBar");
+		$("<span class='tagLink' onclick='addTag(this)'>http://www.google.com </span><br/>").appendTo("#bottomBar");
+		$("<span class='tagLink' onclick='addTag(this)'>http://test.com </span><br/>").appendTo("#bottomBar");
+		$("<span class='tagLink' onclick='addTag(this)'>www.random.org </span><br/>").appendTo("#bottomBar");
 			
 		if (edit === true)
 		{
@@ -458,8 +526,17 @@
 	*/
 	function addTag(field)
 	{
-		var tagText = $(field).text();
-		$('#formText').val($('#formText').val()+" "+tagText);
+		if ($(field).attr('id')=='tagButton')
+		{
+			var tagForm = document.getElementById("user");
+			var tagText = $(tagForm).val();
+			$('#formText').val($('#formText').val()+" "+tagText);
+		}
+		else
+		{
+			var tagText = $(field).text();
+			$('#formText').val($('#formText').val()+" "+tagText);
+		}
 	}
 	
 	//GETS DATA FROM EDIT FOR NOTE
@@ -478,7 +555,13 @@
 			};
 		}
 		
-		if (/*(newLane != 0) || */subText != null)
+		var newColour = document.getElementById('colourDrop').value;
+		var oldColour = field.model.get('colour-note');
+		
+		var newFontSize = document.getElementById('sizeDrop').value;
+		var oldFontSize = field.model.get('font-size');
+		
+		if ((newColour != oldColour) || (subText != null) || (newFontSize != oldFontSize) )
 		{
 			var r=confirm("Confirm?");
 			if (r==true)
@@ -486,7 +569,8 @@
 				var output = [];
 				//output[1] = lanePos;
 				output[0] = fieldText;
-				//output[1] = field;
+				output[1] = newColour;
+				output[2] = newFontSize;
 				//closeMenu();
 				return output;
 			}
@@ -507,17 +591,18 @@
 	//CREATES NEW HTML ELEMENT NOTE
 	function Note(input)
 	{
-		var $note = $(input.$el);
+		//var $note = $(input.$el);
 
 		var x = input.model.get('text');
 		var lanePos = input.model.get('col');
 		//$(input.$el).appendTo('gridster');
-		/*
+		
 		var $note = jQuery('<div/>', {
-			class: 'note',
+			class: 'cssnote',
 		});
-		$note.appendTo($(input.el));
-		*/
+		$($note).css("background-color", input.model.get('colour-note'));
+		$($note).appendTo($(input.el));
+		
 		var $db = jQuery('<div/>', {
 			class: 'dragbar',
 		});
@@ -538,6 +623,7 @@
 		var $eSpan = jQuery('<span/>', {
 			class:'editSpan',
 		});
+		$($eSpan).css("font-size", input.model.get('font-size')+"px");
 		$($eSpan).text(x);
 		$($eSpan).appendTo($edit);
 		linkify($eSpan);
@@ -546,10 +632,45 @@
 			class: 'toolbar',
 		});
 		$tb.appendTo($note);
+		
+		if (randomName == 0)
+		{
+			randomName = 1;
+			var demo = new Array();
+			demo[0] = "poop";
+			input.model.set('voted', demo);
+			var vv = input.model.get('votes');
+			vv = vv+1;
+			input.model.set('votes', vv);
+		}
+		else
+		{
+			randomName = 0;
+		}
+		
+		var voteScore = input.model.get('votes');
+		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+" no one "+"  </span>").appendTo($tb);
 		$("<span id='closespan'><button class='deleteButton'> Delete </button></span>").appendTo($tb);
 		$("<span id='editspan'><button class='editButton' > Edit </button></span>").appendTo($tb);
 		$("<span id='expandspan'><button class='expandButton'> Expand </button></span>").appendTo($tb);
+		
+		
+		var votedList = input.model.get('voted');
+		var votedLength = _.size(votedList);
+		var alreadyVoted;
+		var loggedInUser = "poop";
+		for (var i=0; i<votedLength; i++)
+		{
+			if (loggedInUser == votedList[i])
+			{
+				alreadyVoted = 1;
+			}
+		}
+		if (alreadyVoted != 1)
+		{
+			$("<span id='voteBtnspan'><button class='voteButton'> +1 </button></span>").appendTo($tb);
+		}
 	}
 	
 	//OPENS EXPANDED TEXT BOX FOR NOTE

@@ -104,8 +104,8 @@ body{
     margin-left: -160px;
 	opacity:1.0;
 	background-color: rgb(255, 240, 70);
-    height: 400px;
-    width: 400px;
+    height: 500px;
+    width: 500px;
 	padding: 10px;
 	z-index:99999;
 	border-style:solid;
@@ -124,7 +124,7 @@ body{
 	right: 25%;
     top: 10%;
 	height: 100%;
-    width: 40px;
+    width: 80px;
 }
 
 #formText{
@@ -213,8 +213,8 @@ ul, ol {
 	height: 100%;
 }
 
-.note {
-    background-color: rgb(255, 240, 70);
+.cssnote {
+    background-color: white;
     height: 250px;
     position: absolute;
     width: 200px;
@@ -240,6 +240,7 @@ ul, ol {
 	overflow: hidden;
 	text-overflow:ellipsis;
 	white-space:pre-wrap;
+	font-size: 18px;
 }
 
 .lane {
