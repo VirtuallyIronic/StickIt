@@ -1,17 +1,28 @@
-	// **This example introduces two new Model actions (swap and delete), illustrating how such actions can be handled within a Model's View.**
-	//
-	// _Working example: [5.html](../5.html)._
-
-	//
-	/*
-	var myJSON = JSON.parse('[{"id":"1","col":"1","row":"1","text":"hmmm"},
-	{"id":"2","col":"1","row":"2","text":"WWJD"},
-	{"id":"3","col":"2","row":"2","text":"burp"}]');
-	*/
-	
+//--------------
+/*
+**	VERSION 3(?)
+**	13/09/2013
+**	END OF SPRINT 4
+**
+**	--FEATURES--
+**	NOTES (CREATE, EDIT, DELETE)
+**		DRAGGABLE
+**	LANES (CREATE, EDIT, DELETE)
+**		CLEAR THE WALL
+**	INITIAL AJAX CALLS
+**
+**	--MISSING--
+**	BACKBONE.SYNC
+**	  -BACKBONE.SYNC WILL SPEED UP SERVER REQUESTS. 
+**	  -STILL INVESTIGATING.
+**
+**
+*/
+//--------------
 	var gridster;
 	var lanes;
-		
+	var globalData = {};
+	
 	/*
 	Remove all notes on wall
 	*/
@@ -23,6 +34,14 @@
 			var rr=confirm("Are you sure?");
 			if (rr==true)
 			{
+				var serialGrid = gridster.serialize();
+				for (var i=0; i<serialGrid.length; i++)
+				{
+					var col = serialGrid[i].col;
+					var row = serialGrid[i].row;
+					var widget = gridster.is_widget(col,row);
+					gridster.remove_widget(widget);
+				}
 				/*$(".note").each(function(){
 					$(this).parent().remove();
 				});*/
@@ -31,14 +50,13 @@
 	}
 	
 	$(function(){
-		/**/
+		/*AJAX CALL FOR COLUMNS AND NOTE DATA*/
 		$.ajaxSetup( { "async": false } );
 		var details = {};
 		var request = $.getJSON( "database.json", function(data) {
 			details = data;
-			//alert(data);
 		});
-		//jqxhr.complete(function() { alert("cake"); });
+		
 		$.ajax({ 
 			url: '/get',
 			type: 'GET',
@@ -52,12 +70,9 @@
 			}
 		});
 		
-		//var strings = JSON.stringify(details.note);		
 		var notes = details.note;//JSON.parse(strings);
-		//lanes = details.totalCols;
 
 		var col = lanes;
-		/*ADD COL HEADINGS HERE*/
 		gridster = $(".gridster ul").gridster({
 			//widget_selector: "li",
 			widget_margins: [20, 30], 
@@ -68,26 +83,20 @@
 			autogenerate_stylesheet: true,
 			draggable: {
 				stop: function(event, ui){
-					var temp = this.$el.children()[0];
-					var out = {};
-					
+					var temp = this.$helper.context;					
 					var cul = this.$helper.context.attributes[1].nodeValue;
 					var row = this.$helper.context.attributes[2].nodeValue;
-					out[0] = cul;
-					out[1] = row;
-					$(temp).trigger('movePos', out);//, row]);
+					globalData[0] = cul;
+					globalData[1] = row;
+					$(temp).trigger('custom');//, [cul, row]);
 				}
 			}
 		}).data('gridster');
 
-		//createHeadings(col);
-		
 		// `Backbone.sync`: Overrides persistence storage with dummy function. This enables use of `Model.destroy()` without raising an error.
-		/*Backbone.sync = function(method, model, success, error){
-			alert(method+" method");
-			alert(model+" model");
+		Backbone.sync = function(method, model, success, error){
 			success();
-		}*/
+		}
 
 		noteFormat = Backbone.Model.extend({
 			defaults: {
@@ -107,60 +116,69 @@
 			model: noteFormat
 		});
 
+		//------VIEW HANDLER FOR NOTES--------
 		ItemView = Backbone.View.extend({
+			/*tagName: 'li', // name of tag to be created
+			className: 'noteContainer',*/
 			tagName: 'div', // name of tag to be created
 			className: 'note',
+			
 			// `ItemView`s now respond to two clickable actions for each `Item`: swap and delete.
 			events: {
 				'click button.deleteButton': 'remove',//'remove',
 				'click button.editButton': 'editMe',
-				'click button.expandButton': 'expanding',
-				
+				'click button.expandButton': 'expanding'		
 			},
 			
 			// `initialize()` now binds model change/removal to the corresponding handlers below.
 			initialize: function(){
 				// every function that uses 'this' as the current object should be in here
-				_.bindAll(this, 'render','editMe', 'unrender','removenoprompt','updatePos','processing', 'remove', 'expanding');
+				_.bindAll(this, 'render','editMe', 'unrender','moveNote','removenoprompt','updatePos','processing', 'remove', 'expanding');
 
-				//this.model.bind('change', this.render);
 				this.model.bind('remove', this.unrender);
 				this.model.on('laneRemove', this.removenoprompt);
+				this.model.on('moveNote', this.moveNote);
+				$(this.$el).on('custom', this.updatePos);
 			},
 			
-			// `render()` now includes two extra `span`s corresponding to the actions swap and delete.
+			//------CREATES A NEW NOTE--------
 			render: function(){
 				Note(this);
-				//Ttest(this);
 				return this; // for chainable calls, like .render().el
 			},
 			
+			//------OPENS EXPANDED TEXT BOX--------
 			expanding: function(){
 				expandNote(this);
 			},
 
+			//------OPENS EDIT MENU--------
 			editMe: function(){
 				popMenu(this);
 			},
 			
-			// `unrender()`: Makes Model remove itself from the DOM.
+			//------AFTER DELETE PROMPT, REMOVE NOTE WIDGET--------
 			unrender: function(){
 				removeWidgets($(this.el));
 			},
 			
-			updatePos: function(data){
-				//alert(data);
-				var newCol = data.currentTarget.attributes[1].nodeValue;
-				var newRow = data.currentTarget.attributes[2].nodeValue;
+			//------AFTER DRAG,CHANGES MODEL DATA--------
+			updatePos: function(e){
+				var newCol = globalData[0];
+				var newRow = globalData[1];
 				this.model.set('col', newCol);
 				this.model.set('row', newRow);
+				globalData = {};
 			},
 			
+			//------AFTER EDIT, CHANGES MODEL DATA--------
 			processing: function(){
 				var data = confirmEdit(this);
 				if (data != null)
 				{
 					var textEdit = data[0];
+					/*this.$el.children('.note').children('.edit').children(".editSpan").text( textEdit);
+					linkify(this.$el.children('.note').children('.edit').children(".editSpan"));*/
 					this.$el.children('.edit').children(".editSpan").text( textEdit);
 					linkify(this.$el.children('.edit').children(".editSpan"));
 					this.model.set('text', textEdit);
@@ -169,7 +187,8 @@
 				}
 				closeMenu();
 			},
-			// `remove()`: We use the method `destroy()` to remove a model from its collection. Normally this would also delete the record from its persistent storage, but we have overridden that (see above).
+			
+			// CHECKS IF THE USER WANTS TO DELETE NOTE
 			remove: function(){
 				var r=confirm("Delete note?");
 				if (r==true)
@@ -177,28 +196,42 @@
 					this.model.destroy();
 				}			
 			},
+			
+			//------LANE DELETION FUNCTION -NOTE --------
 			removenoprompt: function(){
 				this.model.destroy();
-			}			
+			},
+			
+			//------Moves Note Data to the left--------
+			moveNote: function(){
+				var oldCol = this.model.get('col');
+				oldCol = (oldCol-1).toString();
+				this.model.set('col', oldCol);
+			}
 
 		});
 
-		// Because the new features (swap and delete) are intrinsic to each `Item`, there is no need to modify `ListView`.
+		// Wall View Handler
 		ListView = Backbone.View.extend({
 			el: $('.wall'), // el attaches to existing element
+			
+			//------LISTENERS--------
 			events: {
 				'click button#add': 'addItem',
 				'click button#confirmPopup': 'prepareItem',
 				'click button.deleteLane': 'removeLane'
 			},
 			
+			//-------SETS UP ALL LISTENERS AND PROCESSES-------
 			initialize: function(){
 				_.bindAll(this, 'render', 'addItem', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
 				this.collection = new noteList();
 				this.collection.bind('add', this.appendItem); // collection event binder
+				this.on('newNote', this.addItem);
 				this.render();
 			},
 			
+			//-------CREATES INITIAL OBJECTS-------
 			render: function(){
 				var self = this;
 				
@@ -236,24 +269,25 @@
 				}
 			},
 			
-			//---------BROKEN!!!---------------
+			//------OPENS NEW NOTE MENU--------
 			addItem: function(){
-				alert('!!!!');
+				//alert('!!!!');
 				popMenu(this);
 			},
 			
+			//-------DELETES A COLUMN OF NOTES AND MOVES REST TO THE LEFT-------
 			removeLane: function(ev){
 				var r=confirm("Delete lane? ");
 				if (r==true)
 				{
 					var colID = $(ev.target).val();
-					//var data = this.collection.where({col:colID}));
-					
-					//move all notes to the left one
+
 					for (var q=colID; q<=lanes;q++)
 					{
+						//alert("q "+q);
 						if (q==colID)
 						{
+							//alert('if');
 							var colData = this.collection.where({'col': colID});
 							for (var i=0; i<colData.length; i++)
 							{
@@ -263,23 +297,30 @@
 						}
 						else
 						{
-							var colMove = this.collection.where({'col': q});
+							//alert('else '+q );
+							var colPos = q.toString();
+							var colMove = this.collection.where({'col': colPos});
 							for (var i=0; i<colMove.length; i++)
 							{
 								//Move all notes to the left.
-								//alert(colData[q].model.get('col');
+								var moveNote = colMove[i];
+								moveNote.trigger('moveNote');
+								//alert(colMove[i]);//.model.get('text'));
 							}
 						}
 					}
 					//remove Heading  --  unneeded
+					
+					$(ev.target).parent().children('.titleSpan').html("DELETED");
 					$(ev.target).remove();
 					
 					//AJAX: SET SERVER COL NUMBER TO 1 LESS
-					moreLanes();
-					alert("DELETE WALL CODE HERE ");
+					//moreLanes();
+
 				}
 			},
 			
+			//-------GETS DATA FROM DIV MENU FOR NEW NOTE-------
 			prepareItem: function(){
 				var col = document.getElementById('laneDrop').value;
 				var row = 1;
@@ -295,6 +336,7 @@
 				closeMenu();
 			},
 			
+			//-------ADDS WIDGET TO GRIDSTER GRID-------
 			appendItem: function(item){
 				var col = item.get('col');
 				var row = item.get('row');
@@ -311,18 +353,26 @@
 			}
 		});
 
-		var listView = new ListView();
+		listView = new ListView();
 	})(jQuery);
 	
+	//CLOSES ANY POPUP MENU OPEN
 	function closeMenu()
 	{
 		$('#fullscreen').hide();
 		$('.popupMenu').remove();
 	}
 	
+	//BUTTON STOPPED WORKING, WORKAROUND
+	function newNoteWorkaround(){
+		//alert("FUCK");
+		listView.trigger('newNote');
+	}
+	
+	//OPENS POP-UP MENU (NEW OR EDIT)
 	function popMenu(data)
 	{
-	//	widgetTest();
+		//	widgetTest();
 		var edit = true;
 		var bonusTry = data;
 		if (data.$el.selector == '.wall')
@@ -353,7 +403,7 @@
 		{
 			$textEdit.val(data.model.get('text'));
 		}
-
+		//------------------------------------------------
 		if (edit != true)
 		{
 			var $laneSelect = jQuery('<select/>', {
@@ -367,6 +417,7 @@
 				$("<option value="+i+">"+i+"</option>").appendTo("#laneDrop");
 			}
 		}
+		
 		/*if (edit == true)
 		{
 			$("#laneDrop > [value='"+data.model.get('col')+"']").attr("selected", "true");
@@ -382,12 +433,12 @@
 		}
 			
 		$("<button id='tagButton' onclick='addTagButton()'>Add Tag</button>").appendTo("#sideBar");
-		
+		//------------------------------------------------
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
-		$("<span class='tagLink' onclick='addTag(this)'>TAG 1 </span>").appendTo("#bottomBar");
-		$("<span class='tagLink' onclick='addTag(this)'>TAG 4 </span>").appendTo("#bottomBar");
-		$("<span class='tagLink' onclick='addTag(this)'>TAG CLICK ME FOR 5 </span>").appendTo("#bottomBar");
-		$("<span class='tagLink' onclick='addTag(this)'>TAG 6 </span>").appendTo("#bottomBar");
+		$("<span class='tagLink' onclick='addTag(this)'>www.google.com </span>").appendTo("#bottomBar");
+		$("<span class='tagLink' onclick='addTag(this)'>http://www.google.com </span>").appendTo("#bottomBar");
+		$("<span class='tagLink' onclick='addTag(this)'>http://test.com </span>").appendTo("#bottomBar");
+		$("<span class='tagLink' onclick='addTag(this)'>www.random.org </span>").appendTo("#bottomBar");
 			
 		if (edit === true)
 		{
@@ -397,6 +448,7 @@
 		//if (edit === false)
 		else {
 			$("<button id='confirmPopup' >Confirm</button>").appendTo("#bottomBar");
+			$('#confirmPopup').on('click', data.prepareItem);
 		}
 		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
 	}
@@ -410,16 +462,9 @@
 		$('#formText').val($('#formText').val()+" "+tagText);
 	}
 	
+	//GETS DATA FROM EDIT FOR NOTE
 	function confirmEdit(field)
 	{
-		//var currentLane = field.model.get('col');
-		//var lanePos = document.getElementById('laneDrop').value;
-		/*var newLane = 0;
-		if (lanePos != currentLane)
-		{
-			newLane = lanePos;
-		}*/
-
 		var fullTextCurrent = field.model.get('text');
 		var fieldText = document.getElementById('formText').value;
 		var subText = null;
@@ -453,27 +498,32 @@
 		}
 	}
 	
+	//REMOVES THE SELECTED WIDGET
 	function removeWidgets(field)
 	{
 		gridster.remove_widget(field);
 	}
 	
+	//CREATES NEW HTML ELEMENT NOTE
 	function Note(input)
 	{
-		var noteEle = $(input.$el);
-		//$(noteEle).on('movePos', input.updatePos);
-		
-		$(noteEle).on('movePos', function(event, obj) {
-			input.model.set('col', obj[0]);
-			input.model.set('row', obj[1]);
-		});
+		var $note = $(input.$el);
+
 		var x = input.model.get('text');
 		var lanePos = input.model.get('col');
-		
+		//$(input.$el).appendTo('gridster');
+		/*
+		var $note = jQuery('<div/>', {
+			class: 'note',
+		});
+		$note.appendTo($(input.el));
+		*/
 		var $db = jQuery('<div/>', {
 			class: 'dragbar',
 		});
-		$db.appendTo($(input.el));
+		$db.appendTo($note);
+
+
 		
 		var $edit = jQuery('<div/>', {
 			class: 'edit'
@@ -483,7 +533,7 @@
 			x = x.substr(0, 140);
 			x += " ...";
 		};
-		$edit.appendTo($(input.$el));
+		$edit.appendTo($note);
 		
 		var $eSpan = jQuery('<span/>', {
 			class:'editSpan',
@@ -495,13 +545,14 @@
 		var $tb = jQuery('<div/>', {
 			class: 'toolbar',
 		});
-		$tb.appendTo($(input.$el));
+		$tb.appendTo($note);
 		$("<span id='userspan'>Created by: "+" no one "+"  </span>").appendTo($tb);
 		$("<span id='closespan'><button class='deleteButton'> Delete </button></span>").appendTo($tb);
 		$("<span id='editspan'><button class='editButton' > Edit </button></span>").appendTo($tb);
 		$("<span id='expandspan'><button class='expandButton'> Expand </button></span>").appendTo($tb);
 	}
 	
+	//OPENS EXPANDED TEXT BOX FOR NOTE
 	function expandNote(field)
 	{
 		var fullText = field.model.get('text');
@@ -526,6 +577,7 @@
 		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
 	}
 	
+	//REQUESTS MORE LANES FROM SERVER
 	function moreLanes(postType)
 	{
 		
@@ -561,20 +613,15 @@
 		});
 	}
 	
+	//CREATES URL FROM PLAIN TEXT
 	function linkify(eSpan) 
 	{
-		//var replacedText, replacePattern1, replacePattern3;
 		var replacePattern2;
 		var inputText = $(eSpan).text();
 		$(eSpan).text("");
 		
-		//URLs starting with http://, https://, or ftp://
-		//replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-		//replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
-
-		//URLs starting with "www." (without // before it, or it'd re-link the ones done above).
-		replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-		//replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+		//URLs starting with http://, https://, or www.
+		replacePattern2 = /((www|https?:\/\/)[^ ]+)/;
 		var replacedArray = inputText.split(replacePattern2);
 		
 		for (var i =0; i<replacedArray.length; i++)
@@ -582,8 +629,10 @@
 			var temp = "";
 			if (replacePattern2.test(replacedArray[i]))
 			{
-				temp = replacedArray[i].replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+				temp = replacedArray[i].replace(replacePattern2, '<a href="$1" target="_blank">$1</a>');
+				//'<a href="$1">$1</a>
 				$(temp).appendTo(eSpan);
+				i=i+1;
 			}
 			else
 			{
