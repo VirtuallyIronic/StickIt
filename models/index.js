@@ -25,24 +25,41 @@ var sequelize = new Sequelize(
 			dialect: 'mysql',
 			maxConcurrentQueries: 100,
 			define: {
-				timestamps: false
+			    charset: 'utf8',
+			    collate: 'utf8_general_ci',
+				timestamps: false,
+				freezeTableName: true
 			},
 			sync: {
-				force: true
+				force: false
 			},
-			pool: { maxConnections: 5, maxIdleTime: 30}
+			syncOnAssociation: false,
+			pool: { maxConnections: 10, maxIdleTime: 30}
 		}
 	);
 
 
 // load models
 var models = [
-              'User'
+              'User',
+              'Wall',
+              'WallUsers'
              ];
 
 models.forEach(function(model){
 	module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
+
+module.exports.Wall.hasMany(module.exports.WallUsers);
+module.exports.User.hasMany(module.exports.WallUsers);
+module.exports.WallUsers.belongsTo(module.exports.Wall);
+module.exports.WallUsers.belongsTo(module.exports.User);
+
+
+models.forEach(function(model){
+	module.exports[model].sync();
+});
+
 
 // export connection
 module.exports.sequelize = sequelize;

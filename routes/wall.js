@@ -23,6 +23,9 @@ if(!MODULE_VERSION_APPEND) {
 	console.log('API ' + MODULE_NAME + ' (' + MODULE_MAJOR_VERSION + '.' + MODULE_MINOR_VERSION + '.' + MODULE_PATCH_VERSION + MODULE_VERSION_APPEND + ')');
 }
 
+var models = require('../models');
+var User = models.User;
+
 module.exports = function(app, passport) {
 
 };

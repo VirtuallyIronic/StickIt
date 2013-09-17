@@ -2,8 +2,9 @@ define([
         'jquery',
         'underscore',
         'backbone',
-        'views/login/loginView'
-        ], function($, _, Bacbone, LoginView){
+        'views/login/loginView',
+        'views/index/indexView'
+        ], function($, _, Bacbone, LoginView, IndexView){
 	
 	var AppRouter = Backbone.Router.extend({
 		routes: {
@@ -28,7 +29,8 @@ define([
 		
 		appRouter.on('route:defaultAction', function(actions){
 			if(!actions){
-				console.log('home');
+				var indexView = new IndexView();
+				indexView.render();
 			} else {
 				console.log('404 on route: ', actions);
 			}

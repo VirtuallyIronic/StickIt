@@ -13,27 +13,25 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , passport = require('passport')
-  , bcrypt = require('bcrypt')
-  , shortId = require('shortid')
-  , appVersion = "0.9.0";
+  , sequelize = require('sequelize')
+  , appVersion = "0.10.0";
 
 // configuration
-var appConfig = require('config').app;
+var config = require('config');
 
 // express
 var app = express();
 
 // environment variables
-app.set('port', appConfig.port);
+app.set('port', config.app.port);
 app.set('view engine', 'html');
 app.use(function(req, res, next){
-	// eye candy for a new X-Powered-By header
 	app.disable('x-powered-by');
 	res.set('X-Powered-By', 'StickIt/' + appVersion);
 	next();
 });
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.favicon());
+app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -55,6 +53,17 @@ app.get('/api', function(req, res) {
 	res.send('StickIt v' + appVersion + ' by Virtually Ironic');
 });
 
+// authentication checker
+function checkAuthentication(req, res, next) {
+	if(req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/#/login');
+}
+
+//direct all api routes to to login if not logged in 
+app.all('/api/*', checkAuthentication);
+
 // import the api
 var api = require('./routes')(app, passport);
 
@@ -62,7 +71,6 @@ var api = require('./routes')(app, passport);
 app.use(function(req, res){
 	return res.redirect('/#' + req.url);
 });
-
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('StickIt v' + appVersion + ' listening on port ' + app.get('port'));

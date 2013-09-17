@@ -2,7 +2,7 @@ define([
         'jquery',
         'underscore',
         'backbone',
-        'utils/backbone.min',
+        'utils/bootstrap.min',
         'utils/settingsMenu',
         'text!templates/login/loginTemplate.html'
         ], function($, _, Backbone, Bootstrap, settingsMenu, loginTemplate){
@@ -16,7 +16,8 @@ define([
 		},
 	
 		events: {
-			"click #loginButton": "login"
+			"click #loginButton": "login",
+			"click #registerButton": "register"
 		},
 		
 		render: function(){
@@ -49,6 +50,38 @@ define([
 				},
 				error:function(error){
 					window.location.replace('/#/login/failure');
+				}
+			});
+		},
+		
+		register:function(event){
+			event.preventDefault();
+			$('.alert-error').hide();
+			var url = '/auth/register';
+			console.log('Registering...');
+			var formValues = {
+					username: $('#usernamesignup').val(),
+					emailAddr: $('#emailsignup').val(),
+					password: $('#passwordsignup').val(),
+					passwordConfirm: $('#passwordsignup_confirm').val()
+			};
+			
+			$.ajax({
+				url: url,
+				type: 'POST',
+				dataType:"json",
+				data: formValues,
+				success:function(data){
+					if(data.error){
+						console.log("error: " + data.error.text);
+						$('.alert-error').text(data.error.text).show();
+					}
+					else {
+						window.location.replace('/#/login/success');
+					}
+				},
+				error:function(error){
+					window.location.replace('/#/register');
 				}
 			});
 		}

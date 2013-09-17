@@ -321,6 +321,7 @@ p.change_link{
 	top: 1px;
 }
 /** Styling both forms **/
+#menuSettings,
 #register,
 #mainSettings,
 #optionPaneOne, 

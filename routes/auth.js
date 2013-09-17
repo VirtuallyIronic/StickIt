@@ -12,8 +12,8 @@
 // route version numbers
 var MODULE_NAME = 'AUTH'
   , MODULE_MAJOR_VERSION = '0'
-  , MODULE_MINOR_VERSION = '10'
-  , MODULE_PATCH_VERSION = '5'
+  , MODULE_MINOR_VERSION = '11'
+  , MODULE_PATCH_VERSION = '9'
   , MODULE_VERSION_APPEND = null;
 
 // print route version for debugging and logging 
@@ -26,14 +26,21 @@ if(!MODULE_VERSION_APPEND) {
 // route modules
 var LocalStrategy = require('passport-local').Strategy
   , bcrypt = require('bcrypt')
-  , check = require('validator').check
+  , shortId = require('shortid')
   , sanitize = require('validator').sanitize
+  , Validator = require('validator').Validator
   , dbConfig = require('config').db;
 
 var models = require('../models');
 var User = models.User;
+var validator = new Validator();
 
 module.exports = function(app, passport) {
+	
+	validator.error = function (err_msg) {
+		return false;
+	}
+	
 	function findById(id, fn) {
 		User.find(id).success(function(user){
 			return fn(null, user);
@@ -80,7 +87,7 @@ module.exports = function(app, passport) {
 		function(username, password, done){
 			sanitize(username).xss();
 			sanitize(username).escape();
-			if(check(username).isEmail()){
+			if(validator.check(username).isEmail()){
 				findByEmail(username, function(err, user){
 					if(err) {
 						console.log('error');
@@ -136,6 +143,16 @@ module.exports = function(app, passport) {
 		}
 	}
 	
+	function createUser(username, emailAddr, password, done) {
+		var uid = shortId.generate(8);
+		var passwordHash = bcrypt.hashSync(password, 12);
+		User.create({id: uid, username: username, password: passwordHash, email: emailAddr}).success(function(user){
+			return done(null, user);
+		}).error(function(error){
+			return done(error, null);
+		});
+	}
+	
 	app.post('/auth/login', passport.authenticate('local'), function(req, res){
 		res.json(req.user);
 	});
@@ -143,6 +160,45 @@ module.exports = function(app, passport) {
 	app.get('/auth/logout', function(req, res){
 		req.logout();
 		res.redirect('/');
+	});
+	
+	app.post('/auth/register', function(req, res){
+		var username = req.body.username
+		  , emailAddr = req.body.emailAddr
+		  , password = req.body.password
+		  , passwordConfirm = req.body.passwordConfirm;
+		
+		sanitize(username).xss();
+		sanitize(username).escape();
+		sanitize(emailAddr).xss();
+		sanitize(emailAddr).escape();
+		sanitize(password).xss();
+		sanitize(password).escape();
+		sanitize(passwordConfirm).xss();
+		sanitize(passwordConfirm).escape();
+		
+		if(password == passwordConfirm) {
+			if(validator.check(emailAddr).isEmail()){
+				createUser(username, emailAddr, password, function(error, user){
+					if(error) {
+						res.send({'error': error}, 401);
+						req.login(user, function(err){
+							if(err) {
+								res.send({'error': err}, 401)
+							}
+							else {
+								res.json(req.user);
+							}
+						});
+					}
+				});
+			} else {
+				res.send({ 'error' : 'registration error '}, 401);
+			}
+		}
+		else {
+			res.send({ 'error' : 'passwords must be the same'}, 401);
+		}
 	});
 	
 	app.get('/auth/me', whoAmI);
