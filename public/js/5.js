@@ -19,8 +19,10 @@
 **
 */
 //--------------
+	var globalTestCount = 0;
 	var gridster;
 	var lanes;
+	var notes;
 	var globalData = {};
 	var randomName = 0;
 	/*
@@ -48,28 +50,31 @@
 	
 	$(function(){
 		/*AJAX CALL FOR COLUMNS AND NOTE DATA*/
-		$.ajaxSetup( { "async": false } );
+		/*$.ajaxSetup( { "async": false } );
 		var details = {};
 		var request = $.getJSON( "database.json", function(data) {
 			details = data;
-		});
-		
+		});*/
+		//$.ajaxSetup( { "async": false } );
+		$('#fullscreen').show();
 		$.ajax({ 
 			url: '/get',
 			type: 'GET',
+			async: false,
 			success: function(data){
-				lanes = data.newCol;
+				lanes = data[0];//.totalCols;
+				notes = data[1];
 				alert("success");
-			}
-			, error: function(jqXHR, textStatus, err){
-				//alert('text status '+textStatus+', err '+err);
+			}, 
+			error: function(jqXHR, textStatus, err){
+				alert('text status '+textStatus+', err '+err);
 				lanes = 7;
 			}
 		});
-		
-		var notes = details.note;//JSON.parse(strings);
+		//var notes = noteData;//JSON.parse(strings);
 
-		var col = lanes;
+		$('#fullscreen').hide();
+		var col = parseInt(lanes);
 		gridster = $(".gridster ul").gridster({
 			//widget_selector: "li",
 			widget_margins: [20, 30], 
@@ -91,9 +96,9 @@
 		}).data('gridster');
 
 		// `Backbone.sync`: Overrides persistence storage with dummy function. This enables use of `Model.destroy()` without raising an error.
-		Backbone.sync = function(method, model, success, error){
-			success();
-		}
+		Backbone.sync = function(method, model) {
+			alert(method+"<-- method SYNC model-->"+model);
+		};
 
 		noteFormat = Backbone.Model.extend({
 			defaults: function(){
@@ -103,16 +108,20 @@
 					'text': '',
 					'votes': 0,
 					'voted': new Array(),
+					'tagged': new Array(),
 					'colour-note': 'white',
-					'colour-bar': 'yellow',
+					'colour-bar': 'red',
 					'font': '',
 					'font-size': 18
 				}
-			}
+			},
+			url: 'http://localhost:8080/'
+			//http://localhost:8080/messages
 		});
 		
 		noteList = Backbone.Collection.extend({
-			model: noteFormat
+			model: noteFormat,
+			url: 'http://localhost:8080'
 		});
 
 		//------VIEW HANDLER FOR NOTES--------
@@ -133,7 +142,7 @@
 			// `initialize()` now binds model change/removal to the corresponding handlers below.
 			initialize: function(){
 				// every function that uses 'this' as the current object should be in here
-				_.bindAll(this, 'render','editMe', 'unrender','voting','moveNote','removenoprompt','updatePos','processing', 'remove', 'expanding');
+				_.bindAll(this, 'render','editMe', 'testingAlerts','unrender','removeTag','addNewTag','voting','moveNote','removenoprompt','updatePos','processing', 'remove', 'expanding');
 
 				this.model.bind('remove', this.unrender);
 				this.model.on('laneRemove', this.removenoprompt);
@@ -149,7 +158,32 @@
 			
 			//------OPENS EXPANDED TEXT BOX--------
 			expanding: function(){
+				var asdasd = this.model.toJSON();
+				alert(asdasd);
 				expandNote(this);
+			},
+			
+			testingAlerts: function(input){
+				alert(input);
+			},
+			addNewTag: function(e){
+				var tags = this.model.get('tagged');
+				var tagName = $(e.target).parent().children('.userText').val();
+				var tagSize = _.size(tags);//.length;
+				if (tagSize === 0)
+				{
+					tags[0] = tagName;
+				}
+				else
+				{
+					tags[tagSize] = tagName;
+				}
+				this.model.set('tagged',tags);
+				$("<span>TAGGED: </span><span class='taggedUser'> "+tags[tagSize]+"</span><br/>").appendTo(".popupMenu");
+			},
+			
+			removeTag: function(e){
+				alert(e);
 			},
 			
 			//------+1 Vote--------
@@ -170,7 +204,7 @@
 				this.model.set('voted', voted);
 				this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").remove();
 				this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
-				
+				this.model.trigger('updateServer');				
 			},
 
 			//------OPENS EDIT MENU--------
@@ -181,6 +215,7 @@
 			//------AFTER DELETE PROMPT, REMOVE NOTE WIDGET--------
 			unrender: function(){
 				removeWidgets($(this.el));
+				//this.model.trigger('updateServer');
 			},
 			
 			//------AFTER DRAG,CHANGES MODEL DATA--------
@@ -190,6 +225,7 @@
 				this.model.set('col', newCol);
 				this.model.set('row', newRow);
 				globalData = {};
+				this.model.trigger('updateServer');
 			},
 			
 			//------AFTER EDIT, CHANGES MODEL DATA--------
@@ -200,21 +236,37 @@
 					var textEdit = data[0];
 					var colour = data[1];
 					var fontSize = data[2];
+					var tags = data[3];
 					this.$el.children('.cssnote').children('.edit').children(".editSpan").text( textEdit);
 					linkify(this.$el.children('.cssnote').children('.edit').children(".editSpan"));
 					/*this.$el.children('.edit').children(".editSpan").text( textEdit);
 					linkify(this.$el.children('.edit').children(".editSpan"));*/
 					//$($note).css("background-color", input.model.get('colour-note'));
 					this.$el.children('.cssnote').css('background-color', colour);
+					colour = this.$el.children('.cssnote').css('background-color');
+					colour = palletSwap(colour);
+					this.$el.children('.cssnote').children('.dragbar').css('background-color', colour);					
+					this.$el.children('.cssnote').children('.toolbar').css('background-color', colour);
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontSize', fontSize+"px");
 					
 					this.model.set('font-size', fontSize);
 					this.model.set('colour-note', colour);
 					this.model.set('text', textEdit);
+					if (tags != 0)
+					{
+						var oldTags = this.model.get('tagged');
+						var newTags = oldTags.concat(tags);
+						this.model.set('tagged',newTags);
+					}
+					closeMenu();
+					this.model.trigger('updateServer');
 					/* HOW TO MOVE WIDGET ????*/
 					//field.model.set('col', col);
 				}
-				closeMenu();
+				else
+				{
+					closeMenu();
+				}
 			},
 			
 			// CHECKS IF THE USER WANTS TO DELETE NOTE
@@ -223,6 +275,7 @@
 				if (r==true)
 				{
 					this.model.destroy();
+					this.model.set('col', oldCol);
 				}			
 			},
 			
@@ -248,14 +301,16 @@
 			events: {
 				'click button#add': 'addItem',
 				'click button#confirmPopup': 'prepareItem',
-				'click button.deleteLane': 'removeLane'
+				'click button.deleteLane': 'removeLane',
+				'click button.editLaneBut': 'editTitle'
 			},
 			
 			//-------SETS UP ALL LISTENERS AND PROCESSES-------
 			initialize: function(){
-				_.bindAll(this, 'render', 'addItem', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
+				_.bindAll(this, 'render', 'addItem', 'editTitle', 'serverUpdate', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
 				this.collection = new noteList();
 				this.collection.bind('add', this.appendItem); // collection event binder
+				this.collection.bind('updateServer', this.serverUpdate);
 				this.on('newNote', this.addItem);
 				this.render();
 			},
@@ -279,6 +334,10 @@
 						class:'titleSpan',
 					});
 					$($tSpan).text(i);
+					
+					//--- attempt to put the title inside a <p> tag. ---
+					$("<p>").appendTo($headDetails);
+					
 					$($tSpan).appendTo($headDetails);
 					var varvar = i+1
 					$("<button value="+varvar+" class='deleteLane'>DELETE LANES</button>").appendTo($headDetails);
@@ -287,15 +346,47 @@
 
 				for (var w=0; w<notes.length; w++)
 				{
-					var item = new noteFormat();
-					item.set({
+					var item = new noteFormat(notes[w]);
+					/*item.set({
 						'col': notes[w].col,
 						'row': notes[w].row,
 						'text': notes[w].text
 						// modify item defaults
-					});
+					});*/
 					this.collection.add(item);
 				}
+			},
+			
+			serverUpdate: function(){
+				//alert('testing '+globalTestCount);
+				//globalTestCount = globalTestCount+1;
+				var qqa = this.collection.toJSON();
+				//alert(qqa);
+				
+				$.ajax({ 
+					url: '/dataUpdate',
+					type: 'POST',
+					//async: false,
+					cache: false, 
+					dataType: 'json',
+					contentType: "application/json",
+					data: JSON.stringify(qqa),
+					success: function(data){
+						alert("done, reloading now")
+						//location.reload(true);
+					}
+					, error: function(jqXHR, textStatus, err){
+						alert('ERROR text status '+textStatus+', err '+err)
+						//location.reload(true);
+					}
+				});
+				
+				
+			},
+			
+			editTitle: function(ev){
+				var fname=prompt("New Lane Title")
+				$(ev.target).parent().children('.titleSpan').html(fname);
 			},
 			
 			//------OPENS NEW NOTE MENU--------
@@ -310,7 +401,7 @@
 				if (r==true)
 				{
 					var colID = $(ev.target).val();
-
+					var notesEdited = 0;
 					for (var q=colID; q<=lanes;q++)
 					{
 						//alert("q "+q);
@@ -320,6 +411,7 @@
 							var colData = this.collection.where({'col': colID});
 							for (var i=0; i<colData.length; i++)
 							{
+								notesEdited++;
 								var testing = colData[i];
 								testing.trigger('laneRemove');
 							}
@@ -332,11 +424,16 @@
 							for (var i=0; i<colMove.length; i++)
 							{
 								//Move all notes to the left.
+								notesEdited++;
 								var moveNote = colMove[i];
 								moveNote.trigger('moveNote');
 								//alert(colMove[i]);//.model.get('text'));
 							}
 						}
+					}
+					if (notesEdited > 0)
+					{
+						this.serverUpdate();
 					}
 					//remove Heading  --  unneeded
 					
@@ -344,31 +441,48 @@
 					$(ev.target).remove();
 					
 					//AJAX: SET SERVER COL NUMBER TO 1 LESS
-					//moreLanes();
+					moreLanes();
 
 				}
 			},
 			
 			//-------GETS DATA FROM DIV MENU FOR NEW NOTE-------
 			prepareItem: function(){
-				var col = document.getElementById('laneDrop').value;
-				var row = 1;
-				var text = document.getElementById('formText').value;
-				var colour = document.getElementById('colourDrop').value;
-				var fontSize = document.getElementById('sizeDrop').value;
-				while (gridster.is_widget(col,row))
-				{
-					++row;
-				};
-				var item = new noteFormat();
-				item.set({
-					'col': col,
-					'row': row,
-					'text': text,
-					'colour-note': colour,
-					'font-size': fontSize
-				});
-				this.collection.add(item);
+				if (confirm('Confirm new Note?')) 
+				{   
+					var col = document.getElementById('laneDrop').value;
+					var row = 1;
+					var text = document.getElementById('formText').value;
+					var colour = document.getElementById('colourDrop').value;
+					var fontSize = document.getElementById('sizeDrop').value;
+					var tags = document.getElementById('newTags');
+					var tagged = new Array();
+					var tagSize = $(tags).children().length;
+					var count = 0;
+					//alert($(tags).children().eq(1).text());
+					for (var i=1; i<tagSize; i=i+3)
+					{
+						//alert($(tags).children[i].text());
+						tagged[count] = $(tags).children().eq(i).text();
+						count=count+1;
+						//i=i+2;
+					}
+					while (gridster.is_widget(col,row))
+					{
+						++row;
+					};
+					var item = new noteFormat();
+					item.set({
+						'col': col,
+						'row': row,
+						'text': text,
+						'tagged': tagged,
+						'colour-note': colour,
+						'font-size': fontSize
+					});
+					this.collection.add(item);
+					this.serverUpdate();
+				}
 				closeMenu();
 			},
 			
@@ -386,7 +500,42 @@
 		});
 
 		listView = new ListView();
-	})(jQuery);
+	});//(jQuery);
+	
+	function palletSwap(col)
+	{
+		var check = col.substring(0,3);
+		if (check!='rgb')
+		{
+			col = "rgb("+255+","+255+","+255+")";
+		}
+		var num = col.slice(4);
+		num = num.split(",");
+		var red = parseInt(num[0]);
+		var green = parseInt(num[1]);
+		var blue = num[2].slice(0,-1);
+		blue = parseInt(blue);
+
+		red = red-55;
+		green = green-55;
+		blue = blue-55;
+		
+		red = zeroCheck(red);
+		green = zeroCheck(green);
+		blue = zeroCheck(blue);
+		var newColour = "rgb("+red+","+green+","+blue+")";
+		return newColour;
+		//return col;
+	}
+
+	function zeroCheck(colour)
+	{
+		if (colour < 0)
+		{
+			colour = 0;
+		}
+		return colour;
+	}
 	
 	//CLOSES ANY POPUP MENU OPEN
 	function closeMenu()
@@ -424,6 +573,7 @@
 		$("<div id='formDetails'></div>").appendTo("#popupDetails");
 		
 		var $textEdit = jQuery('<textarea/>', {
+			placeholder:"Your text goes here.",
 			id: 'formText',
 			rows: '10',
 			cols: '24',
@@ -449,9 +599,8 @@
 			{
 				$("<option value="+i+">"+i+"</option>").appendTo("#laneDrop");
 			}
-
 		}
-					
+
 		$("<p>Colour</p>").appendTo("#sideBar");
 
 		var $colourSelect = jQuery('<select/>', {
@@ -459,12 +608,11 @@
 		});
 		$colourSelect.appendTo("#sideBar");
 
-		$("<option value='white'>white</option>").appendTo("#colourDrop");
-		$("<option value='yellow'>yellow</option>").appendTo("#colourDrop");
-		$("<option value='brown'>brown</option>").appendTo("#colourDrop");
-		$("<option value='pink'>pink</option>").appendTo("#colourDrop");
-		$("<option value='red'>red</option>").appendTo("#colourDrop");
-		
+		$("<option value='#E6E6E6'>white</option>").appendTo("#colourDrop");
+		$("<option value='#CCCC00'>yellow</option>").appendTo("#colourDrop");
+		$("<option value='#33CCFF'>blue</option>").appendTo("#colourDrop");
+		$("<option value='#FF0000'>red</option>").appendTo("#colourDrop");
+
 		$("<p>Colour</p>").appendTo("#sideBar");
 
 		var $sizeSelect = jQuery('<select/>', {
@@ -498,8 +646,10 @@
 			$("<option value="+i+">"+i+"</option>").appendTo("#tagDrop");
 		}
 		*/
-		$('<input id="user" type="text" name="user">').appendTo('#sideBar');
-		$("<button id='tagButton' onclick='addTag(this)'>Add Tag</button>").appendTo("#sideBar");
+		$('<input class="userText" type="text" name="user" placeholder="e.g. Worked Well">').appendTo('#sideBar');
+		//$('<input class="userText" type="text" name="user">').appendTo('#sideBar');
+		$("<button class='tagButton' onclick='addUserTag(this)'>Add Tag</button>").appendTo("#sideBar");
+		//$('.tagButton').on('click', addUserTag(this));
 		//------------------------------------------------
 		
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
@@ -519,6 +669,36 @@
 			$('#confirmPopup').on('click', data.prepareItem);
 		}
 		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
+				
+		$("<div id='newTags' class='newTagBar'></div>").appendTo("#bottomBar");
+		$("<div id='oldTags' class='oldTagBar'></div>").appendTo("#bottomBar");
+		if (edit === true)
+		{
+			var tags = data.model.get('tagged');
+			//var tagName = $(e.target).parent().children('.userText').val();
+			var tagSize = _.size(tags);//.length;
+
+			if (!tags[0])
+			{
+			}
+			else
+			{
+				for (var i=0; i<tagSize; i++)
+				{
+					$("<span class='tagSpan' <span>TAGGED: </span><span class='taggedUser'> "+tags[i]+"</span> </span><br/>").appendTo(".oldTagBar");	
+				}	
+			}			
+		}
+	}
+	
+	function addUserTag(field){
+		//var tags = this.model.get('tagged');
+		var tagName = $(field).parent().children('.userText').val();
+		if (tagName != 'undefined' && tagName != '')
+		{
+			$("<span class='tagRemoval' <span>New: </span><span class='taggedUser'> "+tagName+"</span> (click to remove)</span><br/>").appendTo(".newTagBar");	
+		}
+		var tagName = $(field).parent().children('.userText').val('');
 	}
 	
 	/*
@@ -526,22 +706,26 @@
 	*/
 	function addTag(field)
 	{
-		if ($(field).attr('id')=='tagButton')
-		{
-			var tagForm = document.getElementById("user");
-			var tagText = $(tagForm).val();
-			$('#formText').val($('#formText').val()+" "+tagText);
-		}
-		else
-		{
-			var tagText = $(field).text();
-			$('#formText').val($('#formText').val()+" "+tagText);
-		}
+		var tagText = $(field).text();
+		$('#formText').val($('#formText').val()+" "+tagText);
 	}
 	
 	//GETS DATA FROM EDIT FOR NOTE
 	function confirmEdit(field)
 	{
+		var tags = document.getElementById('newTags');
+		var tagged = new Array();
+		var tagSize = $(tags).children().length;
+		var count = 0;
+		//alert($(tags).children().eq(1).text());
+		for (var i=1; i<tagSize; i=i+3)
+		{
+			//alert($(tags).children[i].text());
+			tagged[count] = $(tags).children().eq(i).text();
+			count=count+1;
+			//i=i+2;
+		}
+		var checkSize = _.size(tagged);
 		var fullTextCurrent = field.model.get('text');
 		var fieldText = document.getElementById('formText').value;
 		var subText = null;
@@ -561,7 +745,7 @@
 		var newFontSize = document.getElementById('sizeDrop').value;
 		var oldFontSize = field.model.get('font-size');
 		
-		if ((newColour != oldColour) || (subText != null) || (newFontSize != oldFontSize) )
+		if ((newColour != oldColour) || (subText != null) || (newFontSize != oldFontSize) || (checkSize>0))
 		{
 			var r=confirm("Confirm?");
 			if (r==true)
@@ -571,6 +755,14 @@
 				output[0] = fieldText;
 				output[1] = newColour;
 				output[2] = newFontSize;
+				if (checkSize >0)
+				{
+					output[3] = tagged;
+				}
+				else
+				{
+					output[3] = 0;
+				}
 				//closeMenu();
 				return output;
 			}
@@ -601,14 +793,20 @@
 			class: 'cssnote',
 		});
 		$($note).css("background-color", input.model.get('colour-note'));
+		var colour = $($note).css("background-color");
+		var check = colour.substring(0,3);
+		if (check!='rgb')
+		{
+			var ppp = window.getComputedStyle($note);
+			colour = "rgb("+255+","+255+","+255+")";
+		}
+		colour = palletSwap(colour);
 		$($note).appendTo($(input.el));
 		
 		var $db = jQuery('<div/>', {
 			class: 'dragbar',
 		});
 		$db.appendTo($note);
-
-
 		
 		var $edit = jQuery('<div/>', {
 			class: 'edit'
@@ -632,6 +830,9 @@
 			class: 'toolbar',
 		});
 		$tb.appendTo($note);
+		
+		$($db).css("background-color", colour);
+		$($tb).css("background-color", colour);
 		
 		if (randomName == 0)
 		{
@@ -683,6 +884,8 @@
 			class: 'popupMenu',
 		});//.draggable();
 		$($exMenu).appendTo("body");
+		//$($exMenu).css('background-color', field.model.get('note-colour'));
+		$($exMenu).css("background-color", field.model.get('colour-note'));
 		$("<span id='createTitle'>Note</span></br>").appendTo(".popupMenu");
 		$("<div id='popupDetails'></div>").appendTo(".popupMenu");
 		
@@ -695,9 +898,16 @@
 		linkify($fullT);
 		$("<br></br>").appendTo("#popupDetails");
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
+		
+		var tagged = field.model.get('tagged');
+		var tagSize = _.size(tagged);
+		for (var i=0; i<tagSize; i++)
+		{
+			$("<span class='taggedUser'>Tag: "+tagged[i]+"</span><br/>").appendTo("#bottomBar");
+		}		
 		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
 	}
-	
+
 	//REQUESTS MORE LANES FROM SERVER
 	function moreLanes(postType)
 	{
@@ -705,31 +915,44 @@
 		alert(lanes);
 		if (postType == '0')
 		{
-			alert('ajax');
-			var sendURL = '/ajax';	
+			//alert('ajax');
+			//var sendURL = '/ajax';
+			lanes = parseInt(lanes); 			
 			lanes=lanes+1;
 		}
 		else
 		{
-			alert('decLane');
-			var sendURL = '/decLan';
+			//alert('decLane');
+			//var sendURL = '/decLan';
+			lanes = parseInt(lanes);
 			lanes=lanes-1;
 		}
 		
 		$.ajax({ 
-			url: sendURL,
+			url: '/',
 			type: 'POST',
-			cache: false, 
+			cache: false,
+			async: false,			
 			dataType: 'json',
 			contentType: "application/json",
-			data: JSON.stringify({newCol:lanes}),
+			data: JSON.stringify({'newCol':lanes}),
 			success: function(data){
 				alert("done, reloading now")
 				location.reload(true);
 			}
 			, error: function(jqXHR, textStatus, err){
-				alert('text status '+textStatus+', err '+err)
-				location.reload(true);
+				alert('ERROR text status '+textStatus+', err '+err)
+				//location.reload(true);
+			}
+		});
+	}
+	
+	function screenCap()
+	{
+		var test = window.open();
+		html2canvas($('.demo'), {
+			onrendered: function(canvas) {
+				$(test.document.body).html(canvas);
 			}
 		});
 	}
