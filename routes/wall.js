@@ -25,7 +25,18 @@ if(!MODULE_VERSION_APPEND) {
 
 var models = require('../models');
 var User = models.User;
+var Wall = models.Wall;
+var WallUsers = models.WallUsers;
 
 module.exports = function(app, passport) {
-
+	app.get('/api/wall', function(req, res){
+		models.sequelize.query('SELECT * FROM `Wall` WHERE `Wall`.`author`=\'' + req.user.id + '\' OR `Wall`.`isPrivate`=\'0\' OR `Wall`.`id` IN (SELECT `WallUsers`.`WallId` FROM `WallUsers` WHERE `WallUsers`.`UserId`=\'' + req.user.id + '\')', Wall).success(function(walls){
+			res.json(walls);
+		}).error(function(error){
+			console.log(error);
+		});
+	});
+	app.post('/api/wall', function(req, res){
+		
+	});
 };

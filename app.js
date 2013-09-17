@@ -63,6 +63,8 @@ function checkAuthentication(req, res, next) {
 
 //direct all api routes to to login if not logged in 
 app.all('/api/*', checkAuthentication);
+app.all('/#/home', checkAuthentication);
+app.all('/home', checkAuthentication);
 
 // import the api
 var api = require('./routes')(app, passport);

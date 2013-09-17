@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8" />
+        <title>User Main Page</title>
+
+
+          <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="javascript/bootstrap.min.js"></script>
+                <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+        <link rel="stylesheet" type="text/css" href="css/stylesheet401.css" />
+         <link rel="stylesheet" type="text/css" href="css/dropdownstyle.css" />
+
+         <link rel="stylesheet" type="text/css" href="css/WallThumbnail.css" />
+       
+
+       <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <!-- remember you need to load in jquery before you use it other files. -->
+        <script type="text/javascript" src="javascript/SettingsMenu.js"></script>
+
+    </head>
+     <body>
+        <div class="container">
+            <div class="topmenu" style="height:300px">
+                <div id="logo">
+                  <div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
+                  <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
+                 </div>
+                 
+
+
+   
+                    <span><img src="logo/logo.jpg" style="height:301px; align:center; display:block; margin-left: auto;
+    margin-right: auto; "></span>  
+                </div>
+
+
+    <div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px;">
+    <div id="menuSettings" class="animate form" style="display:none; margin-top:-350px;">
+    <div class="closeBtn">
+      <a href="" class="close-thik" onlick="hideSettings(mainSettings)"></a>
+    </div>
+    <h1 id="MainS">Login</h1>
+    <p> 
+    <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+                                </p>
+                                <p> 
+    <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
+                                </p>
+                <p class="login button"> 
+                <input type="submit" value="Login" /> 
+                </p>
+    </div>
+  </div>              
+
+             <div class="navbar" style="text-align:center;">
+          <div class="navbar-inner">
+            <div class="container" style="left:30%;">
+              <ul class="nav">
+                <li class="active"><a href="Homepage.html">Home</a></li>
+                <li><a href="Homepage.html">About</a></li>
+                <li><a href="Homepage.html">Contact</a></li>
+                <li><a href="https://github.com">Download</a></li>
+                <li><a href="login.html">Login</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a href="WallCreation.html"><div  id="createWallBtn"><b><i>Create a new Wall.</b></i></div></a>
+         <li><a href="#">Create a new Wall.</a></li>  
+                             </ul>
+
+        <div id="ThumbnailWrapper">
+            <p>a List of thumbnails of all the walls this user has access to. This will load from the database and collect thumbnail images from each wall for display. The Thumbnails will work as links to each wall.</p>
+            <ul class="multiLine">
+                <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+                <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+                <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+                 <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+                  <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+                   <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+                    <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+                     <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+                      <li class="thumbnail"><a href=""><img src="images/ThumbnailDefault.jpg" style="width:200px; height:200px;"></a></li>
+            </ul>
+
+        </div> 
+       
+                        
+        </div> 
+
+       
+
+       
+        <div id="endBar">
+        </div>
+    </body>
+
+
+</html>

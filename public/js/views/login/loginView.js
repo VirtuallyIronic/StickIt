@@ -45,11 +45,11 @@ define([
 						$('.alert-error').text(data.error.text).show();
 					}
 					else {
-						window.location.replace('/#/login/success');
+						window.location.replace('/home');
 					}
 				},
 				error:function(error){
-					window.location.replace('/#/login/failure');
+					window.location.replace('/login/failure');
 				}
 			});
 		},
