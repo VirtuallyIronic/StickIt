@@ -12,6 +12,7 @@ define([
 			'login': 'login',
 			'home': 'home',
 			'test': 'testAction',
+			'': 'indexAction',
 			'*actions': 'defaultAction'
 		}
 	});
@@ -34,16 +35,17 @@ define([
 			console.log('Testing!');
 		});
 		
+		appRouter.on('route:indexAction', function(){
+			var indexView = new IndexView();
+			indexView.render();
+		});
+	
+		
 		appRouter.on('route:defaultAction', function(actions){
-			if(!actions){
-				var indexView = new IndexView();
-				indexView.render();
-			} else {
-				console.log('404 on route: ', actions);
-			}
+			console.log('404 on route: ', actions);
 		});
 		
-		Backbone.history.start({pushState: true});
+		Backbone.history.start({pushState: true, hashChange: false});
 	};
 
 	return {
