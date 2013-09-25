@@ -20,17 +20,24 @@
 
        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <!-- remember you need to load in jquery before you use it other files. -->
+         <script type="text/javascript" src="javascript/jquery.transit.min.js"></script>
+       <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script type="text/javascript" src="javascript/SettingsMenu.js"></script>
 
     </head>
     <body>
         <div class="container">
-             <div class="topmenu" style="height:300px">
+         <div class="topmenu" style="height:300px">
                 <div id="logo">
                   <div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
                   <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
                  </div>
-        <span><img src="logo/logo.jpg" style="height:301px; align:center; display:block; margin-left: auto;
+                 
+
+
+   
+                    <span><img src="logo/logo1.png" style="height:301px; align:center; display:block; margin-left: auto;
     margin-right: auto; "></span>  
                 </div>
 
@@ -53,14 +60,19 @@
     </div>
   </div>              
 
-             <div class="navbar" style="text-align:center;">
-          <div class="navbar-inner">
-            <div class="container" style="margin-left:30%;">
-              <ul class="nav">
-                <li class="active"><a href="Homepage.html">Home</a></li>
+        
+  <div class="navbar" style="background-color: #fafafa;">
+    <div class="navbar-inner" style="text-align:center; display:inline-block;
+    list-style-type: none;">
+      <ul class="nav" style="display: inline-block;
+    list-style-type: none;">
+                <li><a href="Homepage.html">Home</a></li>
                 <li><a href="Homepage.html">About</a></li>
-                <li><a href="Homepage.html">Contact</a></li>
+                <li><a href="Contact.html">Contact</a></li>
                 <li><a href="https://github.com">Download</a></li>
+                <li><a href="UserMainPage.html">User home</a></li>
+                <li><a href="UserOptions.html">User menu</a></li>
+                
                 <li><a href="login.html">Login</a></li>
               </ul>
             </div>
@@ -82,6 +94,7 @@
                                    Here we setup the walls original settings to our purposes.
 								</p>
                             </form>
+                              <button class="continueBtn" onclick="goToPane(mainSettings, optionPaneOne)">Begin</button>
                         </div>
 
                        <div id="optionPaneOne" class="animate form" style="display:none;">
@@ -90,15 +103,17 @@
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneTwo)"> Wall Specs</a>
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneThree)"> Save Settings</a></h2>  
                             <p>    
-                                Privacy
+                                Set the privacy settings for your wall.
                   <div id="dd" class="wrapper-dropdown-5" tabindex="1">Privacy
                         <ul class="dropdown">
                             <li><a href="#"><i class="icon-user"></i>Public</a></li>
                             <li><a href="#"><i class="icon-cog"></i>Private-invite only</a></li>
                             
                         </ul>
+
                     </div>
                             </p>
+                            <button class="continueBtn" onclick="goToPane(optionPaneOne, optionPaneTwo)">continue</button>
                         </div>
 
                          <div id="optionPaneTwo" class="animate form" style="display:none;">
@@ -108,13 +123,15 @@
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneTwo, optionPaneThree)"> Save Settings</a></h2>  
                             <p>    
                                 Wall Specs
-                                <ul class="optionList">
-                                    <li>test</li>
-                                    <li><input type="radio" name="test"value="test">radiobtn </li>
-                                    <li><input type="radio" name="test"value="test">radiobtn </li>
-                                    <li><input type="radio" name="test"value="test">radiobtn </li>
+                                <ul class="optionList" style="width:300px;">
+                                    <label for="amount" >Wall Size</label>
+                <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
+              </p> 
+               0 <div id="slider" style="width:300px;"></div> 15
+                            </p>
                                 </ul>
                             </p>
+                              <button class="continueBtn" onclick="goToPane(optionPaneTwo, optionPaneThree)">continue</button>
                         </div>
 
                          <div id="optionPaneThree" class="animate form" style="display:none;">
@@ -125,10 +142,20 @@
                             <p>    
                                Save Settings
                                 <ul class="optionList">
-                                    <li>test</li>
-                                    <li><input type="radio" name="test"value="test">radiobtn </li>
+                                    <label for="amount" >Wall Size</label>
+                <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />15
+              </p> 
+                <div id="slider" style="width:300px;"></div> 
+                        Privacy settings:
+                        <div id="dd" class="wrapper-dropdown-5" tabindex="1">Privacy
+                        <ul class="dropdown">
+                            <li><a href="#"><i class="icon-user"></i>Public</a></li>
+                            <li><a href="#"><i class="icon-cog"></i>Private-invite only</a></li>
+                            
+                        </ul>
                                 </ul>
                             </p>
+                              <a href="Wall.html"><button class="continueBtn" onclick="Wall.html">Create!</button></a>
                         </div>
             
                       </div>

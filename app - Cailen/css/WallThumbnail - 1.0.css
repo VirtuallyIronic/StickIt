@@ -8,18 +8,12 @@
 .multiLine ul{
 
 }
-		
 .thumbnail {
-	width: 250px;
-	min-height: 200px;
-	border: 1px solid #000;
-	display: -moz-inline-stack;
-	display: inline-block;
-	vertical-align: top;
+
+	display: inline;
+	width:100px;
+	height: 100px;
 	margin: 30px;
-	zoom: 1;
-	*display: inline;
-	_height: 150px;
 }
 
 #createWallBtn{

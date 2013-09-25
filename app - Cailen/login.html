@@ -7,8 +7,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Login</title>
-
-         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="javascript/bootstrap.min.js"></script>
 
                 <link rel="stylesheet" type="text/css" href="css/demo.css" />
@@ -21,37 +20,62 @@
 
        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <!-- remember you need to load in jquery before you use it other files. -->
+        <script type="text/javascript" src="javascript/jquery.transit.min.js"></script>
         <script type="text/javascript" src="javascript/SettingsMenu.js"></script>
 
     </head>
    <body>
         <div class="container">
-            <div class="topmenu" style="height:300px">
+           <div class="topmenu" style="height:300px">
                 <div id="logo">
-                    <span><img src="logo/logo.jpg" style="height:301px; align:center; display:block; margin-left: auto;
-    margin-right: auto; "></span>  
-                </div>               
-  <div class="navbar" style="text-align:center;">
-          <div class="navbar-inner">
-            <div class="container" style="margin-left:30%;">
-             <ul class="nav">
-                <li class="active"><a href="Homepage.html">Home</a></li>
+                   
+                   
+                  <div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
+                  <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
+                  </div>
+                                     
+                  <span><img src="logo/logo1.png" style="height:301px; display:inline-block;  "></span>  
+
+                </div>
+           
+                
+    <div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px; z-index:99;">
+    <div id="menuSettings" class="animate form" style="display:none; margin-top:-350px;">
+    <div class="closeBtn">
+      <a href="" class="close-thik" onlick="hideSettings(mainSettings)"></a>
+    </div>
+    <h1 id="MainS">Login</h1>
+    <p> 
+    <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+                                </p>
+                                <p> 
+    <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
+                                </p>
+                <p class="login button"> 
+                <input type="submit" value="Login" /> 
+                </p>
+    </div>
+  </div>      
+  
+  <div class="navbar" style="background-color: #fafafa; height:41px; ">
+    <div class="navbar-inner" style="text-align:center; display:inline-block;
+    list-style-type: none;">
+           <ul class="nav">
+                <li><a href="Homepage.html">Home</a></li>
                 <li><a href="Homepage.html">About</a></li>
-                <li><a href="Homepage.html">Contact</a></li>
-                <li><a href="https://github.com">Download</a></li>
-                <li><a href="login.html">Login</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+                <li><a href="https://github.com/VirtuallyIronic/StickIt">Download</a></li>
+                <li class="active"><a href="login.html">Login</a></li>
               </ul>
             </div>
           </div>
         </div>
-            </div>
-                      <section>
-                        
-                <div id="container_demo" >
+        <section>                
+            <div id="container_demo" >
                     <!-- hidden anchor to stop jump  -->
                     <a class="hiddenanchor" id="toregister"></a>
                     <a class="hiddenanchor" id="tologin"></a>
-                    <div id="wrapper" style="margin-top:100px;">
+                    <div id="wrapper" style="margin-top:100px; z-index=99;">
                         <div id="login" class="animate form">
                             <form  action="mysuperscript.php" autocomplete="on"> 
                                 <h1>Log in</h1> 

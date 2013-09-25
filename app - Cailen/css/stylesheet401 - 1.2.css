@@ -90,12 +90,11 @@ body{
 	background-color:#C0C0C0;
 	opacity:0.4;
 }
-
 #expandFulltext{
 	display:inline-block;
 	outline: none;
-	width: 95%;
-	height: auto;
+	width: 80%;
+	height: 200px;
 	padding-left: 5px;
 	overflow: hidden;
 	text-wrap:normal;
@@ -106,13 +105,12 @@ body{
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: 0px;
-    margin-left: -200px;
+    margin-top: -150px;
+    margin-left: -160px;
 	opacity:1.0;
 	background-color: rgb(255, 240, 70);
-	min-height: 400px;
-    height: auto;
-    width: 450px;
+    height: 400px;
+    width: 400px;
 	padding: 10px;
 	z-index:99999;
 	border-style:solid;
@@ -126,16 +124,12 @@ body{
 	height: 205px;
 }
 
-#colourDrop{
-    width: 180px;
-}
-
 #sideBar{
     position:absolute;
 	right: 25%;
     top: 10%;
 	height: 100%;
-    width: 70px;
+    width: 40px;
 }
 
 #formText{
@@ -158,26 +152,26 @@ h2,p{
   font-size:100%;
   font-weight:normal;
 }
-
 .topmenu  {
   width: 100%;
   height: 200px;
+  margin-right:auto;
+  margin-left:auto;
   position: relative;
-   border-top: 1px solid #071e3c;
-   border-bottom: 1px solid #071e3c;
+   
  background-color: #071e3c;
- display: inline-block;
-
-    
 }
 
 .topmenu img{
-  text-align:center;
-padding-left:135px;
-margin-left: 135px;
+ 
 }
 
-
+.topmenu span{
+ 
+  text-align: center;
+  margin: auto;
+   z-index: 100;
+}
 
 .menu {
 	width:33px;
@@ -237,10 +231,8 @@ margin-left: 135px;
 .editSpan {
 	display:inline-block;
 	outline: none;
-	width: 200px;
-	min-height: 150px;
-	max-height: 165px;
-	line-height: 100%;
+	width: 195px;
+	max-height: 200px;
 	padding-left: 5px;
 	overflow: hidden;
 	text-overflow:ellipsis;
@@ -282,6 +274,22 @@ margin-left: 135px;
 	height: 55px;
 }
 
+#loginlogo{
+	-webkit-border-radius: 0em 0em 5em 5em;
+	width: 100%;
+	min-height: 100px;
+	max-height: 200px;
+	border: 1px solid #071e3c;
+	background-color: #071e3c; 
+	text-align: left;
+}
+
+#loginlogo img{ 
+  min-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
 
 #titlebar{ 
 	font-family:arial,sans-serif;
@@ -299,7 +307,7 @@ margin-left: 135px;
 #menuwidgetShow{
 	float: right;
 	margin-right: 90px;
-	
+	width: 40px;
 	height: 40px;
 	border-radius: 15px;
 	cursor: pointer;
@@ -307,7 +315,7 @@ margin-left: 135px;
 #menuwidgetHide{
 	float: right;
 	margin-right: 90px;
-	
+	width: 40px;
 	height: 40px;
 	border-radius: 15px;
 	cursor: pointer;
@@ -456,3 +464,12 @@ background: white;
  background: rgb(202, 60, 60); /* this is a maroon */    
 }
 
+.navbar-inner{
+	border: 1px solid #d4d4d4;
+	background-image: linear-gradient(to bottom,#fff,#f2f2f2);
+}
+
+.nav li{
+	display:inline;
+	height: 30px;
+}

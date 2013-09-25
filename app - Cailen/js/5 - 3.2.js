@@ -1,6 +1,6 @@
 //--------------
 /*
-**	VERSION 3.3
+**	VERSION 3.2
 **	20/09/2013
 **	PRE-TESTING
 **
@@ -38,7 +38,6 @@
 **
 **	NEWLY ADDED/FIXED
 **		FIXED SPACE BAR BUG ON MENU/EXPAND OPEN
-**		FONT CHANGES DEPENDING ON BACKGROUND
 **
 **
 */
@@ -319,12 +318,10 @@
 					
 					//colour = this.$el.children('.cssnote').css('background-color');
 					this.model.set('colour-note', colour);
-					var fontColour = getContrastYIQ(colour);
 					var newColour = getTintedColor(colour, -75);
 					this.$el.children('.cssnote').children('.dragbar').css('background-color', newColour);					
 					this.$el.children('.cssnote').children('.toolbar').css('background-color', newColour);
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontSize', fontSize+"px");
-					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('color', fontColour);
 					
 					this.model.set('font-size', fontSize);
 					this.model.set('text', textEdit);
@@ -836,7 +833,7 @@
 	
 	// credits: richard maloney 2006
 	function getTintedColor(color, v) {
-		if (color.length >6) { color= color.substring(1,color.length)}		
+		if (color.length >6) { color= color.substring(1,color.length)}
 		var rgb = parseInt(color, 16); 
 		var r = Math.abs(((rgb >> 16) & 0xFF)+v); if (r>255) r=r-(r-255);
 		var g = Math.abs(((rgb >> 8) & 0xFF)+v); if (g>255) g=g-(g-255);
@@ -850,15 +847,6 @@
 		return "#" + r + g + b;
 	}
 	
-	function getContrastYIQ(hexcolor){
-		if (hexcolor.length >6) { hexcolor= hexcolor.substring(1,hexcolor.length)}
-		var r = parseInt(hexcolor.substr(0,2),16);
-		var g = parseInt(hexcolor.substr(2,2),16);
-		var b = parseInt(hexcolor.substr(4,2),16);
-		var yiq = ((r*299)+(g*587)+(b*114))/1000;
-		return (yiq >= 128) ? 'black' : 'white';
-	}
-	
 	//CREATES NEW HTML ELEMENT NOTE
 	function Note(input)
 	{
@@ -868,7 +856,6 @@
 		var $note = jQuery('<div/>', {
 			class: 'cssnote',
 		});
-		var fontColour = getContrastYIQ(input.model.get('colour-note'));
 		$(input.el).css("background-color", input.model.get('colour-note'));
 		$($note).appendTo($(input.el));
 		
@@ -891,7 +878,6 @@
 			class:'editSpan',
 		});
 		$($eSpan).css("font-size", input.model.get('font-size')+"px");
-		$($eSpan).css("color", fontColour);
 		$($eSpan).text(x);
 		$($eSpan).appendTo($edit);
 		linkify($eSpan);
