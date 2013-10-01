@@ -142,6 +142,15 @@ module.exports = function(app, passport) {
 			res.json(req.user);
 		}
 	}
+
+	function currentUser(req, res) {
+		if(!req.user) {
+			res.send({'id': null, 'username': null}, 200);
+		}
+		else {
+			res.send({'id': req.user.id, 'username': req.user.username}, 200);
+		}
+	}
 	
 	function createUser(username, emailAddr, password, done) {
 		var uid = shortId.generate(8);
@@ -203,4 +212,5 @@ module.exports = function(app, passport) {
 	
 	app.get('/auth/me', whoAmI);
 	app.get('/api/whoami', whoAmI);
+	app.get('/auth/current', currentUser);
 };

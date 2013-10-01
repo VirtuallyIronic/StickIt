@@ -36,7 +36,7 @@ app.use(function(req, res, next){
 	res.set('X-Powered-By', 'StickIt/' + appVersion);
 	next();
 });
-app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
+app.use(express.favicon(path.join(__dirname, 'public/img/favicon.ico')));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());

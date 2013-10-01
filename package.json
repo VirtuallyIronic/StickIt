@@ -16,6 +16,8 @@
     "bcrypt": "*",
     "shortid": "*",
     "random-string": "*",
+    "underscore": "*",
+    "consolidate": "*",
     "config": "*"
   }
 }

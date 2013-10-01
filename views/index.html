@@ -1,13 +1,20 @@
-
 <!doctype html>
 <html>
 	<head>
-		<title></title>
+		<meta charset="utf-8">
+		<title>StickIt</title>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 	</head>
-	<body>
-		<div id="page">
-			Loading...
+	<body data-role="page">
+		<div>
+			<div>
+				<div id="widgetRegion"><i class="icon-spinner icon-spin icon-large"></i> Loading content...</div>
+				<div id="logoRegion"><i class="icon-spinner icon-spin icon-large"></i> Loading content...</div>
+			</div>
+			<div id="navRegion"><i class="icon-spinner icon-spin icon-large"></i> Loading content...</div>
 		</div>
-		<script data-main="js/main" src="js/libs/requirejs/require.js"></script>
+		<div id="mainRegion"><i class="icon-spinner icon-spin icon-large"></i> Loading content...</div>
+		<div id="footerRegion"><i class="icon-spinner icon-spin icon-large"></i> Loading content...</div>
+		<script type="text/javascript" data-main="js/init/Init" src="js/vendor/require.js"></script>
 	</body>
 </html>
