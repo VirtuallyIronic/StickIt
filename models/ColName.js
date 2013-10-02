@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
 	colNum: {
 	  type: DataTypes.INTEGER,
 	  allowNull: false
-	}
+	},
 	title: {
 	  type: DataTypes.STRING,
 	  allowNull: false,
