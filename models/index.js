@@ -46,12 +46,26 @@ models.forEach(function(model){
 	module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
 
-/**
-module.exports.Wall.hasMany(module.exports.WallUsers);
-module.exports.User.hasMany(module.exports.WallUsers);
-module.exports.WallUsers.belongsTo(module.exports.Wall);
-module.exports.WallUsers.belongsTo(module.exports.User);
-**/
+module.exports.User.hasMany(module.exports.Wall);
+module.exports.User.hasMany(module.exports.Post);
+module.exports.User.hasMany(module.exports.WallUser);
+module.exports.User.hasMany(module.exports.Wall);
+module.exports.User.hasMany(module.exports.Vote);
+
+module.exports.Wall.hasMany(module.exports.Post);
+module.exports.Wall.hasMany(module.exports.WallUser);
+module.exports.Wall.hasMany(module.exports.ColName);
+
+module.exports.WallUser.hasOne(module.exports.User, { as: 'userId' });
+module.exports.WallUser.hasOne(module.exports.Wall, { as: 'wallId' });
+
+module.exports.Post.hasOne(module.exports.User, { as: 'owner' });
+module.exports.Post.hasMany(module.exports.Vote);
+
+module.exports.ColName.hasOne(module.exports.Wall, { as: 'wallId' });
+
+module.exports.Vote.hasOne(module.exports.Post, { as: 'postId' });
+module.exports.Vote.hasOne(module.exports.User, { as: 'userId' });
 
 models.forEach(function(model){
 	module.exports[model].sync();
