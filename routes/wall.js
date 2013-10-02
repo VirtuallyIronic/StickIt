@@ -139,7 +139,7 @@ module.exports = function(app, passport) {
 				//	res.send(500);
 				//});
 				Wall.find({ where: { id : req.params.id }}).success(function(wall){
-					Post.findAll({ where: { wallId: req.params.id}, include [ Vote ]}).success(function(posts){
+					Post.findAll({ where: { wallId: req.params.id}, include: [ Vote ]}).success(function(posts){
 						res.json({
 							id: wall.id,
 							title: wall.title,
