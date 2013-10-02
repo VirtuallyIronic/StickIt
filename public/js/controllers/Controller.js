@@ -41,7 +41,7 @@ define([
 			this.index();
 		},
 		index:function () {
-			App.logoRegion.show(new logoLargeView());
+			App.logoRegion.show(new logoSmallView());
 			App.widgetRegion.show(new widgetView({model: CurrentUser}));
 			App.navRegion.show(new navView());
 			App.mainRegion.show(new indexView());
