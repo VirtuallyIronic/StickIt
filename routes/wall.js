@@ -285,7 +285,7 @@ module.exports = function(app, passport) {
 					  , colourBar = req.body.colourBar
 					  , font = req.body.font
 					  , fontSize = req.body.fontSize
-					  , text = req.body.text,
+					  , text = req.body.text
 					  , tags = req.body.tags;
 					
 					sanitize(col).xss();
