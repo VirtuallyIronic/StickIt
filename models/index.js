@@ -56,16 +56,16 @@ module.exports.Wall.hasMany(module.exports.Post);
 module.exports.Wall.hasMany(module.exports.WallUser);
 module.exports.Wall.hasMany(module.exports.ColName);
 
-module.exports.WallUser.hasOne(module.exports.User, { as: 'userId' });
-module.exports.WallUser.hasOne(module.exports.Wall, { as: 'wallId' });
+module.exports.WallUser.hasOne(module.exports.User);
+module.exports.WallUser.hasOne(module.exports.Wall);
 
-module.exports.Post.hasOne(module.exports.User, { as: 'owner' });
+module.exports.Post.hasOne(module.exports.User);
 module.exports.Post.hasMany(module.exports.Vote);
 
-module.exports.ColName.hasOne(module.exports.Wall, { as: 'wallId' });
+module.exports.ColName.hasOne(module.exports.Wall);
 
-module.exports.Vote.hasOne(module.exports.Post, { as: 'postId' });
-module.exports.Vote.hasOne(module.exports.User, { as: 'userId' });
+module.exports.Vote.hasOne(module.exports.Post);
+module.exports.Vote.hasOne(module.exports.User);
 
 models.forEach(function(model){
 	module.exports[model].sync();
