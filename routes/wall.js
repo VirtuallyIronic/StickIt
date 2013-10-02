@@ -25,7 +25,7 @@ if(!MODULE_VERSION_APPEND) {
 
 var models = require('../models')
   , ColName = models.ColName
-  , Post = model.Post
+  , Post = models.Post
   , User = models.User
   , Vote = models.Vote
   , Wall = models.Wall
