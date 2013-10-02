@@ -5,8 +5,11 @@ require.config({
         "underscore":"vendor/underscore",
         "backbone":"vendor/backbone",
         "marionette":"vendor/backbone.marionette",
+        "backbone-relational":"vendor/backbone-relational",
         "handlebars":"vendor/handlebars",
         "text":"vendor/plugins/text",
+        "transit":"vendor/jquery.transit.min",
+        "settingsmenu":"utils/SettingsMenu",
         "templates":"../templates"
     },
     shim:{
@@ -19,6 +22,18 @@ require.config({
             "deps":["underscore", "backbone", "jquery"],
             "exports":"Marionette"
         },
+        "backbone-relational":{
+        	"deps":["underscore", "backbone", "jquery"],
+        	"exports":"Relational"
+        },
+        "transit":{
+        	"deps":["jquery"],
+        	"exports":"Transit"
+        },
+        "settingsmenu": {
+        	"deps":["jquery"],
+        	"exports":"SettingsMenu"
+        }
         "handlebars":{
             "exports":"Handlebars"
         }

@@ -35,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     text: {
       type: DataTypes.STRING
-    }
+    },
     colour: {
       type: DataTypes.STRING
     },

@@ -1,5 +1,5 @@
-define(['jquery', 'backbone', 'marionette', 'underscore', 'handlebars'],
-    function ($, Backbone, Marionette, _, Handlebars) {
+define(['jquery', 'backbone', 'marionette', 'backbone-relational', 'underscore', 'handlebars'],
+    function ($, Backbone, Marionette, Relational, _, Handlebars) {
         var App = new Backbone.Marionette.Application();
 
         App.addRegions({
