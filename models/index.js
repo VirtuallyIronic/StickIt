@@ -46,6 +46,7 @@ models.forEach(function(model){
 	module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
 
+/**
 module.exports.User.hasMany(module.exports.Wall);
 module.exports.User.hasMany(module.exports.Post);
 module.exports.User.hasMany(module.exports.WallUser);
@@ -66,6 +67,7 @@ module.exports.ColName.hasOne(module.exports.Wall);
 
 module.exports.Vote.hasOne(module.exports.Post);
 module.exports.Vote.hasOne(module.exports.User);
+**/
 
 models.forEach(function(model){
 	module.exports[model].sync();
