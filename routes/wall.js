@@ -246,7 +246,7 @@ module.exports = function(app, passport) {
 		
 		isNotReaderOnly(wallId, function(result){
 			if(result) {
-				Post.create({ col: col, row: row, wallId: wallId, colour: colour, colourBar; colourBar, font: font, fontSize: fontSize, text: text}).success(function(){
+				Post.create({ col: col, row: row, wallId: wallId, colour: colour, colourBar: colourBar, font: font, fontSize: fontSize, text: text}).success(function(){
 					res.send(200);
 				}).error(function(){
 					res.send(500);
