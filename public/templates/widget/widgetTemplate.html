@@ -1,8 +1,25 @@
 <div>
-	{{#if id}}
-	<b>id:</b>{{ id }}<br>
-	<b>user:</b>{{ username }}
-	{{else}}
-	<b>error:</b> not logged in
-	{{/if}}
+	<div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
+    <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png"></div>
+    <div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px; z-index:99;">
+		<div id="menuSettings" class="animate form" style="display:none; margin-top:-210px; height:200px; padding-bottom:100;">
+			<h1 id="MainS">Login</h1>
+			{{#if id}}
+				<p>Hello, {{ username }}</p>
+				<p class="login button"> 
+					<input type="submit" value="Login" /> 
+				</p>
+			{{else}}
+			<p> 
+				<input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+			</p>
+			<p> 
+				<input id="password" name="password" required="required" type="password" placeholder="Password" /> 
+			</p>
+			<p class="login button"> 
+				<input type="submit" value="Login" /> 
+			</p>
+			{{/if}}
+		</div>
+	</div>
 </div>

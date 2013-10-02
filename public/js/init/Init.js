@@ -33,7 +33,7 @@ require.config({
         "settingsmenu": {
         	"deps":["jquery"],
         	"exports":"SettingsMenu"
-        }
+        },
         "handlebars":{
             "exports":"Handlebars"
         }
