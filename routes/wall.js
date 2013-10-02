@@ -89,7 +89,7 @@ module.exports = function(app, passport) {
 	app.get('/api/wall/:id', function(req, res){
 		hasPermission(req.params.id, function(result){
 			if(result) {
-				Wall.find({ where: { id : req.params.id}, include: [ Post ]).success(function(wall){
+				Wall.find({ where: { id : req.params.id}, include: [ Post ]}).success(function(wall){
 					res.json(wall);
 				}).error(function(error){
 					res.send(error, 500);
