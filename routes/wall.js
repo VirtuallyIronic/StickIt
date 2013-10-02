@@ -34,6 +34,8 @@ var models = require('../models')
   , sanitize = require('validator').sanitize
   , Validator = require('validator').Validator;
 
+var validator = new Validator();
+
 module.exports = function(app, passport) {
 	validator.error = function (err_msg) {
 		return false;
