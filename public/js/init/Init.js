@@ -10,7 +10,7 @@ require.config({
         "text":"vendor/plugins/text",
         "transit":"vendor/jquery.transit.min",
         "settingsmenu":"utils/SettingsMenu",
-        "bootstrap": "vendor/bootstrap.min"
+        "bootstrap": "vendor/bootstrap.min",
         "templates":"../templates"
     },
     shim:{
