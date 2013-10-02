@@ -34,7 +34,7 @@ define([
 	var CurrentUser = new modelCurrentUser();
 	setInterval(function(){
 		CurrentUser.fetch();
-	}, 500);
+	}, 5000);
 	
 	return Backbone.Marionette.Controller.extend({
 		initialize:function (options) {
