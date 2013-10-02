@@ -10,10 +10,14 @@ require.config({
         "text":"vendor/plugins/text",
         "transit":"vendor/jquery.transit.min",
         "settingsmenu":"utils/SettingsMenu",
+        "bootstrap": "vendor/bootstrap.min"
         "templates":"../templates"
     },
     shim:{
-        "bootstrap":["jquery"],
+        "bootstrap":{
+        	"deps":["jquery"],
+        	"exports":"Bootstrap"
+        },
         "backbone":{
             "deps":["underscore"],
             "exports":"Backbone"
