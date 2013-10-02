@@ -40,26 +40,22 @@ var sequelize = new Sequelize(
 
 
 // load models
-var models = [
-              'User',
-              'Wall',
-              'WallUsers'
-             ];
+var models = ['User', 'Wall', 'WallUser', 'Post', 'ColName', 'Vote'];
 
 models.forEach(function(model){
 	module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
 
+/**
 module.exports.Wall.hasMany(module.exports.WallUsers);
 module.exports.User.hasMany(module.exports.WallUsers);
 module.exports.WallUsers.belongsTo(module.exports.Wall);
 module.exports.WallUsers.belongsTo(module.exports.User);
-
+**/
 
 models.forEach(function(model){
 	module.exports[model].sync();
 });
-
 
 // export connection
 module.exports.sequelize = sequelize;

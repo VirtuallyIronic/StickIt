@@ -11,10 +11,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    author: {
-      type: DataTypes.STRING(8),
-      allowNull: false
-    },
+    owner: {
+	  type: DataTypes.STRING(8),
+	  primaryKey: true,
+	  allowNull: false,
+	  references: "User",
+	  referencesKey: "id"
+	},
     isPrivate: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

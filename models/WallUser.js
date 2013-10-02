@@ -1,26 +1,27 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('WallUsers', {
-	UserId: {
+  return sequelize.define('WallUser', {
+	id: {
+	  type: DataTypes.INTEGER,
+	  primaryKey: true,
+	  autoIncrement: true
+	},
+	userId: {
 	  type: DataTypes.STRING(8),
 	  primaryKey: true,
 	  allowNull: false,
 	  references: "User",
-	  referencesKey: "id",
-	  onDelete: 'cascade',
-      onUpdate: 'cascade'
+	  referencesKey: "id"
 	},
-	WallId: {
+	wallId: {
 	  type: DataTypes.STRING(12),
 	  primaryKey: true,
 	  allowNull: false,
 	  references: "Wall",
-	  referencesKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
+	  referencesKey: "id"
 	},
-	Permission: {
+	permission: {
 	  type: DataTypes.ENUM,
 	  values: ['view', 'post', 'admin'],
 	  allowNull: false,

@@ -34,6 +34,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null
+    },
+    role: {
+  	  type: DataTypes.ENUM,
+	  values: ['view', 'post', 'admin'],
+	  allowNull: false,
+	  defaultValue: 'view'
     }
   });
 };
