@@ -27,16 +27,19 @@ module.exports = function(sequelize, DataTypes) {
   	  referencesKey: "id"
   	},
     wallId: {
-        type: DataTypes.STRING(12),
-    	  primaryKey: true,
-      	  allowNull: false,
-      	  references: "Wall",
-      	  referencesKey: "id"
+      type: DataTypes.STRING(12),
+      primaryKey: true,
+      allowNull: false,
+      references: "Wall",
+      referencesKey: "id"
     },
-    color: {
+    text: {
+      type: DataTypes.STRING
+    }
+    colour: {
       type: DataTypes.STRING
     },
-    colorBar: {
+    colourBar: {
       type: DataTypes.STRING
     },
     font: {
@@ -47,6 +50,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     totalVotes: {
       type: DataTypes.INTEGER
+    },
+    tags: {
+      type: DataTypes.STRING
     }
   });
 };

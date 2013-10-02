@@ -78,6 +78,27 @@ module.exports = function(app, passport) {
 		});
 	}
 	
+	function isNotReaderOnly(id, fn) {
+		Wall.find(id).success(function(wall){
+			if(wall.owner === req.user.id) {
+				fn(true);
+			} else {
+				WallUser.find({ where: {wallId: id, userId: req.user.id}}).success(function(wallPermission){
+					if(wallPermission.permission != 'read'){
+						fn(true);
+					}
+					else {
+						fn(false);
+					}
+				}).error(function(){
+					fn(false);
+				});
+			}
+		}).error(function(){
+			fn(false);
+		});
+	}
+	
 	app.get('/api/wall', function(req, res){
 		models.sequelize.query('SELECT * FROM `Wall` WHERE `Wall`.`owner`=\'' + req.user.id + '\' OR `Wall`.`isPrivate`=\'0\' OR `Wall`.`id` IN (SELECT `WallUser`.`WallId` FROM `WallUser` WHERE `WallUser`.`UserId`=\'' + req.user.id + '\')', Wall).success(function(walls){
 			res.json(walls);
@@ -87,7 +108,7 @@ module.exports = function(app, passport) {
 	});
 	app.post('/api/wall', function(req, res){
 		if(req.user.role === 'view') {
-			res.send({'error' : 'access denied'}, 401);
+			res.send(401);
 		} else {
 			var title = req.body.title
 			  , isPrivate = req.body.isPrivate
@@ -112,9 +133,25 @@ module.exports = function(app, passport) {
 	app.get('/api/wall/:id', function(req, res){
 		hasPermission(req.params.id, function(result){
 			if(result) {
-				Wall.find({ where: { id : req.params.id}, include: [ Post ]}).success(function(wall){
-					res.json(wall);
-				}).error(function(error){
+				//Wall.find({ where: { id : req.params.id}, include: [ Post ]}).success(function(wall){
+				//	res.json(wall);
+				//}).error(function(error){
+				//	res.send(500);
+				//});
+				Wall.find({ where: { id : req.params.id }}).success(function(wall){
+					Post.findAll({ where: { wallId: req.params.id}, include [ Vote ]}).success(function(posts){
+						res.json({
+							id: wall.id,
+							title: wall.title,
+							owner: wall.owner,
+							isPrivate: wall.isPrivate,
+							columns: wall.columns,
+							posts: posts
+						});
+					}).error(function(){
+						res.send(500);
+					});
+				}).error(function(){
 					res.send(500);
 				});
 			}
@@ -174,6 +211,144 @@ module.exports = function(app, passport) {
 			else {
 				res.send(401);
 			}
+		});
+	});
+	
+	app.post('/api/post', function(req, res){
+		var col = req.body.col
+		  , row = req.body.row
+		  , wallId = req.body.wallId
+		  , colour = req.body.colour
+		  , colourBar = req.body.colourBar
+		  , font = req.body.font
+		  , fontSize = req.body.fontSize
+		  , text = req.body.text
+		  , tags = req.body.tags;
+		
+		sanitize(col).xss();
+		sanitize(col).escape();
+		sanitize(row).xss();
+		sanitize(row).escape();
+		sanitize(wallId).xss();
+		sanitize(wallId).escape();
+		sanitize(colour).xss();
+		sanitize(colour).escape();
+		sanitize(colourBar).xss();
+		sanitize(colourBar).escape();
+		sanitize(font).xss();
+		sanitize(font).escape();
+		sanitize(fontSize).xss();
+		sanitize(fontSize).escape();
+		sanitize(text).xss();
+		sanitize(text).escape();
+		sanitize(tags).xss();
+		sanitize(tags).escape();
+		
+		isNotReaderOnly(wallId, function(result){
+			if(result) {
+				Post.create({ col: col, row: row, wallId: wallId, colour: colour, colourBar; colourBar, font: font, fontSize: fontSize, text: text}).success(function(){
+					res.send(200);
+				}).error(function(){
+					res.send(500);
+				});
+			}
+			else {
+				res.send(401);
+			}
+		});
+	});
+	
+	app.get('/api/post/:id', function(req, res){
+		Post.find(req.params.id).success(function(post){
+			hasPermission(post.wallId, function(result){
+				if(result){
+					res.json(post);
+				}
+				else {
+					res.send(401);
+				}
+			}).error(function(){
+				res.send(500);
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.put('/api/post/:id', function(req, res){
+		Post.find(req.params.id).success(function(post){
+			isNotReaderOnly(post.wallId, function(result){
+				if(result){
+					var col = req.body.col
+					  , row = req.body.row
+					  , colour = req.body.colour
+					  , colourBar = req.body.colourBar
+					  , font = req.body.font
+					  , fontSize = req.body.fontSize
+					  , text = req.body.text,
+					  , tags = req.body.tags;
+					
+					sanitize(col).xss();
+					sanitize(col).escape();
+					sanitize(row).xss();
+					sanitize(row).escape();
+					sanitize(colour).xss();
+					sanitize(colour).escape();
+					sanitize(colourBar).xss();
+					sanitize(colourBar).escape();
+					sanitize(font).xss();
+					sanitize(font).escape();
+					sanitize(fontSize).xss();
+					sanitize(fontSize).escape();
+					sanitize(text).xss();
+					sanitize(text).escape();
+					sanitize(tags).xss();
+					sanitize(tags).escape();
+					
+					post.updateAttributes({
+						col: col,
+						row: row,
+						colour: colour,
+						colourBar: colourBar,
+						font: font,
+						fontSize: fontSize,
+						text: text,
+						tags: tags
+					}).success(function(){
+						res.send(200);
+					}).error(function(){
+						res.send(500);
+					});
+				}
+				else {
+					res.send(401);
+				}
+			}).error(function(){
+				res.send(500);
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.delete('/api/post/:id', function(req, res){
+		Post.find(req.params.id).success(function(post){
+			isNotReaderOnly(post.wallId, function(result){
+				if(result){
+					post.destroy().success(function(){
+						res.send(200);
+					}).error(function(){
+						res.send(500);
+					});
+				}
+				else {
+					res.send(401);
+				}
+			}).error(function(){
+				res.send(500);
+			});
+		}).error(function(){
+			res.send(500);
 		});
 	});
 };
