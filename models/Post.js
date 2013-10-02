@@ -24,6 +24,13 @@ module.exports = function(sequelize, DataTypes) {
   	  references: "User",
   	  referencesKey: "id"
   	},
+    wallId: {
+        type: DataTypes.STRING(12),
+    	  primaryKey: true,
+      	  allowNull: false,
+      	  references: "Wall",
+      	  referencesKey: "id"
+    },
     color: {
       type: DataTypes.STRING
     },

@@ -47,27 +47,16 @@ models.forEach(function(model){
 });
 
 
-module.exports.User.hasMany(module.exports.Wall);
-module.exports.User.hasMany(module.exports.Post);
-module.exports.User.hasMany(module.exports.WallUser);
-module.exports.User.hasMany(module.exports.Wall);
-module.exports.User.hasMany(module.exports.Vote);
+module.exports.User.hasMany(module.exports.Wall, {foreignKey: 'owner'});
+module.exports.User.hasMany(module.exports.WallUser, {foreignKey: 'userId'});
+module.exports.User.hasMany(module.exports.Post, {foreignKey: 'owner'});
+module.exports.User.hasMany(module.exports.Vote, {foreignKey: 'userId'});
 
-module.exports.Wall.hasMany(module.exports.Post);
-module.exports.Wall.hasMany(module.exports.WallUser);
-module.exports.Wall.hasMany(module.exports.ColName);
+module.exports.Wall.hasMany(module.exports.Post, {foreignKey: 'wallId'});
+module.exports.Wall.hasMany(module.exports.WallUser, {foreignKey: 'wallId'});
+module.exports.Wall.hasMany(module.exports.ColName, {foreignKey: 'wallId'});
 
-module.exports.WallUser.belongsTo(module.exports.User);
-module.exports.WallUser.belongsTo(module.exports.Wall);
-
-module.exports.Post.belongsTo(module.exports.User);
-module.exports.Post.hasMany(module.exports.Vote);
-
-module.exports.ColName.belongsTo(module.exports.Wall);
-
-module.exports.Vote.belongsTo(module.exports.Post);
-module.exports.Vote.belongsTo(module.exports.User);
-
+module.exports.Post.hasMany(module.exports.Vote, {foreignKey: 'postId'});
 
 models.forEach(function(model){
 	module.exports[model].sync();
