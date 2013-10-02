@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.STRING(12),
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      unique: true
     },
     title: {
       type: DataTypes.STRING,

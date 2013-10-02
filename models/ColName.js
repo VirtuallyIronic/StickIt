@@ -4,8 +4,10 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ColName', {
 	id: {
 	  type: DataTypes.INTEGER,
+	  unique: true,
+	  allowNull: false,
 	  primaryKey: true,
-	  autoIncrement: true
+	  autoIncrement: true 
 	},
 	wallId: {
 	  type: DataTypes.STRING(12),

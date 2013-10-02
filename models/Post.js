@@ -3,9 +3,11 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Post', { 
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      unique: true,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true 
     },
     col: {
       type: DataTypes.INTEGER,

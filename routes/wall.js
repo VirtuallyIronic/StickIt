@@ -57,6 +57,27 @@ module.exports = function(app, passport) {
 		});
 	}
 	
+	function hasAdmin(id, fn) {
+		Wall.find(id).success(function(wall){
+			if(wall.owner === req.user.id) {
+				fn(true);
+			} else {
+				WallUser.find({ where: {wallId: id, userId: req.user.id}}).success(function(wallPermission){
+					if(wallPermission.permission === 'admin') {
+						fn(true);
+					}
+					else {
+						fn(false);
+					}
+				}).error(function(error){
+					fn(false);
+				});
+			}
+		}).error(function(error){
+			fn(false);
+		});
+	}
+	
 	app.get('/api/wall', function(req, res){
 		models.sequelize.query('SELECT * FROM `Wall` WHERE `Wall`.`owner`=\'' + req.user.id + '\' OR `Wall`.`isPrivate`=\'0\' OR `Wall`.`id` IN (SELECT `WallUser`.`WallId` FROM `WallUser` WHERE `WallUser`.`UserId`=\'' + req.user.id + '\')', Wall).success(function(walls){
 			res.json(walls);
@@ -94,7 +115,60 @@ module.exports = function(app, passport) {
 				Wall.find({ where: { id : req.params.id}, include: [ Post ]}).success(function(wall){
 					res.json(wall);
 				}).error(function(error){
-					res.send(error, 500);
+					res.send(500);
+				});
+			}
+			else {
+				res.send(401);
+			}
+		});
+	});
+	
+	app.put('/api/wall/:id', function(req, res){
+		hasAdmin(req.params.id, function(result){
+			if(result) {
+				Wall.find(req.params.id).success(function(wall){
+					var title = req.body.title
+					  , isPrivate = req.body.isPrivate
+					  , columns = req.body.colums;
+					
+					sanitize(title).xss();
+					sanitize(title).escape();
+					sanitize(isPrivate).xss();
+					sanitize(isPrivate).escape();
+					sanitize(columns).xss();
+					sanitize(columns).escape();
+					
+					wall.updateAttributes({
+						title: title,
+						isPrivate: isPrivate,
+						columns: columns
+					}).success(function(){
+						res.send(200);
+					}).error(function(error){
+						res.send(500);
+					});
+				}).error(function(error){
+					res.send(500);
+				})
+			}
+			else {
+				res.send(401);
+			}
+		})
+	});
+	
+	app.delete('/api/wall/:id', function(req, res){
+		hasAdmin(req.params.id, function(result){
+			if(result) {
+				Wall.find(req.params.id).success(function(wall){
+					wall.destroy().success(function(){
+						res.send(200);
+					}).error(function(){
+						res.send(500);
+					});
+				}).error(function(){
+					res.send(500);
 				});
 			}
 			else {
