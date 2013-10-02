@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     colorBar: {
       type: DataTypes.STRING
-    }
+    },
     font: {
       type: DataTypes.STRING
     },
