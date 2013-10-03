@@ -16,6 +16,8 @@ define([ 'marionette', 'handlebars', 'text!templates/page/registerTemplate.html'
 						passwordConfirm: $('#passwordsignup_confirm').val()
 				};
 
+				console.log(formValues);
+				/**
 				$.ajax({
 					url: url,
 					type: 'POST',
@@ -33,6 +35,7 @@ define([ 'marionette', 'handlebars', 'text!templates/page/registerTemplate.html'
 						window.location.replace('/register');
 					}
 				});
+				**/
 			}
 		});
 	}
