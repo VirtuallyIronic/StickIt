@@ -28,7 +28,7 @@ define([ 'jquery', 'underscore', 'backbone', 'marionette', 'handlebars', 'text!t
 						}
 					},
 					error: function(error) {
-						window.location.replace('/login/failure');
+						window.location.replace('/login');
 					}
 				});
 			}

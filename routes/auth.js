@@ -186,27 +186,29 @@ module.exports = function(app, passport) {
 		sanitize(passwordConfirm).xss();
 		sanitize(passwordConfirm).escape();
 		
-		if(password == passwordConfirm) {
+		if(password == passwordConfirm){
 			if(validator.check(emailAddr).isEmail()){
-				createUser(username, emailAddr, password, function(error, user){
-					if(error) {
-						res.send({'error': error}, 401);
-						req.login(user, function(err){
-							if(err) {
-								res.send({'error': err}, 401)
+				createUser(username, emailAddr,password, function(error, user){
+					if(error){
+						res.send(401);
+					}
+					else {
+						req.login(user, function(error){
+							if(error){
+								res.send(500);
 							}
 							else {
-								res.json(req.user);
+								res.send(200);
 							}
 						});
 					}
 				});
 			} else {
-				res.send({ 'error' : 'registration error '}, 401);
+				res.send(401);
 			}
 		}
 		else {
-			res.send({ 'error' : 'passwords must be the same'}, 401);
+			res.send(401);
 		}
 	});
 	
