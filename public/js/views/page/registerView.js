@@ -26,11 +26,11 @@ define([ 'marionette', 'handlebars', 'text!templates/page/registerTemplate.html'
 							console.log("error: " + data.error.text);
 						}
 						else {
-							window.location.replace('/#/login/success');
+							window.location.replace('/login');
 						}
 					},
 					error:function(error){
-						window.location.replace('/#/register');
+						window.location.replace('/register');
 					}
 				});
 			}

@@ -70,14 +70,17 @@ module.exports = function(app, passport) {
 	
 	// passport session setup
 	passport.serializeUser(function(user, done){
+		console.log(user);
 		done(null, user.id);
 	});
 
 	passport.deserializeUser(function(id, done){
 		findById(id, function(err, user){
 			if(err) {
+				console.log(err);
 				return done(err, null);
 			}
+			console.log(user);
 			return done(null, user);
 		});
 	});
@@ -102,6 +105,7 @@ module.exports = function(app, passport) {
 						console.log('Invalid password ' + password)
 						return done(null, false, { message: 'Invalid password' });
 					}
+					console.log(user);
 					return done(null, user);
 				});
 			}
@@ -120,6 +124,7 @@ module.exports = function(app, passport) {
 						console.log('Invalid password ' + password)
 						return done(null, false, { message: 'Invalid password' });
 					}
+					console.log(user);
 					return done(null, user);
 				});
 			}
