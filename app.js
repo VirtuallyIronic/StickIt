@@ -51,7 +51,7 @@ app.use(express.session({secret: 'abc'}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(serve.router());
-//app.use(app.router);
+app.use(app.router);
 
 
 
