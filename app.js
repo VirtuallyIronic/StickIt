@@ -50,7 +50,7 @@ app.use(express.cookieParser());
 app.use(express.session({secret: 'abc'}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(serve.router());
+//app.use(serve.router());
 app.use(app.router);
 
 
@@ -83,10 +83,10 @@ app.all('/home', checkAuthentication);
 var api = require('./routes')(app, passport);
 
 //redirects to backbone's hash route if express route doesn't exist
-//app.use(function(req, res){
-//	console.log(req.url);
-//	return res.redirect('#' + req.url);
-//});
+app.use(function(req, res){
+	console.log(req.url);
+	return res.redirect('#' + req.url);
+});
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('StickIt v' + appVersion + ' listening on port ' + app.get('port'));
