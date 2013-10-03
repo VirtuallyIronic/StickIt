@@ -8,7 +8,6 @@ define([
     'views/nav/navView',
     'views/page/aboutView',
     'views/page/contactView',
-    'views/page/downloadView',
     'views/page/indexView',
     'views/page/loginView',
     'views/page/registerView',
@@ -52,9 +51,6 @@ define([
         },
         contact:function () {
         	App.mainRegion.show(new contactView());
-        },
-        download:function () {
-        	App.mainRegion.show(new downloadView());
         },
         login:function () {
         	App.mainRegion.show(new loginView());

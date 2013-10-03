@@ -1,16 +1,29 @@
-<div>
-	<form>
-		<h1>Login</h1>
-		<p>
-			<label for="username">Your email or username</label>
-			<input name="username" id="username" type="text" placeholder="myusername or mymail@mail.com">
-		</p>
-		<p>
-			<label for="password">Your Password</label>
-			<input name="password" id="password" type="password">
-		</p>
-		<p>
-			<input type="submit" id="loginButton" value="Login">
-		</p>
-	</form>
-</div>
+<section>
+	<div id="container_demo" >
+		<div id="wrapper" style="margin-top:100px;">
+			<div id="login" class="animate form" >
+				<form autocomplete="on"> 
+					<h1>Log in</h1> 
+					<p> 
+						<label for="username" class="uname" data-icon="u" > Your email or username </label>
+						<input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+					</p>
+					<p> 
+						<label for="password" class="youpasswd" data-icon="p"> Your password </label>
+						<input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" /> 
+					</p>
+					<p class="keeplogin"> 
+						<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
+						<label for="loginkeeping">Keep me logged in</label>
+					</p>
+					<p class="login button"> 
+						<input type="submit" id="loginButton" value="Login" /> 
+					</p>
+					<p class="change_link">
+						Not a member yet ? <a href="#toregister" class="to_register">Join us</a>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
