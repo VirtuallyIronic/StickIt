@@ -10,8 +10,8 @@ define([ 'jquery', 'underscore', 'backbone', 'marionette', 'handlebars', 'text!t
 				event.preventDefault();
 				var url = '/auth/login';
 				var formValues = {
-					username: $('#username').val(),
-					password: $('#password').val()
+					username: $('#usernameLogin').val(),
+					password: $('#passwordLogin').val()
 				};
 				
 				console.log(formValues);
