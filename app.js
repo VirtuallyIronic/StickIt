@@ -31,20 +31,15 @@ app.engine('html', cons.underscore);
 app.set('port', config.app.port);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
-app.use(function(req, res, next){
-	app.disable('x-powered-by');
-	res.set('X-Powered-By', 'StickIt/' + appVersion);
-	next();
-});
+//app.use(function(req, res, next){
+//	app.disable('x-powered-by');
+//	res.set('X-Powered-By', 'StickIt/' + appVersion);
+//	next();
+//});
 app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.cookieParser());
 app.use(express.session({secret: 'abc'}));
