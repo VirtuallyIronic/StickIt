@@ -5,7 +5,6 @@ define(['marionette', 'controllers/Controller'], function(Marionette, Controller
            "": "index",
            "about": "about",
            "contact": "contact",
-           "download": "download",
            "login": "login",
            "register": "register"
        }
