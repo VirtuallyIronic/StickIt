@@ -46,11 +46,11 @@ app.use(function(req, res, next) {
     next();
 });
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(serve.router());
 app.use(express.cookieParser());
 app.use(express.session({secret: 'abc'}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(serve.router());
 //app.use(app.router);
 
 
