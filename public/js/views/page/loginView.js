@@ -14,6 +14,8 @@ define([ 'jquery', 'underscore', 'backbone', 'marionette', 'handlebars', 'text!t
 					password: $('#password').val()
 				};
 				
+				console.log(formValues);
+				/**
 				$.ajax({
 					url: url,
 					type: 'POST',
@@ -28,9 +30,11 @@ define([ 'jquery', 'underscore', 'backbone', 'marionette', 'handlebars', 'text!t
 						}
 					},
 					error: function(error) {
-						window.location.replace('/login');
+						console.log(error);
+						//window.location.replace('/login');
 					}
 				});
+				**/
 			}
 		});
 	}

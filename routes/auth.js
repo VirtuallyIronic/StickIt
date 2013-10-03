@@ -43,6 +43,7 @@ module.exports = function(app, passport) {
 	
 	function findById(id, fn) {
 		User.find(id).success(function(user){
+			console.log(user);
 			return fn(null, user);
 		}).error(function(error){
 			console.log(error);
@@ -52,6 +53,7 @@ module.exports = function(app, passport) {
 
 	function findByUsername(username, fn) {
 		User.find({ where: {username: username} }).success(function(user){
+			console.log(user);
 			fn(null, user);
 		}).error(function(error){
 			console.log(error);
@@ -61,6 +63,7 @@ module.exports = function(app, passport) {
 
 	function findByEmail(email, fn) {
 		User.find({ where: {email: email} }).success(function(user){
+			console.log(user);
 			fn(null, user);
 		}).error(function(error){
 			console.log(error);
@@ -168,7 +171,7 @@ module.exports = function(app, passport) {
 	}
 	
 	app.post('/auth/login', passport.authenticate('local'), function(req, res){
-		res.json(req.user);
+		console.log(req.body.username);
 	});
 	
 	app.get('/auth/logout', function(req, res){
