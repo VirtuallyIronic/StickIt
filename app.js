@@ -31,22 +31,27 @@ app.engine('html', cons.underscore);
 app.set('port', config.app.port);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
-//app.use(function(req, res, next){
-//	app.disable('x-powered-by');
-//	res.set('X-Powered-By', 'StickIt/' + appVersion);
-//	next();
-//});
+app.use(function(req, res, next){
+	app.disable('x-powered-by');
+	res.set('X-Powered-By', 'StickIt/' + appVersion);
+	next();
+});
 app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.cookieParser());
 app.use(express.session({secret: 'abc'}));
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use(serve.router());
-app.use(app.router);
+app.use(serve.router());
+//app.use(app.router);
 
 
 
@@ -78,10 +83,10 @@ app.all('/home', checkAuthentication);
 var api = require('./routes')(app, passport);
 
 //redirects to backbone's hash route if express route doesn't exist
-app.use(function(req, res){
-	console.log(req.url);
-	return res.redirect('#' + req.url);
-});
+//app.use(function(req, res){
+//	console.log(req.url);
+//	return res.redirect('#' + req.url);
+//});
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('StickIt v' + appVersion + ' listening on port ' + app.get('port'));
