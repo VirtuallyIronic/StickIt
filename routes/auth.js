@@ -43,47 +43,38 @@ module.exports = function(app, passport) {
 	
 	function findById(id, fn) {
 		User.find(id).success(function(user){
-			console.log(user);
 			return fn(null, user);
 		}).error(function(error){
-			console.log(error);
 			return fn(error, null);
 		});
 	}
 
 	function findByUsername(username, fn) {
 		User.find({ where: {username: username} }).success(function(user){
-			console.log(user);
 			fn(null, user);
 		}).error(function(error){
-			console.log(error);
 			fn(error, null);
 		});
 	}
 
 	function findByEmail(email, fn) {
 		User.find({ where: {email: email} }).success(function(user){
-			console.log(user);
 			fn(null, user);
 		}).error(function(error){
-			console.log(error);
 			fn(error, null);
 		});
 	}
 	
 	// passport session setup
 	passport.serializeUser(function(user, done){
-		console.log(user);
 		done(null, user.id);
 	});
 
 	passport.deserializeUser(function(id, done){
 		findById(id, function(err, user){
 			if(err) {
-				console.log(err);
 				return done(err, null);
 			}
-			console.log(user);
 			return done(null, user);
 		});
 	});
@@ -127,7 +118,6 @@ module.exports = function(app, passport) {
 						console.log('Invalid password ' + password)
 						return done(null, false, { message: 'Invalid password' });
 					}
-					console.log(user);
 					return done(null, user);
 				});
 			}
@@ -171,7 +161,7 @@ module.exports = function(app, passport) {
 	}
 	
 	app.post('/auth/login', passport.authenticate('local'), function(req, res){
-		console.log(req.body.username);
+		res.json(req.user);
 	});
 	
 	app.get('/auth/logout', function(req, res){
