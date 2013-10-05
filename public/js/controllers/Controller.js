@@ -11,7 +11,9 @@ define([
     'views/page/loginView',
     'views/page/registerView',
     'views/footer/footerView',
-    'models/CurrentUser'], 
+    'views/page/homeView',
+    'models/CurrentUser',
+    'models/WallsList'], 
 	function(
 		App,
 		Backbone,
@@ -25,23 +27,26 @@ define([
 		loginView,
 		registerView,
 		footerView,
-		modelCurrentUser
+		homeView,
+		modelCurrentUser,
+		modelWallsList
 	){
 	var CurrentUser = new modelCurrentUser();
+	var WallsList = new modelWallsList();
 	setInterval(function(){
 		CurrentUser.fetch();
+		WallsList.fetch();
 	}, 5000);
 	
 	return Backbone.Marionette.Controller.extend({
 		initialize:function (options) {
-			this.index();
-		},
-		index:function () {
 			App.logoRegion.show(new logoSmallView());
 			App.widgetRegion.show(new widgetView({model: CurrentUser}));
-			App.navRegion.show(new navView());
-			App.mainRegion.show(new indexView());
+			App.navRegion.show(new navView({model: CurrentUser}));
 			App.footerRegion.show(new footerView());
+		},
+		index:function () {
+			App.mainRegion.show(new indexView());
         },
         about:function () {
         	App.mainRegion.show(new aboutView());
@@ -55,6 +60,8 @@ define([
         register: function () {
         	App.mainRegion.show(new registerView());
         },
+        home: function() {}
+        	App.mainRegion.show(new homeView());
         error: function () {
         	
         }

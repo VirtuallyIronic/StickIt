@@ -23,7 +23,7 @@ var sequelize = new Sequelize(
 			host: db.host,
 			port: db.port,
 			dialect: 'mysql',
-			maxConcurrentQueries: 100,
+			maxConcurrentQueries: 1000,
 			define: {
 			    charset: 'utf8',
 			    collate: 'utf8_general_ci',
@@ -34,13 +34,13 @@ var sequelize = new Sequelize(
 				force: false
 			},
 			syncOnAssociation: false,
-			pool: { maxConnections: 10, maxIdleTime: 30}
+			pool: { maxConnections: 100, maxIdleTime: 20 }
 		}
 	);
 
 
 // load models
-var models = ['User', 'Wall', 'WallUser', 'Post', 'ColName', 'Vote'];
+var models = ['User', 'Wall', 'WallUser', 'Post', 'ColName', 'Vote', 'Tag'];
 
 models.forEach(function(model){
 	module.exports[model] = sequelize.import(__dirname + '/' + model);
@@ -49,7 +49,7 @@ models.forEach(function(model){
 
 module.exports.User.hasMany(module.exports.Wall, {foreignKey: 'owner'});
 module.exports.User.hasMany(module.exports.WallUser, {foreignKey: 'userId'});
-module.exports.User.hasMany(module.exports.Post, {foreignKey: 'owner'});
+module.exports.User.hasMany(module.exports.Post, {foreignKey: 'userId'});
 module.exports.User.hasMany(module.exports.Vote, {foreignKey: 'userId'});
 
 module.exports.Wall.hasMany(module.exports.Post, {foreignKey: 'wallId'});
@@ -57,6 +57,7 @@ module.exports.Wall.hasMany(module.exports.WallUser, {foreignKey: 'wallId'});
 module.exports.Wall.hasMany(module.exports.ColName, {foreignKey: 'wallId'});
 
 module.exports.Post.hasMany(module.exports.Vote, {foreignKey: 'postId'});
+module.exports.Post.hasMany(module.exports.Tag, {foreignKey: 'postId'});
 
 models.forEach(function(model){
 	module.exports[model].sync();

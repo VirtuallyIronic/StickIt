@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 1
     },
-    owner: {
+    userId: {
   	  type: DataTypes.STRING(8),
   	  primaryKey: true,
   	  allowNull: false,
@@ -39,20 +39,8 @@ module.exports = function(sequelize, DataTypes) {
     colour: {
       type: DataTypes.STRING
     },
-    colourBar: {
-      type: DataTypes.STRING
-    },
-    font: {
-      type: DataTypes.STRING
-    },
     fontSize: {
       type: DataTypes.INTEGER
-    },
-    totalVotes: {
-      type: DataTypes.INTEGER
-    },
-    tags: {
-      type: DataTypes.STRING
     }
   });
 };
