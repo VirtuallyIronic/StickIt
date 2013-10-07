@@ -3,10 +3,6 @@ define(['jquery', 'underscore', 'backbone'],
 		var CurrentUser = Backbone.Model.extend({
 			initialize:function () {
 			},
-            defaults:{
-            	id: null,
-            	username: null
-            },
             url: '/auth/current'
         });
         return CurrentUser;

@@ -34,7 +34,7 @@ define([
 	setInterval(function(){
 		CurrentUser.fetch();
 		//WallsList.fetch();
-	}, 5000);
+	}, 500);
 	
 	return Backbone.Marionette.Controller.extend({
 		initialize:function (options) {

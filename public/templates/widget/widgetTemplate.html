@@ -5,20 +5,24 @@
 		<div id="menuSettings" class="animate form" style="display:none; margin-top: -60px; height:200px; padding-bottom:100;">
 			<h1 id="MainS">Login</h1>
 			{{#if id}}
+			<form autocomplete="on">
 				<p>Hello, {{ username }}</p>
 				<p class="login button"> 
-					<input type="submit" value="Logout" /> 
+					<input type="submit" id="widgetLogoutButton" value="Logout" /> 
 				</p>
+			</form>
 			{{else}}
-			<p> 
-				<input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
-			</p>
-			<p> 
-				<input id="password" name="password" required="required" type="password" placeholder="Password" /> 
-			</p>
-			<p class="login button"> 
-				<input type="submit" value="Login" /> 
-			</p>
+			<form autocomplete="on"> 
+				<p> 
+					<input id="usernameWidget" name="usernameWidget" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+				</p>
+				<p> 
+					<input id="passwordWidget" name="passwordWidget" required="required" type="password" placeholder="eg. X8df!90EO" /> 
+				</p>
+				<p class="login button"> 
+					<input type="submit" id="widgetLoginButton" value="Login" /> 
+				</p>
+			</form>
 			{{/if}}
 		</div>
 	</div>
