@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
 	
 	function hasPermission(id, fn) {
 		Wall.find(id).success(function(wall){
-			if(!wall.isPrivate){
+			if(wall.isPrivate == 0){
 				fn(true);
 			} else if(wall.owner == req.user.id){
 				fn(true);
