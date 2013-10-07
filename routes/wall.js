@@ -247,78 +247,89 @@ module.exports = function(app, passport) {
 	});
 	
 	app.post('/api/wall', function(req, res){
-		if(req.user.role == 'view') {
+		if(req.user.role == 'view'){
 			res.send(401);
 		} else {
 			var title = req.body.title
-			  , isPrivate = req.body.isPrivate
-			  , columns = req.body.colums;
+			  , isPrivate = req.body.isPrivate;
 			
-			var wid = shortId.generate(12);
+			var wallId = shortId.generate(12);
 			
 			sanitize(title).xss();
 			sanitize(title).escape();
 			sanitize(isPrivate).xss();
 			sanitize(isPrivate).escape();
-			sanitize(columns).xss();
-			sanitize(columns).escape();
 			
-			Wall.create({ id: wid, title: title, owner: req.user.id, isPrivate: isPrivate, columns: columns}).success(function(wall){
+			Wall.create({ id: wallId, title: title, owner: req.user.id, isPrivate: isPrivate }).success(function(wall){
 				res.json(wall);
-			}).error(function(error){
-				res.send(error, 500);
+			}).error(function(){
+				res.send(500);
 			});
 		}
 	});
 	
 	app.put('/api/wall/:id', function(req, res){
-		hasAdmin(req.params.id, function(result){
-			if(result) {
-				Wall.find(req.params.id).success(function(wall){
-					var title = req.body.title
-					  , isPrivate = req.body.isPrivate
-					  , columns = req.body.colums;
-					
-					sanitize(title).xss();
-					sanitize(title).escape();
-					sanitize(isPrivate).xss();
-					sanitize(isPrivate).escape();
-					sanitize(columns).xss();
-					sanitize(columns).escape();
-					
-					wall.updateAttributes({
-						title: title,
-						isPrivate: isPrivate,
-						columns: columns
-					}).success(function(){
-						res.send(200);
-					}).error(function(error){
-						res.send(500);
-					});
-				}).error(function(error){
+		var title = req.body.title
+		  , isPrivate = req.body.isPrivate;
+		
+		sanitize(title).xss();
+		sanitize(title).escape();
+		sanitize(isPrivate).xss();
+		sanitize(isPrivate).escape();
+		
+		hasPermission(req.params.id, req.user, function(result){
+			if(result){
+				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
+					if(wall) {
+						textPermission(req.params.id, req.user, function(textResult){
+							if(textResult == 'admin') {
+								wall.updateAttributes({
+									title: title,
+									isPrivate: isPrivate
+								}).success(function(){
+									res.send(200);
+								}).error(function(){
+									res.send(500);
+								});
+							} else {
+								res.send(401);
+							}
+						});
+					} else {
+						res.send(401);
+					}
+				}).error(function(){
 					res.send(500);
 				})
-			}
-			else {
+			} else {
 				res.send(401);
 			}
-		})
+		});
 	});
 	
 	app.delete('/api/wall/:id', function(req, res){
-		hasAdmin(req.params.id, function(result){
-			if(result) {
-				Wall.find(req.params.id).success(function(wall){
-					wall.destroy().success(function(){
-						res.send(200);
-					}).error(function(){
-						res.send(500);
-					});
+		hasPermission(req.params.id, req.user, function(result){
+			if(result){
+				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
+					if(wall){
+						textPermission(req.params.id, req.user, function(textResult){
+							if(textResult == 'admin') {
+								wall.destroy().success(function(){
+									res.send(200);
+								}).error(function(){
+									res.send(500);
+								});
+							} else {
+								res.send(401);
+							}
+						});
+					} else {
+						res.send(401);
+					}
 				}).error(function(){
 					res.send(500);
 				});
-			}
-			else {
+			} else {
 				res.send(401);
 			}
 		});
@@ -328,9 +339,10 @@ module.exports = function(app, passport) {
 		var col = req.body.col
 		  , row = req.body.row
 		  , wallId = req.body.wallId
-		  , colour = req.body.colour
-		  , fontSize = req.body.fontSize
+		  , username = req.user.username
 		  , text = req.body.text
+		  , colour = req.body.colour
+		  , fontSize = req.body.fontSize;
 		
 		sanitize(col).xss();
 		sanitize(col).escape();
@@ -338,38 +350,447 @@ module.exports = function(app, passport) {
 		sanitize(row).escape();
 		sanitize(wallId).xss();
 		sanitize(wallId).escape();
+		sanitize(username).xss();
+		sanitize(username).escape();
+		sanitize(text).xss();
+		sanitize(text).escape();
 		sanitize(colour).xss();
 		sanitize(colour).escape();
 		sanitize(fontSize).xss();
 		sanitize(fontSize).escape();
-		sanitize(text).xss();
-		sanitize(text).escape();
 		
-		isNotReaderOnly(wallId, function(result){
+		hasPermission(wallId, req.user.id, function(result){
 			if(result) {
-				Post.create({ col: col, row: row, wallId: wallId, colour: colour, colourBar: colourBar, font: font, fontSize: fontSize, text: text}).success(function(){
-					res.send(200);
-				}).error(function(){
-					res.send(500);
+				textPermission(wallId, req.user.id, function(textResult){
+					if(textResult != 'view'){
+						Post.create({
+							col: col,
+							row: row,
+							wallId: wallId,
+							username: username,
+							text: text,
+							colour: colour,
+							fontSize: fontSize
+						}).success(function(post){
+							res.send(200);
+						}).error(function(){
+							res.send(500);
+						});
+					} else {
+						res.send(401);
+					}
 				});
-			}
-			else {
+			} else {
 				res.send(401);
 			}
 		});
 	});
 	
-	app.get('/api/post/:id', function(req, res){
-		Post.find(req.params.id).success(function(post){
-			hasPermission(post.wallId, function(result){
-				if(result){
-					res.json(post);
-				}
-				else {
+	app.put('/api/post/:id', function(req, res){
+		var col = req.body.col
+		  , row = req.body.row
+		  , text = req.body.text
+		  , colour = req.body.colour
+		  , fontSize = req.body.fontSize;
+		
+		sanitize(col).xss();
+		sanitize(col).escape();
+		sanitize(row).xss();
+		sanitize(row).escape();
+		sanitize(text).xss();
+		sanitize(text).escape();
+		sanitize(colour).xss();
+		sanitize(colour).escape();
+		sanitize(fontSize).xss();
+		sanitize(fontSize).escape();
+		
+		Post.find({ where: { id: req.params.id }, limit: 1}).success(function(post){
+			hasPermission(post.wallId, req.user.id, function(result){
+				if(result) {
+					textPermission(post.wallId, req.user.id, function(textResult){
+						if(textResult != 'view'){
+							post.updateAttributes({
+								col: col,
+								row: row,
+								text: text,
+								colour: colour,
+								fontSize: fontSize
+							}).success(function(){
+								res.send(200);
+							}).error(function(){
+								res.send(500);
+							});
+						} else {
+							res.send(401);
+						}
+					});
+				} else {
 					res.send(401);
 				}
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.delete('/api/post/:id', function(req, res){
+		Post.find({ where: { id: req.params.id }, limit: 1}).success(function(post){
+			hasPermission(post.wallId, req.user.id, function(result){
+				if(result) {
+					textPermission(wallId, req.user.id, function(textResult){
+						if(textResult != 'view'){
+							post.destroy().success(function(){
+								res.send(200);
+							}).error(function(){
+								res.send(500);
+							});
+						} else {
+							res.send(401);
+						}
+					});
+				} else {
+					res.send(401);
+				}
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.post('/api/colname', function(req, res){
+		var wallId = req.body.wallId
+		  , colNum = req.body.colNum
+		  , title = req.body.title;
+		
+		sanitize(wallId).xss();
+		sanitize(wallId).escape();
+		sanitize(colNum).xss();
+		sanitize(colNum).escape();
+		sanitize(title).xss();
+		sanitize(title).escape();
+		
+		hasPermission(wallId, req.user.id, function(result){
+			if(result) {
+				textPermission(wallId, req.user.id, function(textResult){
+					if(textResult != 'view'){
+						ColName.create({
+							wallId: wallId,
+							colNum: colNum,
+							title: title
+						}).success(function(colname){
+							res.send(200);
+						}).error(function(){
+							res.send(500);
+						});
+					} else {
+						res.send(401);
+					}
+				});
+			} else {
+				res.send(401);
+			}
+		});
+	});
+	
+	app.put('/api/colname/:id', function(req, res){
+		var colNum = req.body.colNum
+		  , title = req.body.title;
+		
+		sanitize(colNum).xss();
+		sanitize(colNum).escape();
+		sanitize(title).xss();
+		sanitize(title).escape();
+		
+		ColName.find({ where: { id: req.params.id }, limit: 1}).success(function(colName){
+			hasPermission(colName.wallId, req.user.id, function(result){
+				if(result) {
+					textPermission(colName.wallId, req.user.id, function(textResult){
+						if(textResult != 'view'){
+							colName.updateAttributes({
+								colNum: colNum,
+								title: title
+							}).success(function(){
+								res.send(200);
+							}).error(function(){
+								res.send(500);
+							});
+						} else {
+							res.send(401);
+						}
+					});
+				} else {
+					res.send(401);
+				}
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.delete('/api/colname/:id', function(req, res){
+		ColName.find({ where: { id: req.params.id }, limit: 1}).success(function(colName){
+			hasPermission(colName.wallId, req.user.id, function(result){
+				if(result) {
+					textPermission(colName.wallId, req.user.id, function(textResult){
+						if(textResult != 'view'){
+							colName.destroy().success(function(){
+								res.send(200);
+							}).error(function(){
+								res.send(500);
+							});
+						} else {
+							res.send(401);
+						}
+					});
+				} else {
+					res.send(401);
+				}
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.post('/api/vote', function(req, res){
+		var postId = req.body.postId;
+		
+		sanitize(postId).xss();
+		sanitize(postId).escape();
+
+		Post.find({ where: { id: postId }, limit: 1}).success(function(post){
+			hasPermission(post.wallId, req.user.id, function(result){
+				if(result) {
+					textPermission(post.wallId, req.user.id, function(textResult){
+						if(textResult != 'view'){
+							Vote.create({
+								postId: postId,
+								userId: req.user.id
+							}).success(function(vote){
+								res.send(200);
+							}).error(function(){
+								res.send(500);
+							});
+						} else {
+							res.send(401);
+						}
+					});
+				} else {
+					res.send(401);
+				}
+			});
+		}).error(function(){
+			res.send(500);
+		});
+		
+	});
+		
+	app.delete('/api/vote/:id', function(req, res){
+		Vote.find({ where: { id: req.params.id }, limit: 1 }).success(function(vote){
+			Post.find({ where: { id: vote.postId }, limit: 1 }).success(function(post){
+				hasPermission(post.wallId, req.user.id, function(result){
+					if(result) {
+						textPermission(post.wallId, req.user.id, function(textResult){
+							if(textResult != 'view'){
+								vote.destroy().success(function(){
+									res.send(200);
+								}).error(function(){
+									res.send(500);
+								});
+							} else {
+								res.send(401);
+							}
+						});
+					} else {
+						res.send(401);
+					}
+				});
 			}).error(function(){
 				res.send(500);
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.post('/api/tag', function(req, res){
+		var postId = req.body.postId
+		  , title = req.body.title;
+		
+		sanitize(postId).xss();
+		sanitize(postId).escape();
+		sanitize(title).xss();
+		sanitize(title).escape();
+		
+		hasPermission(wallId, req.user.id, function(result){
+			if(result) {
+				textPermission(wallId, req.user.id, function(textResult){
+					if(textResult != 'view'){
+						ColName.create({
+							wallId: wallId,
+							colNum: colNum,
+							title: title
+						}).success(function(colname){
+							res.send(200);
+						}).error(function(){
+							res.send(500);
+						});
+					} else {
+						res.send(401);
+					}
+				});
+			} else {
+				res.send(401);
+			}
+		});
+	});
+	
+	app.put('/api/tag/:id', function(req, res){
+		var title = req.body.title;
+		
+		sanitize(title).xss();
+		sanitize(title).escape();
+		
+		Tag.find({ where: { id: req.params.id }, limit: 1}).success(function(tag){
+			Post.find({ where: { id: tag.postId }, limit: 1}).success(function(post){
+				hasPermission(post.wallId, req.user.id, function(result){
+					if(result){
+						textPermission(post.wallId, req.user.id, function(textResult){
+							if(textResult != 'view'){
+								tag.updateAttributes({
+									title: title
+								}).success(function(){
+									res.send(200);
+								}).error(function(){
+									res.send(500);
+								});
+							} else {
+								res.send(401);
+							}
+						});
+					} else {
+						res.send(401);
+					}
+				});
+			}).error(function(){
+				res.send(500);
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.delete('/api/tag/:id', function(req, res){
+		Tag.find({ where: { id: req.params.id }, limit: 1}).success(function(tag){
+			Post.find({ where: { id: tag.postId }, limit: 1}).success(function(post){
+				hasPermission(post.wallId, req.user.id, function(result){
+					if(result){
+						textPermission(post.wallId, req.user.id, function(textResult){
+							if(textResult != 'view'){
+								tag.destroy().success(function(){
+									res.send(200);
+								}).error(function(){
+									res.send(500);
+								});
+							} else {
+								res.send(401);
+							}
+						});
+					} else {
+						res.send(401);
+					}
+				});
+			}).error(function(){
+				res.send(500);
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.post('/api/walluser', function(req, res){
+		var userId = req.body.userId
+		  , wallId = req.body.wallId
+		  , permission = req.body.permission;
+		
+		sanitize(userId).xss();
+		sanitize(userId).escape();
+		sanitize(wallId).xss();
+		sanitize(wallId).escape();
+		sanitize(permission).xss();
+		sanitize(permission).escape();
+		
+		hasPermission(wallId, req.user.id, function(result){
+			if(result) {
+				textPermission(wallId, req.user.id, function(textResult){
+					if(textResult != 'view'){
+						WallUser.create({
+							userId: userId,
+							wallId: wallId,
+							permission: permission
+						}).success(function(colname){
+							res.send(200);
+						}).error(function(){
+							res.send(500);
+						});
+					} else {
+						res.send(401);
+					}
+				});
+			} else {
+				res.send(401);
+			}
+		});
+	});
+	
+	app.put('/api/walluser/:id', function(req, res){
+		var permission = req.body.permission
+		
+		sanitize(permission).xss();
+		sanitize(permission).escape();
+		
+		WallUser.find({ where: { id: req.params.id }, limit: 1}).success(function(wallUser){
+			hasPermission(wallUser.wallId, req.user.id, function(result){
+				if(result) {
+					textPermission(wallUser.wallId, req.user.id, function(textResult){
+						if(textResult != 'view'){
+							wallUser.updateAttributes({
+								permission: permission
+							}).success(function(){
+								res.send(200);
+							}).error(function(){
+								res.send(500);
+							});
+						} else {
+							res.send(401);
+						}
+					});
+				} else {
+					res.send(401);
+				}
+			});
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.delete('/api/walluser/:id', function(req, res){
+		WallUser.find({ where: { id: req.params.id }, limit: 1}).success(function(wallUser){
+			hasPermission(wallUser.wallId, req.user.id, function(result){
+				if(result) {
+					textPermission(wallUser.wallId, req.user.id, function(textResult){
+						if(textResult != 'view'){
+							wallUser.destroy().success(function(){
+								res.send(200);
+							}).error(function(){
+								res.send(500);
+							});
+						} else {
+							res.send(401);
+						}
+					});
+				} else {
+					res.send(401);
+				}
 			});
 		}).error(function(){
 			res.send(500);
