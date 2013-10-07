@@ -132,19 +132,24 @@ module.exports = function(app, passport) {
 				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
 					if(wall) {
 						textPermission(req.params.id, req.user, function(textResult){
-							res.json({
-								id: wall.id,
-								title: wall.title,
-								owner: wall.owner,
-								isPrivate: wall.isPrivate,
-								permission: textResult
+							Post.findAll({ where: { wallId: req.params.id }}).success(function(posts){
+								res.json({
+									id: wall.id,
+									title: wall.title,
+									owner: wall.owner,
+									isPrivate: wall.isPrivate,
+									permission: textResult,
+									posts: posts
+								});
+							}).error(function(){
+								res.send(500);
 							});
 						});
 					} else {
 						res.send(401);
 					}
 				}).error(function(){
-					res.send(401);
+					res.send(500);
 				});
 			} else {
 				res.send(401);
