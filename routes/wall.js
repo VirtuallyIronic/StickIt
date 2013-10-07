@@ -41,15 +41,15 @@ module.exports = function(app, passport) {
 		return false;
 	}
 	
-	function hasPermission(id, fn) {
+	function hasPermission(id, user, fn) {
 		Wall.find(id).success(function(wall){
 			if(wall) {
 				if(wall.isPrivate == 0){
 					fn(true);
-				} else if(wall.owner == req.user.id){
+				} else if(wall.owner == user.id){
 					fn(true);
 				} else {
-					WallUser.find({ where: { wallId: id, userId: req.user.id }, limit: 1 }).success(function(wallUser){
+					WallUser.find({ where: { wallId: id, userId: user.id }, limit: 1 }).success(function(wallUser){
 						if(wallUser){
 							fn(true);
 						} else {
@@ -178,8 +178,8 @@ module.exports = function(app, passport) {
 		}
 	});
 	app.get('/api/wall/:id', function(req, res){
-		hasPermission(req.params.id, function(result){
-			console.log(result);
+		hasPermission(req.params.id, req.user, function(result){
+			res.json(result);
 /**			if(result) {
 				//Wall.find({ where: { id : req.params.id}, include: [ Post ]}).success(function(wall){
 				//	res.json(wall);
