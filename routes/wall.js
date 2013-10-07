@@ -79,75 +79,16 @@ module.exports = function(app, passport) {
 						} else if(wall.isPrivate == 1) {
 							fn(false);
 						} else {
-							fn('read');
+							fn('view');
 						}
 					}).error(function(){
 						if(wall.isPrivate){
 							fn(false);
 						} else {
-							fn('read');
+							fn('view');
 						}
 					});
 				}
-			}
-		}).error(function(){
-			fn(false);
-		});
-	}
-	
-/**	function hasPermission(id, fn) {
-		Wall.find(id).success(function(wall){
-			if(wall.owner === req.user.id) {
-				fn(true);
-			} else {
-				WallUser.find({ where: {wallId: id, userId: req.user.id}}).success(function(wallPermission){
-					fn(true);
-				}).error(function(error){
-					fn(false);
-				});
-			}
-		}).error(function(error){
-			fn(false);
-		});
-	}
-**/
-	
-	function hasAdmin(id, fn) {
-		Wall.find(id).success(function(wall){
-			if(wall.owner === req.user.id) {
-				fn(true);
-			} else {
-				WallUser.find({ where: {wallId: id, userId: req.user.id}}).success(function(wallPermission){
-					if(wallPermission.permission === 'admin') {
-						fn(true);
-					}
-					else {
-						fn(false);
-					}
-				}).error(function(error){
-					fn(false);
-				});
-			}
-		}).error(function(error){
-			fn(false);
-		});
-	}
-	
-	function isNotReaderOnly(id, fn) {
-		Wall.find(id).success(function(wall){
-			if(wall.owner === req.user.id) {
-				fn(true);
-			} else {
-				WallUser.find({ where: {wallId: id, userId: req.user.id}}).success(function(wallPermission){
-					if(wallPermission.permission != 'read'){
-						fn(true);
-					}
-					else {
-						fn(false);
-					}
-				}).error(function(){
-					fn(false);
-				});
 			}
 		}).error(function(){
 			fn(false);
@@ -162,7 +103,7 @@ module.exports = function(app, passport) {
 		});
 	});
 	app.post('/api/wall', function(req, res){
-		if(req.user.role === 'view') {
+		if(req.user.role == 'view') {
 			res.send(401);
 		} else {
 			var title = req.body.title
@@ -188,8 +129,22 @@ module.exports = function(app, passport) {
 	app.get('/api/wall/:id', function(req, res){
 		hasPermission(req.params.id, req.user, function(result){
 			if(result){
-				textPermission(req.params.id, req.user, function(textResult){
-					res.json(textResult);
+				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
+					if(wall) {
+						textPermission(req.params.id, req.user, function(textResult){
+							res.json({
+								id: wall.id,
+								title: wall.title,
+								owner: wall.owner,
+								isPrivate: wall.isPrivate,
+								permission: textResult
+							});
+						});
+					} else {
+						res.send(401);
+					}
+				}).error(function(){
+					res.send(401);
 				});
 			} else {
 				res.send(401);
