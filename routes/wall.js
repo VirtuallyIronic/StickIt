@@ -42,7 +42,7 @@ module.exports = function(app, passport) {
 	}
 	
 	function hasPermission(id, user, fn) {
-		Wall.find(id).success(function(wall){
+		Wall.find({ where: { id: id }, limit: 1 }).success(function(wall){
 			if(wall) {
 				if(wall.isPrivate == 0){
 					fn(true);
@@ -68,7 +68,7 @@ module.exports = function(app, passport) {
 	}
 	
 	function textPermission(id, user, fn) {
-		Wall.find(id).success(function(wall){
+		Wall.find({ where: { id: id }, limit: 1 }).success(function(wall){
 			if(wall) {
 				if(wall.owner == user.id){
 					fn('admin');
