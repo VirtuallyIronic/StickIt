@@ -49,7 +49,6 @@ models.forEach(function(model){
 
 module.exports.User.hasMany(module.exports.Wall, {foreignKey: 'owner'});
 module.exports.User.hasMany(module.exports.WallUser, {foreignKey: 'userId'});
-module.exports.User.hasMany(module.exports.Post, {foreignKey: 'userId'});
 module.exports.User.hasMany(module.exports.Vote, {foreignKey: 'userId'});
 
 module.exports.Wall.hasMany(module.exports.Post, {foreignKey: 'wallId'});

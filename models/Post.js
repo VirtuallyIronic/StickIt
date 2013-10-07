@@ -19,19 +19,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 1
     },
-    userId: {
-  	  type: DataTypes.STRING(8),
-  	  primaryKey: true,
-  	  allowNull: false,
-  	  references: "User",
-  	  referencesKey: "id"
-  	},
     wallId: {
       type: DataTypes.STRING(12),
       primaryKey: true,
       allowNull: false,
       references: "Wall",
       referencesKey: "id"
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     text: {
       type: DataTypes.STRING

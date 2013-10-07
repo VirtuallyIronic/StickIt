@@ -102,6 +102,150 @@ module.exports = function(app, passport) {
 			console.log(error);
 		});
 	});
+	
+	app.get('/api/wall/:id', function(req, res){
+		hasPermission(req.params.id, req.user, function(result){
+			if(result){
+				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
+					if(wall) {
+						textPermission(req.params.id, req.user, function(textResult){
+							Post.findAll({ where: { wallId: req.params.id }, include [Vote, Tags]}).success(function(posts){
+								ColName.findAndCountAll({ where: { wallId: req.params.id}}).success(function(colnames){
+									res.json({
+										id: wall.id,
+										title: wall.title,
+										owner: wall.owner,
+										isPrivate: wall.isPrivate,
+										permission: textResult,
+										totalCols: colnames.count,
+										cols: colnames.rows,
+										posts: posts
+									});
+								}).error(function(){
+									res.send(500);
+								});
+							}).error(function(){
+								res.send(500);
+							});
+						});
+					} else {
+						res.send(401);
+					}
+				}).error(function(){
+					res.send(500);
+				});
+			} else {
+				res.send(401);
+			}
+		});
+	});
+	
+	app.get('/api/post/:id', function(req, res){
+		Post.find({ where: { id: req.params.id }, include[Vote, Tags]}).success(function(post){
+			if(post){
+				hasPermission(post.wallId, req.user.id, function(result){
+					if(result) {
+						res.json(post);
+					} else {
+						res.send(401);
+					}
+				});
+			} else {
+				res.send(500);
+			}
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.get('/api/colname/:id', function(req, res){
+		ColName.find(req.param.id).success(function(colname){
+			if(colname) {
+				hasPermission(colname.wallId, req.user.id, function(result){
+					if(result){
+						res.json(colname);
+					} else {
+						res.send(401);
+					}
+				});
+			} else {
+				res.send(401);
+			}
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.get('/api/vote/:id', function(req, res){
+		Vote.find(req.param.id).success(function(vote){
+			if(vote) {
+				Post.find(vote.postId).success(function(post){
+					if(post){
+						hasPermission(post.wallId, req.user.id, function(result){
+							if(result) {
+								res.json(vote);
+							} else {
+								res.send(401);
+							}
+						});
+					} else {
+						res.send(401);
+					}
+				}).error(function(){
+					res.send(500);
+				});
+			} else {
+				res.send(401);
+			}
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.get('/api/tag/:id', function(req, res){
+		Tag.find(req.param.id).success(function(tag){
+			if(tag) {
+				Post.find(tag.postId).success(function(post){
+					if(post){
+						hasPermission(post.wallId, req.user.id, function(result){
+							if(result) {
+								res.json(tag);
+							} else {
+								res.send(401);
+							}
+						});
+					} else {
+						res.send(401);
+					}
+				}).error(function(){
+					res.send(500);
+				});
+			} else {
+				res.send(401);
+			}
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
+	app.get('/api/walluser/:id', function(req, res){
+		WallUser.find(req.param.id).success(function(walluser){
+			if(walluser) {
+				hasPermission(walluser.wallId, req.user.id, function(result){
+					if(result){
+						res.json(walluser);
+					} else {
+						res.send(401);
+					}
+				});
+			} else {
+				res.send(401);
+			}
+		}).error(function(){
+			res.send(500);
+		});
+	});
+	
 	app.post('/api/wall', function(req, res){
 		if(req.user.role == 'view') {
 			res.send(401);
@@ -125,63 +269,6 @@ module.exports = function(app, passport) {
 				res.send(error, 500);
 			});
 		}
-	});
-	app.get('/api/wall/:id', function(req, res){
-		hasPermission(req.params.id, req.user, function(result){
-			if(result){
-				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
-					if(wall) {
-						textPermission(req.params.id, req.user, function(textResult){
-							Post.findAll({ where: { wallId: req.params.id }}).success(function(posts){
-								res.json({
-									id: wall.id,
-									title: wall.title,
-									owner: wall.owner,
-									isPrivate: wall.isPrivate,
-									permission: textResult,
-									posts: posts
-								});
-							}).error(function(){
-								res.send(500);
-							});
-						});
-					} else {
-						res.send(401);
-					}
-				}).error(function(){
-					res.send(500);
-				});
-			} else {
-				res.send(401);
-			}
-/**			if(result) {
-				//Wall.find({ where: { id : req.params.id}, include: [ Post ]}).success(function(wall){
-				//	res.json(wall);
-				//}).error(function(error){
-				//	res.send(500);
-				//});
-				Wall.find({ where: { id : req.params.id }}).success(function(wall){
-					Post.findAll({ where: { wallId: req.params.id}, include: [ Vote ]}).success(function(posts){
-						res.json({
-							id: wall.id,
-							title: wall.title,
-							owner: wall.owner,
-							isPrivate: wall.isPrivate,
-							columns: wall.columns,
-							posts: posts
-						});
-					}).error(function(){
-						res.send(500);
-					});
-				}).error(function(){
-					res.send(500);
-				});
-			}
-			else {
-				res.send(401);
-			}
-**/
-		});
 	});
 	
 	app.put('/api/wall/:id', function(req, res){
@@ -277,83 +364,6 @@ module.exports = function(app, passport) {
 			hasPermission(post.wallId, function(result){
 				if(result){
 					res.json(post);
-				}
-				else {
-					res.send(401);
-				}
-			}).error(function(){
-				res.send(500);
-			});
-		}).error(function(){
-			res.send(500);
-		});
-	});
-	
-	app.put('/api/post/:id', function(req, res){
-		Post.find(req.params.id).success(function(post){
-			isNotReaderOnly(post.wallId, function(result){
-				if(result){
-					var col = req.body.col
-					  , row = req.body.row
-					  , colour = req.body.colour
-					  , colourBar = req.body.colourBar
-					  , font = req.body.font
-					  , fontSize = req.body.fontSize
-					  , text = req.body.text
-					  , tags = req.body.tags;
-					
-					sanitize(col).xss();
-					sanitize(col).escape();
-					sanitize(row).xss();
-					sanitize(row).escape();
-					sanitize(colour).xss();
-					sanitize(colour).escape();
-					sanitize(colourBar).xss();
-					sanitize(colourBar).escape();
-					sanitize(font).xss();
-					sanitize(font).escape();
-					sanitize(fontSize).xss();
-					sanitize(fontSize).escape();
-					sanitize(text).xss();
-					sanitize(text).escape();
-					sanitize(tags).xss();
-					sanitize(tags).escape();
-					
-					post.updateAttributes({
-						col: col,
-						row: row,
-						colour: colour,
-						colourBar: colourBar,
-						font: font,
-						fontSize: fontSize,
-						text: text,
-						tags: tags
-					}).success(function(){
-						res.send(200);
-					}).error(function(){
-						res.send(500);
-					});
-				}
-				else {
-					res.send(401);
-				}
-			}).error(function(){
-				res.send(500);
-			});
-		}).error(function(){
-			res.send(500);
-		});
-	});
-	
-	app.delete('/api/post/:id', function(req, res){
-		Post.find(req.params.id).success(function(post){
-			isNotReaderOnly(post.wallId, function(result){
-				if(result){
-					post.destroy().success(function(){
-						res.send(200);
-					}).error(function(){
-						res.send(500);
-					});
 				}
 				else {
 					res.send(401);
