@@ -7,11 +7,7 @@
 
 /*
 	TODO!!!
-	FINSIH INTERGRATING RELATIONS
-	CHECK IF THERE ARE ANY PROBLEMS WITH NEW AND EDIT NOTES
-	NEW VS IMPORTED NOTES
-	WALL + PERMISSIONS (LOW PRIORITY)
-	TOMORROW ONLY!!!!!!!!
+	CREATE APPROPRIATE MODELS TO INTERACT WITH NEW AJAX COMMANDS
 
 *-----
 
@@ -137,11 +133,11 @@
 			},
 			relations: [{
 				type: Backbone.HasOne,
-				key: 'noteR',
+				key: 'wall_connection',
 				relatedModel: 'wallFormat',
 				collectionType: 'wallList',
 				reverseRelation: {
-					key: 'hasWall',
+					key: 'note_wall',
 					includeInJSON: '_id'
 					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
@@ -158,19 +154,19 @@
 					'owner': currentUser_ID,
 					'cols': 5,
 					'headings': 'String,of,potato chips for lunch,for,headings'
-			}/*,
+			},/*
 			relations: [{
 				type: Backbone.HasMany,
-				key: 'wallR',
+				key: 'notes_related',
 				relatedModel: 'noteFormat',
 				collectionType: 'noteList',
 				reverseRelation: {
-					key: 'hasNote',
+					key: 'Note_Wall',
 					includeInJSON: '_id'
 					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
-			}]*/,
-			url: 'http://localhost:8080/'
+			}],//*/
+			url: '/api/wall/:id'
 			//http://localhost:8080/messages
 		});
 		
@@ -183,7 +179,7 @@
 			},
 			relations: [{
 				type: Backbone.HasOne,
-				key: 'votesR',
+				key: 'votes_note',
 				relatedModel: 'noteFormat',
 				collectionType: 'noteList',
 				reverseRelation: {
@@ -205,7 +201,7 @@
 			},
 			relations: [{
 				type: Backbone.HasOne,
-				key: 'tagsR',
+				key: 'tags_note',
 				relatedModel: 'noteFormat',
 				collectionType: 'noteList',
 				reverseRelation: {
@@ -227,7 +223,7 @@
 			},
 			relations: [{
 				type: Backbone.HasOne,
-				key: 'permissionR',
+				key: 'user_wall',
 				relatedModel: 'wallFormat',
 				collectionType: 'wallList',
 				reverseRelation: {
@@ -382,6 +378,7 @@
 						newVotings.set({
 							'userID': currentUser_ID,
 							'noteID': this.model.get('_id'),//noteID
+							'votes_note': this.model
 						});
 						this.voteObj.add(newVotings);
 					}
@@ -643,12 +640,14 @@
 					'owner': 1,
 					'cols': col,
 					'headings': 'String,of,words,for,headings',
+					//'notes_related':[{text:"service1"},{text:"service2"},{text:"service3"},{text:"service4"}]
 				});
 				this.wallDetails.add(testWall);
 				
 				testPer.set({
 					"userID": currentUser_ID,
 					'permission': 'admin',
+					'user_wall': testWall,
 				});
 				this.permissionDetails.add(testPer);
 				//-------------------------
@@ -695,7 +694,7 @@
 						$(this).hide();
 					});
 				}
-				
+				//alert(this.//);
 				if (online == true){
 					for (var w=0; w<notes.length; w++)
 					{
@@ -872,7 +871,8 @@
 						'tagged': tagged,
 						'color': colour,
 						'fontsize': fontsize,
-						'hasWall': testWall
+						//'taggedKey'
+						'wall_connection': testWall//.get('_id')
 					});
 					tagObj = new Array;
 					var tagCount=0;
@@ -882,7 +882,8 @@
 						var newNoteTags = new taggedFormat();
 						newNoteTags.set({
 							'noteID': item.get('id'),
-							'tagItem': $(tags).children().eq(i).text()
+							'tagItem': $(tags).children().eq(i).text(),
+							'tags_note': item,
 						});
 						
 						tagObj[tagCount]=newNoteTags;
