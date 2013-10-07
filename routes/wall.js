@@ -141,7 +141,7 @@ module.exports = function(app, passport) {
 	});
 	
 	app.get('/api/post/:id', function(req, res){
-		Post.find({ where: { id: req.params.id }, include[Vote, Tags]}).success(function(post){
+		Post.find({ where: { id: req.params.id }, include: [Vote, Tags]}).success(function(post){
 			if(post){
 				hasPermission(post.wallId, req.user.id, function(result){
 					if(result) {
