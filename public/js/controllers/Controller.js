@@ -60,8 +60,9 @@ define([
         register: function () {
         	App.mainRegion.show(new registerView());
         },
-        home: function() {}
+        home: function() {
         	App.mainRegion.show(new homeView());
+        },
         error: function () {
         	
         }
