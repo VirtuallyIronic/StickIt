@@ -9,19 +9,15 @@ module.exports = function(sequelize, DataTypes) {
 	  unique: true,
 	  allowNull: false
 	},
-    userId: {
-      type: DataTypes.STRING(8),
-	  primaryKey: true,
-	  allowNull: false,
-	  references: "User",
-	  referencesKey: "id"
-    },
     postId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
       references: "Post",
       referencesKey: "id"
+    },
+    text: {
+      type: DataTypes.STRING
     }
   });
 };

@@ -40,7 +40,7 @@ module.exports = function(sequelize, DataTypes) {
   	  type: DataTypes.ENUM,
 	  values: ['view', 'post', 'admin'],
 	  allowNull: false,
-	  defaultValue: 'view'
+	  defaultValue: 'post'
     }
   });
 };

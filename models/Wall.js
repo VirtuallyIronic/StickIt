@@ -23,11 +23,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true
-    },
-    columns: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1
     }
   });
 };
