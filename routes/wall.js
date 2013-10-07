@@ -42,15 +42,15 @@ module.exports = function(app, passport) {
 		return false;
 	}
 	
-	function hasPermission(id, user, fn) {
+	function hasPermission(id, userId, fn) {
 		Wall.find({ where: { id: id }, limit: 1 }).success(function(wall){
 			if(wall) {
 				if(wall.isPrivate == 0){
 					fn(true);
-				} else if(wall.owner == user.id){
+				} else if(wall.owner == userId){
 					fn(true);
 				} else {
-					WallUser.find({ where: { wallId: id, userId: user.id }, limit: 1 }).success(function(wallUser){
+					WallUser.find({ where: { wallId: id, userId: userId }, limit: 1 }).success(function(wallUser){
 						if(wallUser){
 							fn(true);
 						} else {
@@ -71,10 +71,10 @@ module.exports = function(app, passport) {
 	function textPermission(id, user, fn) {
 		Wall.find({ where: { id: id }, limit: 1 }).success(function(wall){
 			if(wall) {
-				if(wall.owner == user.id){
+				if(wall.owner == userId){
 					fn('admin');
 				} else {
-					WallUser.find({ where: { wallId: id, userId: user.id }, limit: 1 }).success(function(wallUser){
+					WallUser.find({ where: { wallId: id, userId: userId }, limit: 1 }).success(function(wallUser){
 						if(wallUser) {
 							fn(wallUser.permission);
 						} else if(wall.isPrivate == 1) {
@@ -105,11 +105,11 @@ module.exports = function(app, passport) {
 	});
 	
 	app.get('/api/wall/:id', function(req, res){
-		hasPermission(req.params.id, req.user, function(result){
+		hasPermission(req.params.id, req.user.id, function(result){
 			if(result){
 				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
 					if(wall) {
-						textPermission(req.params.id, req.user, function(textResult){
+						textPermission(req.params.id, req.user.id, function(textResult){
 							Post.findAll({ where: { wallId: req.params.id }, include: [Vote, Tag]}).success(function(posts){
 								ColName.findAndCountAll({ where: { wallId: req.params.id}}).success(function(colnames){
 									res.json({
@@ -278,11 +278,11 @@ module.exports = function(app, passport) {
 		sanitize(isPrivate).xss();
 		sanitize(isPrivate).escape();
 		
-		hasPermission(req.params.id, req.user, function(result){
+		hasPermission(req.params.id, req.user.id, function(result){
 			if(result){
 				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
 					if(wall) {
-						textPermission(req.params.id, req.user, function(textResult){
+						textPermission(req.params.id, req.user.id, function(textResult){
 							if(textResult == 'admin') {
 								wall.updateAttributes({
 									title: title,
@@ -309,11 +309,11 @@ module.exports = function(app, passport) {
 	});
 	
 	app.delete('/api/wall/:id', function(req, res){
-		hasPermission(req.params.id, req.user, function(result){
+		hasPermission(req.params.id, req.user.id, function(result){
 			if(result){
 				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
 					if(wall){
-						textPermission(req.params.id, req.user, function(textResult){
+						textPermission(req.params.id, req.user.id, function(textResult){
 							if(textResult == 'admin') {
 								wall.destroy().success(function(){
 									res.send(200);
@@ -472,8 +472,8 @@ module.exports = function(app, passport) {
 		
 		hasPermission(wallId, req.user.id, function(result){
 			if(result) {
-				textPermission(wallId, req.user.id, function(textResult){
-					if(textResult != 'view'){
+				textPermission(wallId, req.user, function(textResult){
+					if(textResult != "view"){
 						ColName.create({
 							wallId: wallId,
 							colNum: colNum,
