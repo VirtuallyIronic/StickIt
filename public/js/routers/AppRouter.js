@@ -8,6 +8,7 @@ define(['marionette', 'controllers/Controller'], function(Marionette, Controller
            "login": "login",
            "register": "register",
            "home": "home",
+           "wall:id": "wall"
        }
    });
 });
