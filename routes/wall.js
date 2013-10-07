@@ -43,16 +43,24 @@ module.exports = function(app, passport) {
 	
 	function hasPermission(id, fn) {
 		Wall.find(id).success(function(wall){
-			if(wall.isPrivate == 0){
-				fn(true);
-			} else if(wall.owner == req.user.id){
-				fn(true);
-			} else {
-				WallUser.find({ where: { wallId: id, userId: req.user.id }, limit: 1 }).success(function(wallUser){
+			if(wall) {
+				if(wall.isPrivate == 0){
 					fn(true);
-				}).error(function(){
-					fn(false);
-				});
+				} else if(wall.owner == req.user.id){
+					fn(true);
+				} else {
+					WallUser.find({ where: { wallId: id, userId: req.user.id }, limit: 1 }).success(function(wallUser){
+						if(wallUser){
+							fn(true);
+						} else {
+							fn(false);
+						}
+					}).error(function(){
+						fn(false);
+					});
+				}				
+			} else {
+				fn(false);
 			}
 		}).error(function(){
 			fn(false);
