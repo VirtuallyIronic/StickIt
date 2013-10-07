@@ -68,7 +68,7 @@ module.exports = function(app, passport) {
 		});
 	}
 	
-	function textPermission(id, user, fn) {
+	function textPermission(id, userId, fn) {
 		Wall.find({ where: { id: id }, limit: 1 }).success(function(wall){
 			if(wall) {
 				if(wall.owner == userId){
