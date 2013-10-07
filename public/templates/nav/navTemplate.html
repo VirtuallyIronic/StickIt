@@ -1,7 +1,7 @@
 <div>
+	{{#if id}}
 	<div class="navbar" style="background-color: #fafafa;">
 		<div class="navbar-inner" style="text-align:center; display:inline-block; list-style-type: none;">
-			{{#if id}}
 			<ul class="nav">
 				<li><a href="index">Home</a></li>
 				<li><a href="about">About</a></li>
@@ -9,8 +9,12 @@
 				<li><a href="http://github.com/VirtuallyIronic/StickIt">Download</a></li>
 				<li><a href="login">Login</a></li>
 			</ul>
-			{{else}}
-			<ul>
+		</div>
+	</div>
+	{{else}}
+	<div class="navbar" style="background-color: #fafafa;">
+		<div class="navbar-inner" style="text-align:center; display:inline-block; list-style-type: none;">	
+			<ul class="nav">
 				<li><a href="index">Home</a></li>
 				<li><a href="about">About</a></li>
 				<li><a href="contact">Contact</a></li>
@@ -19,7 +23,7 @@
 				<li><a href="http://github.com/VirtuallyIronic/StickIt">Download</a></li>
 				<li><a href="/auth/logout">Logout</a></li>
 			</ul>
-			{{/if}}
 		</div>
 	</div>
+	{{/if}}
 </div>
