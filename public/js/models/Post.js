@@ -8,7 +8,16 @@ define(['jquery', 'underscore', 'backbone', 'backbone-relational', 'models/Tag',
 				key: 'tags',
 				relatedModel: 'modelTag',
 				reverseRelation: {
-					key: ''
+					key: 'postId',
+					includeInJSON: 'id'
+				}
+			}, {
+				type: Backbone.HasMany,
+				key: 'votes',
+				relatedModel: 'modelVote',
+				reverseRelation: {
+					key: 'postId',
+					includeInJSON: 'id'
 				}
 			}]
         });

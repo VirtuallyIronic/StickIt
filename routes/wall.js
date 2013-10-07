@@ -43,6 +43,44 @@ module.exports = function(app, passport) {
 	
 	function hasPermission(id, fn) {
 		Wall.find(id).success(function(wall){
+			if(!wall.isPrivate){
+				fn(true);
+			} else if(wall.owner == req.user.id){
+				fn(true);
+			} else {
+				WallUser.find({ where: { wallId: id, userId: req.user.id }, limit: 1 }).success(function(wallUser){
+					fn(true);
+				}).error(function(){
+					fn(false);
+				});
+			}
+		}).error(function(){
+			fn(false);
+		});
+	}
+	
+	function textPermission(id, fn) {
+		Wall.find(id).success(function(wall){
+			if(wall.owner == req.user.id){
+				fn('admin');
+			} else {
+				WallUser.find({ where: { wallId: id, userId: req.user.id }, limit: 1 }).success(function(wallUser){
+					fn(wallUser.permission);
+				}).error(function(){
+					if(wall.isPrivate){
+						fn(false);
+					} else {
+						fn('read');
+					}
+				});
+			}
+		}).error(function(){
+			fn(false);
+		});
+	}
+	
+/**	function hasPermission(id, fn) {
+		Wall.find(id).success(function(wall){
 			if(wall.owner === req.user.id) {
 				fn(true);
 			} else {
@@ -56,6 +94,7 @@ module.exports = function(app, passport) {
 			fn(false);
 		});
 	}
+**/
 	
 	function hasAdmin(id, fn) {
 		Wall.find(id).success(function(wall){
@@ -132,7 +171,8 @@ module.exports = function(app, passport) {
 	});
 	app.get('/api/wall/:id', function(req, res){
 		hasPermission(req.params.id, function(result){
-			if(result) {
+			console.log(result);
+/**			if(result) {
 				//Wall.find({ where: { id : req.params.id}, include: [ Post ]}).success(function(wall){
 				//	res.json(wall);
 				//}).error(function(error){
@@ -158,6 +198,7 @@ module.exports = function(app, passport) {
 			else {
 				res.send(401);
 			}
+**/
 		});
 	});
 	
@@ -219,11 +260,8 @@ module.exports = function(app, passport) {
 		  , row = req.body.row
 		  , wallId = req.body.wallId
 		  , colour = req.body.colour
-		  , colourBar = req.body.colourBar
-		  , font = req.body.font
 		  , fontSize = req.body.fontSize
 		  , text = req.body.text
-		  , tags = req.body.tags;
 		
 		sanitize(col).xss();
 		sanitize(col).escape();
@@ -233,16 +271,10 @@ module.exports = function(app, passport) {
 		sanitize(wallId).escape();
 		sanitize(colour).xss();
 		sanitize(colour).escape();
-		sanitize(colourBar).xss();
-		sanitize(colourBar).escape();
-		sanitize(font).xss();
-		sanitize(font).escape();
 		sanitize(fontSize).xss();
 		sanitize(fontSize).escape();
 		sanitize(text).xss();
 		sanitize(text).escape();
-		sanitize(tags).xss();
-		sanitize(tags).escape();
 		
 		isNotReaderOnly(wallId, function(result){
 			if(result) {

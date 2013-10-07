@@ -23,7 +23,7 @@ var sequelize = new Sequelize(
 			host: db.host,
 			port: db.port,
 			dialect: 'mysql',
-			maxConcurrentQueries: 1000,
+			maxConcurrentQueries: 100,
 			define: {
 			    charset: 'utf8',
 			    collate: 'utf8_general_ci',
@@ -34,7 +34,7 @@ var sequelize = new Sequelize(
 				force: false
 			},
 			syncOnAssociation: false,
-			pool: { maxConnections: 100, maxIdleTime: 20 }
+			pool: { maxConnections: 10, maxIdleTime: 20 }
 		}
 	);
 
