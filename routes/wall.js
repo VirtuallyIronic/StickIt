@@ -67,20 +67,28 @@ module.exports = function(app, passport) {
 		});
 	}
 	
-	function textPermission(id, fn) {
+	function textPermission(id, user, fn) {
 		Wall.find(id).success(function(wall){
-			if(wall.owner == req.user.id){
-				fn('admin');
-			} else {
-				WallUser.find({ where: { wallId: id, userId: req.user.id }, limit: 1 }).success(function(wallUser){
-					fn(wallUser.permission);
-				}).error(function(){
-					if(wall.isPrivate){
-						fn(false);
-					} else {
-						fn('read');
-					}
-				});
+			if(wall) {
+				if(wall.owner == user.id){
+					fn('admin');
+				} else {
+					WallUser.find({ where: { wallId: id, userId: user.id }, limit: 1 }).success(function(wallUser){
+						if(wallUser) {
+							fn(wallUser.permission);
+						} else if(wall.isPrivate == 1) {
+							fn(false);
+						} else {
+							fn('read');
+						}
+					}).error(function(){
+						if(wall.isPrivate){
+							fn(false);
+						} else {
+							fn('read');
+						}
+					});
+				}
 			}
 		}).error(function(){
 			fn(false);
