@@ -11,6 +11,7 @@ define([
     'views/page/loginView',
     'views/page/registerView',
     'views/footer/footerView',
+    'views/page/homeView',
     'models/CurrentUser'], 
 	function(
 		App,
@@ -25,6 +26,7 @@ define([
 		loginView,
 		registerView,
 		footerView,
+		homeView,
 		modelCurrentUser
 	){
 	var CurrentUser = new modelCurrentUser();
@@ -57,7 +59,7 @@ define([
         	App.mainRegion.show(new registerView());
         },
         home: function() {
-        	//App.mainRegion.show(new homeView());
+        	App.mainRegion.show(new homeView());
         },
         error: function () {
         	

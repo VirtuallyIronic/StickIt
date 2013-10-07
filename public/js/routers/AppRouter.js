@@ -6,7 +6,8 @@ define(['marionette', 'controllers/Controller'], function(Marionette, Controller
            "about": "about",
            "contact": "contact",
            "login": "login",
-           "register": "register"
+           "register": "register",
+           "home": "home",
        }
    });
 });
