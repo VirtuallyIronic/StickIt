@@ -33,6 +33,12 @@ a.hiddenanchor{
 	display: none;
 }
 /** The wrapper that will contain our two forms **/
+
+.SettingsBtn{
+	cursor: pointer;
+	margin-left: 70px;
+}
+
 #wrapper{
 	width: 60%;
 	right: 0px;
@@ -49,17 +55,15 @@ a.hiddenanchor{
 	text-decoration: underline;
 }
 
+/** For the moment only webkit supports the background-clip:text; */
 #wrapper h1{
-	font-size: 48px;
+ 	font-size: 35px;
 	color: rgb(6, 106, 117);
-	padding: 2px 0 10px 0;
+	padding: 0px 0 10px 0;
 	font-family: 'FranchiseRegular','Arial Narrow',Arial,sans-serif;
 	font-weight: bold;
 	text-align: center;
-	padding-bottom: 30px;
-}
-/** For the moment only webkit supports the background-clip:text; */
-#wrapper h1{
+	
     background: -webkit-repeating-linear-gradient(-45deg, 
 	rgb(18, 83, 93) , 
 	rgb(18, 83, 93) 20px, 
@@ -68,6 +72,7 @@ a.hiddenanchor{
 	rgb(18, 83, 93) 40px);
 	-webkit-text-fill-color: transparent;
 	-webkit-background-clip: text;
+	cursor:pointer;
 }
 #wrapper h1:after{
 	content: ' ';
@@ -82,9 +87,33 @@ a.hiddenanchor{
 	background: -ms-linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
 	background: linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
 }
+#wrapper h2{
+    background: -webkit-repeating-linear-gradient(-45deg, 
+	rgb(18, 83, 93) , 
+	rgb(18, 83, 93) 20px, 
+	rgb(64, 111, 118) 20px, 
+	rgb(64, 111, 118) 40px, 
+	rgb(18, 83, 93) 40px);
+	text-align: center;
+	-webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+}
+#wrapper h2:after{
+	content: ' ';
+	display: block;
+	width: 100%;
+	height: 2px;
+	margin-top: 10px;
+	background: -moz-linear-gradient(left, rgba(147,184,189,0) 0%, rgba(147,184,189,0.8) 20%, rgba(147,184,189,1) 53%, rgba(147,184,189,0.8) 79%, rgba(147,184,189,0) 100%); 
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(147,184,189,0)), color-stop(20%,rgba(147,184,189,0.8)), color-stop(53%,rgba(147,184,189,1)), color-stop(79%,rgba(147,184,189,0.8)), color-stop(100%,rgba(147,184,189,0))); 
+	background: -webkit-linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
+	background: -o-linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
+	background: -ms-linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
+	background: linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
+}
 
 #wrapper p{
-	margin-bottom:15px;
+	margin-bottom:5px;
 }
 #wrapper p:first-child{
 	margin: 0px;
@@ -290,7 +319,12 @@ p.change_link{
 	top: 1px;
 }
 /** Styling both forms **/
-#register, 
+#menuSettings,
+#register,
+#mainSettings,
+#optionPaneOne, 
+#optionPaneTwo,
+#optionPaneThree,
 #login{
 	position: absolute;
 	top: 0px;
@@ -313,8 +347,14 @@ p.change_link{
 #login{
 	z-index: 22;
 }
+
+
 #toregister:target ~ #wrapper #register,
-#tologin:target ~ #wrapper #login{
+#tologin:target ~ #wrapper #login,
+#toFirstOption:target ~ #wrapper #optionOne,
+#toSecondOption:target ~ #wrapper #optionTwo,
+#toThirdOption:target ~ #wrapper #optionThree,
+#toMainSettings:target ~#wrapper #login{
 	z-index: 22;
 	-webkit-animation-name: fadeInLeft;
 	-moz-animation-name: fadeInLeft;
@@ -327,6 +367,7 @@ p.change_link{
 	-ms-animation-delay: .1s;
 	animation-delay: .1s;
 }
+
 #toregister:target ~ #wrapper #login,
 #tologin:target ~ #wrapper #register{
 	-webkit-animation-name: fadeOutLeft;
@@ -380,4 +421,17 @@ p.change_link{
 	position: absolute;
 	height: 90px;
 	background: transparent;
+}
+#UserMenu{
+	text-align: right;
+	display: inline-block;
+	float: right;
+	margin-top: 10px;
+}
+#username,
+#menuLink,
+#logoutBtn{
+
+	
+	margin-right: 40px;
 }

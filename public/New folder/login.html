@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8" />
+        <title>Login</title>
+
+         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="javascript/bootstrap.min.js"></script>
+
+                <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+        <link rel="stylesheet" type="text/css" href="css/stylesheet401.css" />
+         <link rel="stylesheet" type="text/css" href="css/dropdownstyle.css" />
+
+       
+
+       <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <!-- remember you need to load in jquery before you use it other files. -->
+        <script type="text/javascript" src="javascript/jquery.transit.min.js"></script>
+        <script type="text/javascript" src="javascript/SettingsMenu.js"></script>
+
+    </head>
+   <body>
+        <div class="container">
+           <div class="topmenu" style="height:300px">
+                <div id="logo">
+                  <div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
+                  <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
+                  </div>
+                  <span><img src="logo/logo.jpg" style="height:301px; align:center; display:block; margin-left: auto;
+                  margin-right: auto; "></span>  
+                </div>
+                
+    <div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px;">
+    <div id="menuSettings" class="animate form" style="display:none; margin-top:-350px;">
+    <div class="closeBtn">
+      <a href="" class="close-thik" onlick="hideSettings(mainSettings)"></a>
+    </div>
+    <h1 id="MainS">Login</h1>
+    <p> 
+    <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+                                </p>
+                                <p> 
+    <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
+                                </p>
+                <p class="login button"> 
+                <input type="submit" value="Login" /> 
+                </p>
+    </div>
+  </div>      
+  
+  <div class="navbar" style="background-color: #fafafa;">
+    <div class="navbar-inner" style="text-align:center; display:inline-block;
+    list-style-type: none;">
+           <ul class="nav">
+                <li class="active"><a href="Homepage.html">Home</a></li>
+                <li><a href="Homepage.html">About</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+                <li><a href="https://github.com/VirtuallyIronic/StickIt">Download</a></li>
+                <li><a href="login.html">Login</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+            </div>
+                      <section>
+                        
+                <div id="container_demo" >
+                    <!-- hidden anchor to stop jump  -->
+                    <a class="hiddenanchor" id="toregister"></a>
+                    <a class="hiddenanchor" id="tologin"></a>
+                    <div id="wrapper" style="margin-top:100px;">
+                        <div id="login" class="animate form">
+                            <form  action="mysuperscript.php" autocomplete="on"> 
+                                <h1>Log in</h1> 
+                                <p> 
+                                    <label for="username" class="uname" data-icon="u" > Your email or username </label>
+                                    <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+                                </p>
+                                <p> 
+                                    <label for="password" class="youpasswd" data-icon="p"> Your password </label>
+                                    <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" /> 
+                                </p>
+                                <p class="keeplogin"> 
+									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
+									<label for="loginkeeping">Keep me logged in</label>
+								</p>
+                                <p class="login button"> 
+                                    <input type="submit" value="Login" /> 
+								</p>
+                                <p class="change_link">
+									Not a member yet ?
+									<a href="#toregister" class="to_register">Join us</a>
+								</p>
+                            </form>
+                        </div>
+
+                        <div id="register" class="animate form">
+                            <form  action="mysuperscript.php" autocomplete="on"> 
+                                <h1> Sign up </h1> 
+                                <p> 
+                                    <label for="usernamesignup" class="uname" data-icon="u">Your username</label>
+                                    <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="mysuperusername690" />
+                                </p>
+                                <p> 
+                                    <label for="emailsignup" class="youmail" data-icon="e" > Your email</label>
+                                    <input id="emailsignup" name="emailsignup" required="required" type="email" placeholder="mysupermail@mail.com"/> 
+                                </p>
+                                <p> 
+                                    <label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
+                                    <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                </p>
+                                <p> 
+                                    <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your password </label>
+                                    <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                </p>
+                                <p class="signin button"> 
+									<input type="submit" value="Sign up"/> 
+								</p>
+                                <p class="change_link">  
+									Already a member ?
+									<a href="#tologin" class="to_register"> Go and log in </a>
+								</p>
+                            </form>
+                        </div>
+						
+                    </div>
+                </div>  
+            </section>
+        </div>
+        <div class="footer"> StickIt copyright 2013 all rights reserved. "new tech may not be the most stable but it sure is the most fun"</div>
+    </div>
+    </body>
+</html>

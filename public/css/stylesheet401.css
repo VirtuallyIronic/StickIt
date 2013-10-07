@@ -1,6 +1,6 @@
 /*
 design template CSS sheet.
-8/05/13
+29/07/2013
 */
 
 {
@@ -16,11 +16,11 @@ design template CSS sheet.
 }
 
 .titleDisplay ul{ 
-    padding-left: 20px;
+    
 	overflow:hidden;
 	width: 2000%;
 }
-  
+
 .titleDisplay li{
     display: inline;
 	list-style-type: none;
@@ -28,15 +28,20 @@ design template CSS sheet.
 	margin-right: 15px;
 	overflow-y: hidden;
 }
+
   
 .laneTitle {  
 	background-color: yellow;
 	width: 200px;  
-	height: 40px;  
-	border: solid 1px #ccc;  
+	min-height: 40px;  
+	border: solid 2px #ccc; 
+	border-top-right-radius: 10px; 
+	border-top-left-radius: 5px;  
 	display: inline-block;
-	overflow-y: hidden;
-}  
+	overflow-y: visible;
+	text-align: center;
+} 
+/* new                     addition*/
 
 .itemsList {
 	white-space: nowrap; 
@@ -85,11 +90,12 @@ body{
 	background-color:#C0C0C0;
 	opacity:0.4;
 }
+
 #expandFulltext{
 	display:inline-block;
 	outline: none;
-	width: 80%;
-	height: 200px;
+	width: 95%;
+	height: auto;
 	padding-left: 5px;
 	overflow: hidden;
 	text-wrap:normal;
@@ -100,12 +106,13 @@ body{
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -150px;
-    margin-left: -160px;
+    margin-top: 0px;
+    margin-left: -200px;
 	opacity:1.0;
 	background-color: rgb(255, 240, 70);
-    height: 500px;
-    width: 500px;
+	min-height: 400px;
+    height: auto;
+    width: 450px;
 	padding: 10px;
 	z-index:99999;
 	border-style:solid;
@@ -119,13 +126,10 @@ body{
 	height: 205px;
 }
 
-#sideBar{
-    position:absolute;
-	right: 25%;
-    top: 10%;
-	height: 100%;
-    width: 80px;
+#colourDrop{
+    width: 180px;
 }
+
 
 #formText{
 	resize: none;
@@ -148,29 +152,23 @@ h2,p{
   font-weight:normal;
 }
 
-ul, ol {
-    list-style: none;
-    margin-top: 10px;
-}
-
 .topmenu  {
   width: 100%;
-  height: 80px;
+  height: 200px;
   margin-right:auto;
   margin-left:auto;
   position: relative;
-   border: 1px solid #071e3c;
- background-color: #071e3c;
+  border: 1px solid #0758AF;
+  background-color: #0758AF;
 }
 
 .topmenu img{
-  float:left;
-  width: 200px;
-  height: 80px;
+ 
 }
 
 .topmenu span{
-  float: left;
+ 
+  text-align: center;
   margin: auto;
    z-index: 100;
 }
@@ -193,28 +191,17 @@ ul, ol {
 	width:180px;
 }
 
-.sidebar {
-  float: right;
-  display: inline-block;
-  margin-left: ;
-  margin-top: 200px;
-  width: 40px;
-  height: 30px;
-  position: relative;
-  border: 1px solid #071e3c;
-  background-color: #071e3c;
-}
+
 
 .wall {
 	position:absolute;
-	top: 85px;
 	display: inline;
 	width: 100%;
 	height: 100%;
 }
 
-.cssnote {
-    background-color: white;
+.note {
+    background-color: rgb(255, 240, 70);
     height: 250px;
     position: absolute;
     width: 200px;
@@ -234,13 +221,14 @@ ul, ol {
 .editSpan {
 	display:inline-block;
 	outline: none;
-	width: 195px;
-	max-height: 200px;
+	width: 200px;
+	min-height: 150px;
+	max-height: 165px;
+	line-height: 100%;
 	padding-left: 5px;
 	overflow: hidden;
 	text-overflow:ellipsis;
 	white-space:pre-wrap;
-	font-size: 18px;
 }
 
 .lane {
@@ -275,31 +263,24 @@ ul, ol {
     border-top: 1px solid #a80;
     padding: 2px 4px;
     text-align: right;
-	height: 25px;
+	height: 55px;
 }
 
 #loginlogo{
 	-webkit-border-radius: 0em 0em 5em 5em;
 	width: 100%;
 	min-height: 100px;
-	max-height: 20%;
+	max-height: 200px;
 	border: 1px solid #071e3c;
 	background-color: #071e3c; 
+	text-align: left;
 }
 
-.loginlogo img{ 
+#loginlogo img{ 
   min-height: 100px;
   margin-left: auto;
   margin-right: auto;
-}
 
-#loginlogo{
-	-webkit-border-radius: 0em 0em 5em 5em;
-	width: 100%;
-	min-height: 100px;
-	max-height: 20%;
-	border: 1px solid #071e3c;
-	background-color: #071e3c; 
 }
 
 #titlebar{ 
@@ -307,4 +288,203 @@ ul, ol {
 	font-size:100%;
 	background-color:#999;
 	color:#fff;
+}
+
+.footer{
+	bottom: 0;
+	position: fixed;
+	font-style: italic;
+	font-size: 70%;
+}
+#menuwidgetShow{
+	float: right;
+	margin-right: 90px;
+	width: 40px;
+	height: 40px;
+	border-radius: 15px;
+	cursor: pointer;
+}
+#menuwidgetHide{
+	float: right;
+	margin-right: 90px;
+	width: 40px;
+	height: 40px;
+	border-radius: 15px;
+	cursor: pointer;
+}
+
+.userSettings {
+	position: absolute;
+	top: 40px;
+	width: 300px;	
+	height: 300px;	
+	padding: 18px 6% 60px 6%;
+	margin: 0 0 35px 0;
+	background: rgb(247, 247, 247);
+	border: 1px solid rgba(147, 184, 189,0.8);
+	-webkit-box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+	   -moz-box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+	        box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+	-webkit-box-shadow: 5px;
+	-moz-border-radius: 5px;
+		 border-radius: 5px;
+}
+/*
+lane btns.
+*/  
+.deleteLane,
+.editLaneBut {
+	color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    font-size: 70%;
+}
+.deleteLane{
+	 background: rgb(202, 60, 60); /* this is a maroon */
+}
+.editLaneBut{
+	background: rgb(66, 184, 221); /* this is a light blue */
+}
+/*
+Note btns.
+*/
+.deleteButton,
+.editButton,
+.expandButton,
+.tagButton,
+.continueBtn{
+	color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    
+}
+
+.deleteButton{
+ background: rgb(202, 60, 60); /* this is a maroon */
+}
+.editButton{
+ background: #045cdc; /* this is a light blue */
+}
+.expandButton{
+background: rgb(66, 184, 221); /* this is a light blue */
+ background-attachment: "../images/icons/expand-icon.png"
+}
+
+.continueBtn{
+	float: right;
+	font-size: 130%;
+background: rgb(66, 184, 221); /* this is a light blue */
+ background-attachment: "../images/icons/expand-icon.png"
+}
+.tagButton{
+	width:70px;
+background: #045cdc; /* this is a light blue */	
+}
+#confirmPopup{
+	margin-top: 30px;
+}
+#cancelPopup{
+margin-top: 30px;	
+}
+
+#colourSelect{
+    width: 140px;
+    height: 34px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+	
+}
+#colourSelect select{
+	background: white;
+   width: 138px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+}
+
+#sizeDrop{
+	background: white;
+   width: 138px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+
+}
+#laneDrop{
+	background: white;
+   width: 138px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+
+}
+.userText{
+background: white;
+   width: 128px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+	
+}
+
+.tag {
+	font-style: italic;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+/* note bar*/
+#bottombar{
+	margin-top: 10px;
+}
+
+#wallCreationBtn{
+	color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+ background: rgb(202, 60, 60); /* this is a maroon */    
+}
+
+#sidemenu {
+	
+	position: fixed;
+	right:0;
+	width: 100px;
+	height: 50px;
+	padding-top: 22px;
+	padding-left: 10px;
+	background-color: red;
+	border-bottom-left-radius:10px;
+	border-top-left-radius: 10px;  
+	opacity: 0.4;
+	cursor: pointer;
+}
+
+.sidebar {
+  display:none;
+  float: right;
+  display: inline-block;
+  border-bottom-left-radius:10px;
+  border-top-left-radius: 10px;  
+  
+  
+  position: relative;
+  border: 1px solid #071e3c;
+  background-color: #071e3c;
+}
+
+.closebtn{
+	float:right;
+}
 }

@@ -1,30 +1,59 @@
 //--------------
 /*
-**	VERSION 3(?)
-**	13/09/2013
-**	END OF SPRINT 4
+**	VERSION 3.3
+**	20/09/2013
+**	PRE-TESTING
 **
 **	--FEATURES--
 **	NOTES (CREATE, EDIT, DELETE)
 **		DRAGGABLE
+**		EDIT:
+**			TEXT
+**			TAGS
+**				-TAGS MISSING LINKS TO ACCESSABLE USERS
+**			COLOUR
+**				-PRESET
+**			FONT SIZE
+**				-MISSING FONT STYLE	
+**			VOTING
+**				+1 AND -1
+**			
 **	LANES (CREATE, EDIT, DELETE)
 **		CLEAR THE WALL
+**		CLEAR A LANE
+**		EDIT TITLE
+**
 **	INITIAL AJAX CALLS
+**		IF OFFLINE, IGNORE SERVER REQUESTS
 **
 **	--MISSING--
 **	BACKBONE.SYNC
 **	  -BACKBONE.SYNC WILL SPEED UP SERVER REQUESTS. 
 **	  -STILL INVESTIGATING.
+**	FORMATTING OF NOTES
+**		-ADDITIONAL STYLE, COLOURS AND FONTS
+**	CHROME ISSUES
+**		- PARTIALLY SOLVED	
+**	ADMIN RIGHTS (!!)
+**
+**	NEWLY ADDED/FIXED
+**		FIXED SPACE BAR BUG ON MENU/EXPAND OPEN
+**		FONT CHANGES DEPENDING ON BACKGROUND
 **
 **
 */
 //--------------
+
+
 	var globalTestCount = 0;
 	var gridster;
 	var lanes;
 	var notes;
+	var offlineTitles = new Array();
 	var globalData = {};
 	var randomName = 0;
+	var online = true;
+	var currentUser = "Kirk";
 	/*
 	Remove all notes on wall
 	*/
@@ -50,12 +79,6 @@
 	
 	$(function(){
 		/*AJAX CALL FOR COLUMNS AND NOTE DATA*/
-		/*$.ajaxSetup( { "async": false } );
-		var details = {};
-		var request = $.getJSON( "database.json", function(data) {
-			details = data;
-		});*/
-		//$.ajaxSetup( { "async": false } );
 		$('#fullscreen').show();
 		$.ajax({ 
 			url: '/get',
@@ -64,11 +87,24 @@
 			success: function(data){
 				lanes = data[0];//.totalCols;
 				notes = data[1];
-				alert("success");
+				//PULL HEADINGS NAMES
+				for (var i=0; i<lanes; i++)
+				{
+					var laneID = (i+1);
+					offlineTitles[i] = 'Lane '+laneID;
+				}
+				//alert("success");
 			}, 
 			error: function(jqXHR, textStatus, err){
-				alert('text status '+textStatus+', err '+err);
-				lanes = 7;
+				//alert('text status '+textStatus+', err '+err);
+				alert('Offline Mode: ON');
+				lanes = 5;
+				for (var i=0; i<lanes; i++)
+				{
+					var laneID = (i+1);
+					offlineTitles[i] = 'Lane '+laneID;
+				}
+				online = false;
 			}
 		});
 		//var notes = noteData;//JSON.parse(strings);
@@ -97,7 +133,7 @@
 
 		// `Backbone.sync`: Overrides persistence storage with dummy function. This enables use of `Model.destroy()` without raising an error.
 		Backbone.sync = function(method, model) {
-			alert(method+"<-- method SYNC model-->"+model);
+			//alert(method+"<-- method SYNC model-->"+model);
 		};
 
 		noteFormat = Backbone.Model.extend({
@@ -109,10 +145,20 @@
 					'votes': 0,
 					'voted': new Array(),
 					'tagged': new Array(),
-					'colour-note': 'white',
-					'colour-bar': 'red',
+					'colour-note': '#FFFFFF',
+					'colour-bar': '#000000',
 					'font': '',
 					'font-size': 18
+				}
+			},
+			url: 'http://localhost:8080/'
+			//http://localhost:8080/messages
+		});
+		
+		wallFormat = Backbone.Model.extend({
+			defaults: function(){
+				return {
+					'voted': new Array()
 				}
 			},
 			url: 'http://localhost:8080/'
@@ -136,13 +182,14 @@
 				'click button.deleteButton': 'remove',//'remove',
 				'click button.editButton': 'editMe',
 				'click button.expandButton': 'expanding',
-				'click button.voteButton': 'voting'
+				'click button.voteButton': 'voting',
+				'click button.removeVoteButton': 'cancelVote'
 			},
 			
 			// `initialize()` now binds model change/removal to the corresponding handlers below.
 			initialize: function(){
 				// every function that uses 'this' as the current object should be in here
-				_.bindAll(this, 'render','editMe', 'testingAlerts','unrender','removeTag','addNewTag','voting','moveNote','removenoprompt','updatePos','processing', 'remove', 'expanding');
+				_.bindAll(this, 'render','editMe', 'cancelVote', 'unrender','removeTag','addNewTag','voting','moveNote','removenoprompt','updatePos','processing', 'remove', 'expanding');
 
 				this.model.bind('remove', this.unrender);
 				this.model.on('laneRemove', this.removenoprompt);
@@ -158,14 +205,10 @@
 			
 			//------OPENS EXPANDED TEXT BOX--------
 			expanding: function(){
-				var asdasd = this.model.toJSON();
-				alert(asdasd);
+				//var asdasd = this.model.toJSON();
 				expandNote(this);
 			},
-			
-			testingAlerts: function(input){
-				alert(input);
-			},
+
 			addNewTag: function(e){
 				var tags = this.model.get('tagged');
 				var tagName = $(e.target).parent().children('.userText').val();
@@ -194,19 +237,47 @@
 				var tat = _.size(voted);//.length;
 				if (tat === 0)
 				{
-					voted[0] = "who ever is logged in";
+					voted[0] = currentUser;
 				}
 				else
 				{
-					voted[tat] = "who ever is logged in";
+					voted[tat] = currentUser;
 				}
 				this.model.set('votes', votes);
 				this.model.set('voted', voted);
-				this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").remove();
+				this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
+				$("<button class='removeVoteButton'> -1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+				////.remove();
 				this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
 				this.model.trigger('updateServer');				
 			},
 
+			cancelVote: function(){
+				var changed =0;
+				var votes = this.model.get('votes');
+				
+				var voted = this.model.get('voted');
+				var tat = _.size(voted);//.length;
+				for (var i=0; i<tat; i++)
+				{
+					if (voted[i] == currentUser)
+					{
+						voted.splice(i,1);
+						changed++;
+					}
+				}
+				this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
+				$("<button class='voteButton'> +1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+				if (changed > 0)
+				{
+					votes = (votes-1);
+					this.model.set('votes', votes);
+					this.model.set('voted', voted);
+					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
+					this.model.trigger('updateServer');		
+				}
+			},
+			
 			//------OPENS EDIT MENU--------
 			editMe: function(){
 				popMenu(this);
@@ -242,15 +313,20 @@
 					/*this.$el.children('.edit').children(".editSpan").text( textEdit);
 					linkify(this.$el.children('.edit').children(".editSpan"));*/
 					//$($note).css("background-color", input.model.get('colour-note'));
-					this.$el.children('.cssnote').css('background-color', colour);
-					colour = this.$el.children('.cssnote').css('background-color');
-					colour = palletSwap(colour);
-					this.$el.children('.cssnote').children('.dragbar').css('background-color', colour);					
-					this.$el.children('.cssnote').children('.toolbar').css('background-color', colour);
+					
+					//this.$el.children('.cssnote').css('background-color', colour);
+					this.$el.css('background-color', colour);
+					
+					//colour = this.$el.children('.cssnote').css('background-color');
+					this.model.set('colour-note', colour);
+					var fontColour = getContrastYIQ(colour);
+					var newColour = getTintedColor(colour, -75);
+					this.$el.children('.cssnote').children('.dragbar').css('background-color', newColour);					
+					this.$el.children('.cssnote').children('.toolbar').css('background-color', newColour);
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontSize', fontSize+"px");
+					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('color', fontColour);
 					
 					this.model.set('font-size', fontSize);
-					this.model.set('colour-note', colour);
 					this.model.set('text', textEdit);
 					if (tags != 0)
 					{
@@ -318,7 +394,6 @@
 			//-------CREATES INITIAL OBJECTS-------
 			render: function(){
 				var self = this;
-				
 				for (var i=0; i<col; i++)
 				{
 					var $laneHead = jQuery('<li/>', {
@@ -333,116 +408,132 @@
 					var $tSpan = jQuery('<span/>', {
 						class:'titleSpan',
 					});
-					$($tSpan).text(i);
+					$($tSpan).text(offlineTitles[i]);
 					
 					//--- attempt to put the title inside a <p> tag. ---
 					$("<p>").appendTo($headDetails);
 					
 					$($tSpan).appendTo($headDetails);
-					var varvar = i+1
-					$("<button value="+varvar+" class='deleteLane'>DELETE LANES</button>").appendTo($headDetails);
-					$("<button class='editLaneBut'>EDIT LANES</button>").appendTo($headDetails);
+					//var varvar = i+1
+					$("<button value="+i+" class='deleteLane'>DELETE LANES</button>").appendTo($headDetails);
+					$("<button value="+i+" class='editLaneBut'>EDIT LANES</button>").appendTo($headDetails);
 				}
-
-				for (var w=0; w<notes.length; w++)
-				{
-					var item = new noteFormat(notes[w]);
-					/*item.set({
-						'col': notes[w].col,
-						'row': notes[w].row,
-						'text': notes[w].text
-						// modify item defaults
-					});*/
-					this.collection.add(item);
+				
+				if (online == true){
+					for (var w=0; w<notes.length; w++)
+					{
+						var item = new noteFormat(notes[w]);
+						/*item.set({
+							'col': notes[w].col,
+							'row': notes[w].row,
+							'text': notes[w].text
+							// modify item defaults
+						});*/
+						this.collection.add(item);
+					}
 				}
 			},
 			
 			serverUpdate: function(){
-				//alert('testing '+globalTestCount);
-				//globalTestCount = globalTestCount+1;
-				var qqa = this.collection.toJSON();
-				//alert(qqa);
-				
-				$.ajax({ 
-					url: '/dataUpdate',
-					type: 'POST',
-					//async: false,
-					cache: false, 
-					dataType: 'json',
-					contentType: "application/json",
-					data: JSON.stringify(qqa),
-					success: function(data){
-						alert("done, reloading now")
-						//location.reload(true);
-					}
-					, error: function(jqXHR, textStatus, err){
-						alert('ERROR text status '+textStatus+', err '+err)
-						//location.reload(true);
-					}
-				});
-				
-				
+				if (online == true)
+				{
+					var qqa = this.collection.toJSON();					
+					$.ajax({ 
+						url: '/dataUpdate',
+						type: 'POST',
+						//async: false,
+						cache: false, 
+						dataType: 'json',
+						contentType: "application/json",
+						data: JSON.stringify(qqa),
+						success: function(data){
+							//SERVER UPDATED
+							//alert("reloading now")
+							//location.reload(true);
+						}
+						, error: function(jqXHR, textStatus, err){
+							alert('ERROR text status '+textStatus+', err '+err)
+							//location.reload(true);
+						}
+					});
+				}
 			},
 			
 			editTitle: function(ev){
-				var fname=prompt("New Lane Title")
-				$(ev.target).parent().children('.titleSpan').html(fname);
+				var i = $(ev.target).val();
+				var fname=prompt("New Lane Title",$(ev.target).parent().children('.titleSpan').text());
+				if (fname != 'null' && fname != 'undefinded' && fname != "")
+				{
+					offlineTitles[i] = fname;
+					$(ev.target).parent().children('.titleSpan').text(fname);
+				}
+				
+				/*$(".class").each(function() {
+					// ...
+				});*/
+				
 			},
 			
 			//------OPENS NEW NOTE MENU--------
 			addItem: function(){
-				//alert('!!!!');
 				popMenu(this);
 			},
 			
 			//-------DELETES A COLUMN OF NOTES AND MOVES REST TO THE LEFT-------
 			removeLane: function(ev){
-				var r=confirm("Delete lane? ");
-				if (r==true)
+				if (online == true)
 				{
-					var colID = $(ev.target).val();
-					var notesEdited = 0;
-					for (var q=colID; q<=lanes;q++)
+					var r=confirm("Delete lane? ");
+					if (r==true)
 					{
-						//alert("q "+q);
-						if (q==colID)
+						var colID = $(ev.target).val();
+						
+						//NEED TO UPDATE THIS TO THE BACKEND!
+						offlineTitles.splice(colID,1);
+						
+						var notesEdited = 0;
+						for (var q=colID; q<=lanes;q++)
 						{
-							//alert('if');
-							var colData = this.collection.where({'col': colID});
-							for (var i=0; i<colData.length; i++)
+							if (q==colID)
 							{
-								notesEdited++;
-								var testing = colData[i];
-								testing.trigger('laneRemove');
+								var colData = this.collection.where({'col': colID});
+								for (var i=0; i<colData.length; i++)
+								{
+									notesEdited++;
+									var testing = colData[i];
+									testing.trigger('laneRemove');
+								}
+							}
+							else
+							{
+								var colPos = q.toString();
+								var colMove = this.collection.where({'col': colPos});
+								for (var i=0; i<colMove.length; i++)
+								{
+									//Move all notes to the left.
+									notesEdited++;
+									var moveNote = colMove[i];
+									moveNote.trigger('moveNote');
+								}
 							}
 						}
-						else
+						if (notesEdited > 0)
 						{
-							//alert('else '+q );
-							var colPos = q.toString();
-							var colMove = this.collection.where({'col': colPos});
-							for (var i=0; i<colMove.length; i++)
-							{
-								//Move all notes to the left.
-								notesEdited++;
-								var moveNote = colMove[i];
-								moveNote.trigger('moveNote');
-								//alert(colMove[i]);//.model.get('text'));
-							}
+							this.serverUpdate();
 						}
+						//remove Heading  --  unneeded
+						
+						
+						$(ev.target).parent().children('.titleSpan').html("DELETED");
+						$(ev.target).remove();
+						
+						//AJAX: SET SERVER COL NUMBER TO 1 LESS
+						moreLanes();
 					}
-					if (notesEdited > 0)
-					{
-						this.serverUpdate();
-					}
-					//remove Heading  --  unneeded
-					
-					$(ev.target).parent().children('.titleSpan').html("DELETED");
-					$(ev.target).remove();
-					
-					//AJAX: SET SERVER COL NUMBER TO 1 LESS
-					moreLanes();
-
+				}
+				else
+				{
+					alert('Currently Offline');
 				}
 			},
 			
@@ -459,18 +550,18 @@
 					var tagged = new Array();
 					var tagSize = $(tags).children().length;
 					var count = 0;
-					//alert($(tags).children().eq(1).text());
+
 					for (var i=1; i<tagSize; i=i+3)
 					{
-						//alert($(tags).children[i].text());
 						tagged[count] = $(tags).children().eq(i).text();
 						count=count+1;
-						//i=i+2;
 					}
+					
 					while (gridster.is_widget(col,row))
 					{
 						++row;
 					};
+					
 					var item = new noteFormat();
 					item.set({
 						'col': col,
@@ -480,6 +571,7 @@
 						'colour-note': colour,
 						'font-size': fontSize
 					});
+					
 					this.collection.add(item);
 					this.serverUpdate();
 				}
@@ -501,42 +593,7 @@
 
 		listView = new ListView();
 	});//(jQuery);
-	
-	function palletSwap(col)
-	{
-		var check = col.substring(0,3);
-		if (check!='rgb')
-		{
-			col = "rgb("+255+","+255+","+255+")";
-		}
-		var num = col.slice(4);
-		num = num.split(",");
-		var red = parseInt(num[0]);
-		var green = parseInt(num[1]);
-		var blue = num[2].slice(0,-1);
-		blue = parseInt(blue);
-
-		red = red-55;
-		green = green-55;
-		blue = blue-55;
 		
-		red = zeroCheck(red);
-		green = zeroCheck(green);
-		blue = zeroCheck(blue);
-		var newColour = "rgb("+red+","+green+","+blue+")";
-		return newColour;
-		//return col;
-	}
-
-	function zeroCheck(colour)
-	{
-		if (colour < 0)
-		{
-			colour = 0;
-		}
-		return colour;
-	}
-	
 	//CLOSES ANY POPUP MENU OPEN
 	function closeMenu()
 	{
@@ -546,7 +603,6 @@
 	
 	//BUTTON STOPPED WORKING, WORKAROUND
 	function newNoteWorkaround(){
-		//alert("FUCK");
 		listView.trigger('newNote');
 	}
 	
@@ -579,6 +635,7 @@
 			cols: '24',
 		});
 		$textEdit.appendTo("#formDetails");
+		$textEdit.focus();
 		$("<div id='sideBar'></div>").appendTo("#formDetails");
 		
 
@@ -595,11 +652,13 @@
 			});
 			$laneSelect.appendTo("#sideBar");
 
-			for (i=1; i<=7; i++)
+			for (i=1; i<=lanes; i++)
 			{
-				$("<option value="+i+">"+i+"</option>").appendTo("#laneDrop");
+				var arrayFix = (i-1);
+				$("<option value="+i+">"+offlineTitles[arrayFix]+"</option>").appendTo("#laneDrop");
 			}
 		}
+		//------------------------------------------------
 
 		$("<p>Colour</p>").appendTo("#sideBar");
 
@@ -612,14 +671,25 @@
 		$("<option value='#CCCC00'>yellow</option>").appendTo("#colourDrop");
 		$("<option value='#33CCFF'>blue</option>").appendTo("#colourDrop");
 		$("<option value='#FF0000'>red</option>").appendTo("#colourDrop");
+		
+		$("<option value='#860e20'>860e20</option>").appendTo("#colourDrop");
+		$("<option value='#4246ce'>4246ce</option>").appendTo("#colourDrop");
+		$("<option value='#5aa6c8'>5aa6c8</option>").appendTo("#colourDrop");
+		$("<option value='#ee740e'>ee740e</option>").appendTo("#colourDrop");
+		$("<option value='#1b5733'>1b5733</option>").appendTo("#colourDrop");
+		$("<option value='#605d60'>605d60</option>").appendTo("#colourDrop");
+		$("<option value='#9717e5'>9717e5</option>").appendTo("#colourDrop");
+		$("<option value='#f4504a'>f4504a</option>").appendTo("#colourDrop");
+		$("<option value='#f7fa53'>f7fa53</option>").appendTo("#colourDrop");
 
-		$("<p>Colour</p>").appendTo("#sideBar");
+		//------------------------------------------------
+
+		$("<p>Font Size</p>").appendTo("#sideBar");
 
 		var $sizeSelect = jQuery('<select/>', {
 			id: 'sizeDrop',
 		});
 		$sizeSelect.appendTo("#sideBar");
-		
 		var sizeFont = 15;
 		for (var i=0; i<17; i++)
 		{
@@ -629,35 +699,24 @@
 		
 		if (edit == true)
 		{
-			$("#colourDrop > [value='"+data.model.get('colour-note')+"']").attr("selected", "true");
 			$("#sizeDrop > [value='"+data.model.get('font-size')+"']").attr("selected", "true");
+			$("#colourDrop > [value='"+data.model.get('colour-note')+"']").attr("selected", "true");
 		}
 		
 		//------------------------------------------------
 		$("<p>TAG</p>").appendTo("#sideBar");
-		/*
-		**List is available if we can get a list of those with access to the wall
-		**else Text box for tagging, can check text later to see if user exists.
-		$("<select id='tagDrop'></select>").appendTo("#sideBar");
-		//ADD A LIST OF TAGS HERE
-		//option value etc.
-		for (i=1; i<=lanes; i++)
-		{
-			$("<option value="+i+">"+i+"</option>").appendTo("#tagDrop");
-		}
-		*/
+
 		$('<input class="userText" type="text" name="user" placeholder="e.g. Worked Well">').appendTo('#sideBar');
-		//$('<input class="userText" type="text" name="user">').appendTo('#sideBar');
 		$("<button class='tagButton' onclick='addUserTag(this)'>Add Tag</button>").appendTo("#sideBar");
-		//$('.tagButton').on('click', addUserTag(this));
 		//------------------------------------------------
 		
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
+		/*
 		$("<span class='tagLink' onclick='addTag(this)'>www.google.com </span><br/>").appendTo("#bottomBar");
 		$("<span class='tagLink' onclick='addTag(this)'>http://www.google.com </span><br/>").appendTo("#bottomBar");
 		$("<span class='tagLink' onclick='addTag(this)'>http://test.com </span><br/>").appendTo("#bottomBar");
 		$("<span class='tagLink' onclick='addTag(this)'>www.random.org </span><br/>").appendTo("#bottomBar");
-			
+		*/
 		if (edit === true)
 		{
 			$("<button id='confirmEdit' >Confirm</button>").appendTo("#bottomBar");
@@ -717,13 +776,11 @@
 		var tagged = new Array();
 		var tagSize = $(tags).children().length;
 		var count = 0;
-		//alert($(tags).children().eq(1).text());
+
 		for (var i=1; i<tagSize; i=i+3)
 		{
-			//alert($(tags).children[i].text());
 			tagged[count] = $(tags).children().eq(i).text();
 			count=count+1;
-			//i=i+2;
 		}
 		var checkSize = _.size(tagged);
 		var fullTextCurrent = field.model.get('text');
@@ -751,7 +808,6 @@
 			if (r==true)
 			{
 				var output = [];
-				//output[1] = lanePos;
 				output[0] = fieldText;
 				output[1] = newColour;
 				output[2] = newFontSize;
@@ -763,14 +819,12 @@
 				{
 					output[3] = 0;
 				}
-				//closeMenu();
 				return output;
 			}
 		}
 		else
 		{
 			return null;
-			//closeMenu();
 		}
 	}
 	
@@ -780,27 +834,42 @@
 		gridster.remove_widget(field);
 	}
 	
+	// credits: richard maloney 2006
+	function getTintedColor(color, v) {
+		if (color.length >6) { color= color.substring(1,color.length)}		
+		var rgb = parseInt(color, 16); 
+		var r = Math.abs(((rgb >> 16) & 0xFF)+v); if (r>255) r=r-(r-255);
+		var g = Math.abs(((rgb >> 8) & 0xFF)+v); if (g>255) g=g-(g-255);
+		var b = Math.abs((rgb & 0xFF)+v); if (b>255) b=b-(b-255);
+		r = Number(r < 0 || isNaN(r)) ? 0 : ((r > 255) ? 255 : r).toString(16); 
+		if (r.length == 1) r = '0' + r;
+		g = Number(g < 0 || isNaN(g)) ? 0 : ((g > 255) ? 255 : g).toString(16); 
+		if (g.length == 1) g = '0' + g;
+		b = Number(b < 0 || isNaN(b)) ? 0 : ((b > 255) ? 255 : b).toString(16); 
+		if (b.length == 1) b = '0' + b;
+		return "#" + r + g + b;
+	}
+	
+	function getContrastYIQ(hexcolor){
+		if (hexcolor.length >6) { hexcolor= hexcolor.substring(1,hexcolor.length)}
+		var r = parseInt(hexcolor.substr(0,2),16);
+		var g = parseInt(hexcolor.substr(2,2),16);
+		var b = parseInt(hexcolor.substr(4,2),16);
+		var yiq = ((r*299)+(g*587)+(b*114))/1000;
+		return (yiq >= 128) ? 'black' : 'white';
+	}
+	
 	//CREATES NEW HTML ELEMENT NOTE
 	function Note(input)
 	{
-		//var $note = $(input.$el);
-
 		var x = input.model.get('text');
 		var lanePos = input.model.get('col');
-		//$(input.$el).appendTo('gridster');
 		
 		var $note = jQuery('<div/>', {
 			class: 'cssnote',
 		});
-		$($note).css("background-color", input.model.get('colour-note'));
-		var colour = $($note).css("background-color");
-		var check = colour.substring(0,3);
-		if (check!='rgb')
-		{
-			var ppp = window.getComputedStyle($note);
-			colour = "rgb("+255+","+255+","+255+")";
-		}
-		colour = palletSwap(colour);
+		var fontColour = getContrastYIQ(input.model.get('colour-note'));
+		$(input.el).css("background-color", input.model.get('colour-note'));
 		$($note).appendTo($(input.el));
 		
 		var $db = jQuery('<div/>', {
@@ -822,6 +891,7 @@
 			class:'editSpan',
 		});
 		$($eSpan).css("font-size", input.model.get('font-size')+"px");
+		$($eSpan).css("color", fontColour);
 		$($eSpan).text(x);
 		$($eSpan).appendTo($edit);
 		linkify($eSpan);
@@ -830,24 +900,10 @@
 			class: 'toolbar',
 		});
 		$tb.appendTo($note);
-		
+		var oldColour = input.model.get('colour-note');
+		var colour = getTintedColor(oldColour, -75);
 		$($db).css("background-color", colour);
 		$($tb).css("background-color", colour);
-		
-		if (randomName == 0)
-		{
-			randomName = 1;
-			var demo = new Array();
-			demo[0] = "poop";
-			input.model.set('voted', demo);
-			var vv = input.model.get('votes');
-			vv = vv+1;
-			input.model.set('votes', vv);
-		}
-		else
-		{
-			randomName = 0;
-		}
 		
 		var voteScore = input.model.get('votes');
 		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
@@ -860,10 +916,9 @@
 		var votedList = input.model.get('voted');
 		var votedLength = _.size(votedList);
 		var alreadyVoted;
-		var loggedInUser = "poop";
 		for (var i=0; i<votedLength; i++)
 		{
-			if (loggedInUser == votedList[i])
+			if (currentUser == votedList[i])
 			{
 				alreadyVoted = 1;
 			}
@@ -882,9 +937,9 @@
 		$('#fullscreen').show();
 		var $exMenu = jQuery('<div/>', {
 			class: 'popupMenu',
-		});//.draggable();
+		});
 		$($exMenu).appendTo("body");
-		//$($exMenu).css('background-color', field.model.get('note-colour'));
+		
 		$($exMenu).css("background-color", field.model.get('colour-note'));
 		$("<span id='createTitle'>Note</span></br>").appendTo(".popupMenu");
 		$("<div id='popupDetails'></div>").appendTo(".popupMenu");
@@ -906,45 +961,52 @@
 			$("<span class='taggedUser'>Tag: "+tagged[i]+"</span><br/>").appendTo("#bottomBar");
 		}		
 		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
+		document.getElementById('cancelPopup').focus();
 	}
 
 	//REQUESTS MORE LANES FROM SERVER
 	function moreLanes(postType)
 	{
-		
-		alert(lanes);
-		if (postType == '0')
-		{
-			//alert('ajax');
-			//var sendURL = '/ajax';
-			lanes = parseInt(lanes); 			
-			lanes=lanes+1;
+		if (online == true)
+		{		
+			if (postType == '0')
+			{
+				//alert('ajax');
+				//var sendURL = '/ajax';
+				lanes = parseInt(lanes); 			
+				lanes=lanes+1;
+			}
+			else
+			{
+				//alert('decLane');
+				//var sendURL = '/decLan';
+				lanes = parseInt(lanes);
+				lanes=lanes-1;
+			}
+			
+			$.ajax({ 
+				url: '/',
+				type: 'POST',
+				cache: false,
+				async: false,			
+				dataType: 'json',
+				contentType: "application/json",
+				data: JSON.stringify({'newCol':lanes}),
+				success: function(data){
+					//LANE ALTERED
+					alert('Reloading Page')
+					location.reload(true);
+				}
+				, error: function(jqXHR, textStatus, err){
+					alert('ERROR text status '+textStatus+', err '+err)
+					//location.reload(true);
+				}
+			});
 		}
 		else
 		{
-			//alert('decLane');
-			//var sendURL = '/decLan';
-			lanes = parseInt(lanes);
-			lanes=lanes-1;
+			alert('Currently Offline');
 		}
-		
-		$.ajax({ 
-			url: '/',
-			type: 'POST',
-			cache: false,
-			async: false,			
-			dataType: 'json',
-			contentType: "application/json",
-			data: JSON.stringify({'newCol':lanes}),
-			success: function(data){
-				alert("done, reloading now")
-				location.reload(true);
-			}
-			, error: function(jqXHR, textStatus, err){
-				alert('ERROR text status '+textStatus+', err '+err)
-				//location.reload(true);
-			}
-		});
 	}
 	
 	function screenCap()
@@ -974,7 +1036,6 @@
 			if (replacePattern2.test(replacedArray[i]))
 			{
 				temp = replacedArray[i].replace(replacePattern2, '<a href="$1" target="_blank">$1</a>');
-				//'<a href="$1">$1</a>
 				$(temp).appendTo(eSpan);
 				i=i+1;
 			}
