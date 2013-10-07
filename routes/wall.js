@@ -109,7 +109,7 @@ module.exports = function(app, passport) {
 				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
 					if(wall) {
 						textPermission(req.params.id, req.user, function(textResult){
-							Post.findAll({ where: { wallId: req.params.id }, include: [Vote, Tags]}).success(function(posts){
+							Post.findAll({ where: { wallId: req.params.id }, include: [Vote, Tag]}).success(function(posts){
 								ColName.findAndCountAll({ where: { wallId: req.params.id}}).success(function(colnames){
 									res.json({
 										id: wall.id,
