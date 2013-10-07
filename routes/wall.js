@@ -179,7 +179,13 @@ module.exports = function(app, passport) {
 	});
 	app.get('/api/wall/:id', function(req, res){
 		hasPermission(req.params.id, req.user, function(result){
-			res.json(result);
+			if(result){
+				textPermission(req.params.id, req.user, function(textResult)) {
+					res.json(textResult);
+				}
+			} else {
+				res.send(401);
+			}
 /**			if(result) {
 				//Wall.find({ where: { id : req.params.id}, include: [ Post ]}).success(function(wall){
 				//	res.json(wall);
