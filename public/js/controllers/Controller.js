@@ -34,7 +34,7 @@ define([
 	setInterval(function(){
 		CurrentUser.fetch();
 		//WallsList.fetch();
-	}, 500);
+	}, 1000);
 	
 	return Backbone.Marionette.Controller.extend({
 		initialize:function (options) {
@@ -42,24 +42,31 @@ define([
 			App.widgetRegion.show(new widgetView({model: CurrentUser}));
 			App.navRegion.show(new navView({model: CurrentUser}));
 			App.footerRegion.show(new footerView());
+			CurrentUser.fetch();
 		},
 		index:function () {
 			App.mainRegion.show(new indexView());
+			CurrentUser.fetch();
         },
         about:function () {
         	App.mainRegion.show(new aboutView());
+        	CurrentUser.fetch();
         },
         contact:function () {
         	App.mainRegion.show(new contactView());
+        	CurrentUser.fetch();
         },
         login:function () {
         	App.mainRegion.show(new loginView());
+        	CurrentUser.fetch();
         },
         register: function () {
         	App.mainRegion.show(new registerView());
+        	CurrentUser.fetch();
         },
         home: function() {
         	App.mainRegion.show(new homeView());
+        	CurrentUser.fetch();
         },
         error: function () {
         	

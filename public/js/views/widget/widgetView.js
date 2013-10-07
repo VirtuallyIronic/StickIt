@@ -14,8 +14,8 @@ define([ 'marionette', 'handlebars', 'text!templates/widget/widgetTemplate.html'
 				event.preventDefault();
 				var url = '/auth/login';
 				var formValues = {
-					username: $('#usernameLogin').val(),
-					password: $('#passwordLogin').val()
+					username: $('#usernameWidget').val(),
+					password: $('#passwordWidget').val()
 				};
 				$.ajax({
 					url: url,
