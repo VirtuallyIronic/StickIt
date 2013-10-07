@@ -472,7 +472,7 @@ module.exports = function(app, passport) {
 		
 		hasPermission(wallId, req.user.id, function(result){
 			if(result) {
-				textPermission(wallId, req.user, function(textResult){
+				textPermission(wallId, req.user.id, function(textResult){
 					if(textResult != "view"){
 						ColName.create({
 							wallId: wallId,
