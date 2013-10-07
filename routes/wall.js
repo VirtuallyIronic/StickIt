@@ -29,6 +29,7 @@ var models = require('../models')
   , User = models.User
   , Vote = models.Vote
   , Wall = models.Wall
+  , Tag = models.Tag
   , WallUser = models.WallUser
   , shortId = require('shortid')
   , sanitize = require('validator').sanitize
@@ -141,7 +142,7 @@ module.exports = function(app, passport) {
 	});
 	
 	app.get('/api/post/:id', function(req, res){
-		Post.find({ where: { id: req.params.id }, include: [Vote, Tags]}).success(function(post){
+		Post.find({ where: { id: req.params.id }, include: [Vote, Tag]}).success(function(post){
 			if(post){
 				hasPermission(post.wallId, req.user.id, function(result){
 					if(result) {
