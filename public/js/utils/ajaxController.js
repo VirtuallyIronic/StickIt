@@ -18,8 +18,6 @@
 				//return output;
 			}
 		});
-		var output = {data:obj,status:false};
-		return output;
 	}
 	
 	function wallUpdate(wall_ID, title_data, isPrivate_data)
