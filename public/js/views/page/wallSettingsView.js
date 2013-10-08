@@ -13,7 +13,6 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallPermission
 				event.preventDefault();
 				var checkbox = $('isPrivateCheckbox').val();
 				console.log(checkbox);
-				});
 			}
 		});
 	}

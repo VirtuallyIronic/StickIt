@@ -40,7 +40,7 @@ define([
 		wallPermissionView,
 		successfulRegistrationView,
 		userListView,
-		wallSettingsView,
+		wallSettingView,
 		modelCurrentUser,
 		modelWallPermission,
 		modelWallList,
@@ -119,8 +119,7 @@ define([
         		WallSetting.fetch();
         	}, 2000);
         	WallSetting.fetch();
-        	App.mainRegion.show(new wallSettingsView({ model: WallSetting }));
+        	App.mainRegion.show(new wallSettingView({ model: WallSetting }));
         }
-        
     });
 });
