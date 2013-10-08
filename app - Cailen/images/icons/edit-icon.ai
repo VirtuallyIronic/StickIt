@@ -1,0 +1,287 @@
+%!PS-Adobe-3.0 
+%%Creator: Adobe Illustrator(r) 6.0
+%%For: (Macromedia Flash) ()
+%%Title: (D:\uploads\edit-icon\edit-icon.ai)
+%%CreationDate: (08/15/11) (06:56:29)
+%%BoundingBox: 0 0 500 500
+%%HiResBoundingBox: 0.0 0.0 500.0 500.0
+%%DocumentProcessColors: Cyan Magenta Yellow Black
+%%DocumentNeededResources: procset Adobe_level2_AI5 1.0 0
+%%+ procset Adobe_screens_AI5 1.0 0
+%%+ procset Adobe_typography_AI5 1.0 0
+%%+ procset Adobe_blend_AI5 1.0 0
+%%+ procset Adobe_Illustrator_AI6_vars Adobe_Illustrator_AI6
+%%+ procset Adobe_Illustrator_AI5 1.0 0
+%AI5_FileFormat 2.0
+%AI3_ColorUsage: Color
+%AI3_TemplateBox: 306 396 306 396
+%AI3_TileBox: 18 18 482 482
+%AI3_DocumentPreview: None
+%%EndComments
+%%BeginProlog
+%%IncludeResource: procset Adobe_level2_AI5 1.0 0
+%%IncludeResource: procset Adobe_screens_AI5 1.0 0
+%%IncludeResource: procset Adobe_typography_AI5 1.0 0
+%%IncludeResource: procset Adobe_blend_AI5 1.0 0
+%%IncludeResource: procset Adobe_Illustrator_AI6_vars Adobe_Illustrator_AI6
+%%IncludeResource: procset Adobe_Illustrator_AI5 1.0 0
+%%EndProlog
+%%BeginSetup
+Adobe_level2_AI5 /initialize get exec
+Adobe_screens_AI5 /initialize get exec
+Adobe_Illustrator_AI5_vars Adobe_Illustrator_AI5 Adobe_typography_AI5 /initialize get exec
+Adobe_Illustrator_AI5_vars Adobe_Illustrator_AI5 Adobe_blend_AI5 /initialize get exec
+Adobe_ColorImage_AI6 /initialize get exec
+Adobe_Illustrator_AI5 /initialize get exec
+3 Bn
+%AI5_BeginGradient: (blend 3)
+(blend 3) 0 2 Bd
+[
+ 0.000 0.000 0.000 0.200 1 50 98.824 %_Bs
+ 0.000 0.000 0.000 0.200 1 50 0.000 %_Bs
+BD
+%AI5_EndGradient
+%AI5_BeginGradient: (blend 2)
+(blend 2) 0 2 Bd
+[
+ 0.000 0.000 0.000 0.000 1 50 98.824 %_Bs
+ 0.000 0.000 0.000 0.000 1 50 0.000 %_Bs
+BD
+%AI5_EndGradient
+%AI5_BeginGradient: (blend 1)
+(blend 1) 1 2 Bd
+[
+ 0.000 0.000 0.000 0.000 1 50 0.000 %_Bs
+ 0.000 0.000 0.000 0.400 1 50 98.824 %_Bs
+BD
+%AI5_EndGradient
+%%EndSetup
+u
+*u
+0.200 g
+0.5 0.0 m
+500.5 0.0 L
+500.5 500.0 L
+0.5 500.0 L
+0.5 0.0 L
+f
+*U
+u
+*u
+271.1 443.3 m
+271.1 443.4 L
+120.2 443.4 L
+103.6 443.4 95.3 435.1 95.3 418.4 C
+95.3 68.3 L
+95.3 51.6 103.6 43.3 120.2 43.3 C
+415.1 43.3 L
+431.7 43.3 440.0 51.6 440.0 68.3 C
+440.0 288.6 L
+439.4 288.6 L
+439.4 316.9 L
+330.5 316.9 L
+313.9 316.9 305.6 325.2 305.6 341.9 C
+305.6 443.3 L
+271.1 443.3 L
+Bb
+0 0 0 0 Bh
+1 (blend 1) 0.0 0.0 0 819.2 0.3130 0.0000 0.0000 0.3130 3025.350 2996.550 Bg
+f
+0 BB
+*U
+U
+u
+*u
+431.4 71.9 m
+431.4 186.2 L
+416.3 340.8 307.1 340.8 103.9 186.2 C
+103.9 71.9 L
+103.9 56.1 111.8 48.2 127.6 48.2 C
+407.7 48.2 L
+423.5 48.2 431.4 56.1 431.4 71.9 C
+Bb
+0 0 0 0 Bh
+1 (blend 2) -819.2 0.0 0 1638.4 0.0000 0.1944 -0.2319 0.0000 5406.150 3788.550 Bg
+f
+0 BB
+*U
+U
+u
+*u
+0.600 g
+305.4 443.3 m
+300.3 443.3 L
+300.3 335.9 L
+300.3 319.3 308.6 310.9 325.2 310.9 C
+439.4 310.9 L
+439.4 317.1 L
+305.4 443.3 L
+f
+*U
+U
+u
+*u
+305.6 443.4 m
+305.6 341.9 L
+305.6 325.2 313.9 316.9 330.5 316.9 C
+439.4 316.9 L
+439.4 318.1 L
+305.6 443.4 L
+Bb
+0 0 0 0 Bh
+1 (blend 3) -819.2 0.0 0 1638.4 0.2104 0.0000 0.0000 0.2442 3437.000 3321.200 Bg
+f
+0 BB
+*U
+U
+u
+*u
+1.000 g
+376.9 256.4 m
+376.9 273.5 L
+149.8 273.5 L
+149.8 256.4 L
+376.9 256.4 L
+f
+*U
+*u
+1.000 g
+149.8 233.2 m
+149.8 216.2 L
+376.9 216.2 L
+376.9 233.2 L
+149.8 233.2 L
+f
+*U
+*u
+1.000 g
+149.8 192.9 m
+149.8 175.8 L
+376.9 175.8 L
+376.9 192.9 L
+149.8 192.9 L
+f
+*U
+*u
+1.000 g
+149.8 112.3 m
+149.8 95.3 L
+376.9 95.3 L
+376.9 112.3 L
+149.8 112.3 L
+f
+*U
+*u
+1.000 g
+149.8 152.6 m
+149.8 135.6 L
+376.9 135.6 L
+376.9 152.6 L
+149.8 152.6 L
+f
+*U
+U
+u
+*u
+1.000 g
+246.1 302.9 m
+246.1 397.9 L
+151.0 397.9 L
+151.0 302.9 L
+246.1 302.9 L
+f
+*U
+U
+U
+u
+u
+*u
+0.361 g
+459.1 404.1 m
+443.4 411.4 L
+416.6 384.6 L
+432.3 377.3 L
+459.1 404.1 L
+f
+*U
+*u
+0.157 g
+478.0 378.7 m
+472.9 390.4 L
+472.7 390.5 L
+445.9 363.7 L
+446.1 363.6 L
+451.3 351.9 L
+478.0 378.7 L
+f
+*U
+*u
+0.000 0.275 0.682 0.318 k
+451.3 351.9 m
+446.1 363.6 L
+445.9 363.7 L
+267.6 185.4 L
+267.8 185.3 L
+273.0 173.7 L
+451.3 351.9 L
+f
+*U
+*u
+0.247 g
+445.9 363.7 m
+472.7 390.5 L
+459.1 404.1 L
+432.3 377.3 L
+445.9 363.7 L
+f
+*U
+*u
+0.000 0.400 1.000 0.000 k
+432.3 377.3 m
+416.6 384.6 L
+238.3 206.3 L
+254.1 199.1 L
+432.3 377.3 L
+f
+*U
+*u
+0.000 0.325 0.808 0.192 k
+445.9 363.7 m
+432.3 377.3 L
+254.1 199.1 L
+267.6 185.4 L
+445.9 363.7 L
+f
+*U
+*u
+0.400 g
+209.7 156.9 m
+197.4 135.7 L
+224.5 149.3 L
+222.8 156.1 217.9 158.6 209.7 156.9 C
+f
+*U
+*u
+0.000 0.200 0.400 0.000 k
+209.7 156.9 m
+217.9 158.6 222.8 156.1 224.5 149.3 C
+273.0 173.7 L
+267.8 185.3 L
+267.6 185.4 L
+254.1 199.1 L
+238.3 206.3 L
+209.7 156.9 L
+f
+*U
+U
+U
+%%PageTrailer
+gsave annotatepage grestore showpage
+%%Trailer
+Adobe_Illustrator_AI5 /terminate get exec
+Adobe_ColorImage_AI6 /terminate get exec
+Adobe_blend_AI5 /terminate get exec
+Adobe_typography_AI5 /terminate get exec
+Adobe_screens_AI5 /terminate get exec
+%Adobe_level2_AI5 /terminate get exec
+%%EOF

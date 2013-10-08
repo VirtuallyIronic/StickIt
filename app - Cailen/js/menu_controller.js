@@ -33,17 +33,24 @@
 	{
 		var edit = true;
 		var bonusTry = data;
+		
 		if (data.$el.selector == '.wall')
 		{
 			edit = false;
 		}
 		$('#fullscreen').show();
+		
 		var $mainMenu = jQuery('<div/>', {
 			class: 'popupMenu',
 			title: 'Menu',
-			tempData: bonusTry,
+			id:'mainMenu',
+			tempColour: '123',
 		})
 		$($mainMenu).appendTo("body");
+		if (document.getElementById('mainMenu').tempColour='123'){
+		document.getElementById('mainMenu').tempColour='rgb(230, 230, 230)';
+		}
+		//$("<div class='popupMenu' title='Menu' id='mainMenu' tempColour='FF0000'/>").appendTo("body");
 		$("<span id='createTitle'>Note</span></br>").appendTo(".popupMenu");
 		$("<div id='popupDetails'></div>").appendTo(".popupMenu");
 		
@@ -83,11 +90,17 @@
 
 		$("<p>Colour</p>").appendTo("#sideBar");
 
-		var $colourSelect = jQuery('<select/>', {
+		var $colourSelect = jQuery('<div/>', {
 			id: 'colourDrop',
+			class:'colorpicker',
 		});
 		$colourSelect.appendTo("#sideBar");
 
+$("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6E6' title='White'></div><div onclick='colourChange(this)' class='colourOption' style='background:#A49381' title='Sand'></div><div onclick='colourChange(this)' class='colourOption' style='background:#CCCC00' title='Yellow'></div><div onclick='colourChange(this)' class='colourOption' style='background:#33CCFF' title='Blue'></div><div onclick='colourChange(this)' class='colourOption' style='background:#FF0000' title='Red'></div><div onclick='colourChange(this)' class='colourOption' style='background:#860e20' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#4246ce' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#5aa6c8' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#ee740e' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#1b5733' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#605d60' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#9717e5' title=''></div><div onclick='colourChange(this)'class='colourOption' style='background:#f4504a' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#f7fa53' title=''></div>").appendTo("#colourDrop");
+
+
+
+/*
 		$("<option value='#E6E6E6'>white</option>").appendTo("#colourDrop");
 		$("<option value='#CCCC00'>yellow</option>").appendTo("#colourDrop");
 		$("<option value='#33CCFF'>blue</option>").appendTo("#colourDrop");
@@ -104,7 +117,7 @@
 		$("<option value='#f7fa53'>f7fa53</option>").appendTo("#colourDrop");
 
 		//------------------------------------------------
-
+*/
 		$("<p>Font Size</p>").appendTo("#sideBar");
 
 		var $sizeSelect = jQuery('<select/>', {
@@ -121,7 +134,7 @@
 		if (edit == true)
 		{
 			$("#sizeDrop > [value='"+data.model.get('font-size')+"']").attr("selected", "true");
-			$("#colourDrop > [value='"+data.model.get('colour-note')+"']").attr("selected", "true");
+			document.getElementById('mainMenu').tempColour=data.model.get('colour-note');
 		}
 		
 		//------------------------------------------------
@@ -134,15 +147,15 @@
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		if (edit === true)
 		{
-			$("<button id='confirmEdit' >Confirm</button>").appendTo("#bottomBar");
+			$("<button id='confirmEdit' class='confirmEditBtn' >Confirm</button>").appendTo("#bottomBar");
 			$('#confirmEdit').on('click', data.processing);
 		}		
 		//if (edit === false)
 		else {
-			$("<button id='confirmPopup' >Confirm</button>").appendTo("#bottomBar");
+			$("<button id='confirmPopup' class='confirmEditBtn' >Confirm</button>").appendTo("#bottomBar");
 			$('#confirmPopup').on('click', data.prepareItem);
 		}
-		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
+		$("<button id='cancelPopup'class='cancelEditBtn' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
 				
 		$("<div id='newTags' class='newTagBar'></div>").appendTo("#bottomBar");
 		$("<div id='oldTags' class='oldTagBar'></div>").appendTo("#bottomBar");
@@ -214,7 +227,7 @@
 			};
 		}
 		
-		var newColour = document.getElementById('colourDrop').value;
+		var newColour = document.getElementById('mainMenu').tempColour;
 		var oldColour = field.model.get('colour-note');
 		
 		var newFontSize = document.getElementById('sizeDrop').value;
@@ -287,7 +300,9 @@
 		var $note = jQuery('<div/>', {
 			class: 'cssnote',
 		});
+// breaking for new notes, set to default.
 		var fontColour = getContrastYIQ(input.model.get('colour-note'));
+//var fontColour="#000000";
 		$(input.el).css("background-color", input.model.get('colour-note'));
 		$($note).appendTo($(input.el));
 		
@@ -329,9 +344,10 @@
 		var voteScore = input.model.get('votes');
 		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+" no one "+"  </span>").appendTo($tb);
-		$("<span id='closespan'><button class='deleteButton'> Delete </button></span>").appendTo($tb);
-		$("<span id='editspan'><button class='editButton' > Edit </button></span>").appendTo($tb);
-		$("<span id='expandspan'><button class='expandButton'> Expand </button></span>").appendTo($tb);
+		$("<br>").appendTo($tb);
+		$("<span id='closespan'><img class='deleteButton' src='images/icons/delete-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
+		$("<span id='editspan'><img class='editButton' src='images/icons/edit-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
+		$("<span id='expandspan'><img class='expandButton' src='images/icons/Expand-icon.png' style='width: 30px;'>  </img></span>").appendTo($tb);
 		
 		
 		var votedList = input.model.get('voted');
@@ -346,7 +362,7 @@
 		}
 		if (alreadyVoted != 1)
 		{
-			$("<span id='voteBtnspan'><button class='voteButton'> +1 </button></span>").appendTo($tb);
+			$("<span id='voteBtnspan'><img class='voteButton' src='images/icons/Like-button-transparent.png' style='width: 30px;'> </img></span>").appendTo($tb);
 		}
 	}
 
@@ -419,6 +435,6 @@
 		{
 			$("<span class='taggedUser'>Tag: "+tagged[i]+"</span><br/>").appendTo("#bottomBar");
 		}		
-		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
+		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
 		document.getElementById('cancelPopup').focus();
 	}

@@ -112,11 +112,11 @@
 			
 			// `ItemView`s now respond to two clickable actions for each `Item`: swap and delete.
 			events: {
-				'click button.deleteButton': 'remove',//'remove',
-				'click button.editButton': 'editMe',
-				'click button.expandButton': 'expanding',
-				'click button.voteButton': 'voting',
-				'click button.removeVoteButton': 'cancelVote'
+				'click img.deleteButton': 'remove',//'remove',
+				'click img.editButton': 'editMe',
+				'click img.expandButton': 'expanding',
+				'click img.voteButton': 'voting',
+				'click img.removeVoteButton': 'cancelVote'
 			},
 			
 			// `initialize()` now binds model change/removal to the corresponding handlers below.
@@ -179,7 +179,7 @@
 				this.model.set('votes', votes);
 				this.model.set('voted', voted);
 				this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-				$("<button class='removeVoteButton'> -1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+				$("<img class='removeVoteButton' src='images/icons/dislike-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 				////.remove();
 				this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
 				this.model.trigger('updateServer');				
@@ -200,7 +200,7 @@
 					}
 				}
 				this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-				$("<button class='voteButton'> +1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+				$("<img class='voteButton' src='images/icons/Like-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 				if (changed > 0)
 				{
 					votes = (votes-1);
@@ -351,7 +351,8 @@
 					$($tSpan).appendTo($headDetails);
 					//var varvar = i+1
 					if (admin == true)
-					{
+					{	
+						$("<br>").appendTo($headDetails);
 						$("<button value="+i+" class='deleteLane'>DELETE LANES</button>").appendTo($headDetails);
 						$("<button value="+i+" class='editLaneBut'>EDIT LANES</button>").appendTo($headDetails);
 					}
@@ -467,7 +468,7 @@
 					var col = document.getElementById('laneDrop').value;
 					var row = 1;
 					var text = document.getElementById('formText').value;
-					var colour = document.getElementById('colourDrop').value;
+					var colour = document.getElementById('mainMenu').tempColour;
 					var fontSize = document.getElementById('sizeDrop').value;
 					var tags = document.getElementById('newTags');
 					var tagged = new Array();

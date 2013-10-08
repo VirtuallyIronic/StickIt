@@ -1,0 +1,85 @@
+﻿/*! Menucool Color Picker v2012.8.30. http://www.menucool.com/color-picker */
+
+.colorpicker
+{
+   
+    padding: 12px;
+    background-color: #EEE;
+    border: 1px solid #BBB;
+    color:Black;
+    text-decoration:none;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.colorpicker 
+{
+    float: left;
+    display:block;
+}
+
+.colorpicker .clear
+{
+    float: none;
+    clear: both;
+    border: 0;
+    overflow:hidden;
+    height:0;
+    font-size:0;
+}
+.colourOption{
+    display: inline-block;
+    width: 20px;
+    margin-left: 5px;
+    height: 20px;
+    cursor: pointer;
+}
+.colorbox .selected
+{
+    border-left-color:#FFF;
+    border-top-color:#FFF;
+    border-right-color:#999;
+    border-bottom-color:#999;
+}
+
+.colorpicker .colorbox
+{
+    float: left;
+    border:0;
+    cursor: pointer;
+}
+
+.colorbox b.selected
+{
+    border-left-color:#FFF;
+    border-top-color:#FFF;
+    border-right-color:#999;
+    border-bottom-color:#999;
+}
+
+.colorpicker .hexbox, .colorpicker .bgbox
+{
+    font: normal 10px verdana;
+    height: 16px;
+    margin-bottom: 4px;
+}
+.colorpicker .hexbox
+{
+    margin-left: 12px;
+    color: Black;
+    line-height: 16px;
+}
+.colorpicker .bgbox
+{
+    width: 20px;
+    border: 1px solid #666;
+}
+
+#colourSelected {
+    border-left-color:#FFF;
+    border-top-color:#FFF;
+    border-right-color:#999;
+    border-bottom-color:#999;
+    border-style: solid;
+border-width: 1px;
+}

@@ -908,8 +908,8 @@
 		var voteScore = input.model.get('votes');
 		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+" no one "+"  </span>").appendTo($tb);
-		$("<span id='closespan'><button class='deleteButton'> Delete </button></span>").appendTo($tb);
-		$("<span id='editspan'><button class='editButton' > Edit </button></span>").appendTo($tb);
+		$("<span id='closespan'><button class='deleteButton'> D</button></span>").appendTo($tb);
+		$("<span id='editspan'><button class='editButton' > E </button></span>").appendTo($tb);
 		$("<span id='expandspan'><button class='expandButton'> Expand </button></span>").appendTo($tb);
 		
 		

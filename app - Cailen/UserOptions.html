@@ -24,70 +24,70 @@
         <script type="text/javascript" src="javascript/SettingsMenu.js"></script>
 
     </head>
-    <body>
-        <div class="container">
-         <div class="topmenu" style="height:300px">
-                <div id="logo">
-                   <div class="topmenu" style="height:300px">
-                <div id="logo">
-                  <div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
-                  <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
-                  </div>
-                  <span><img src="logo/logo1.png" style="height:301px; align:center; display:block; margin-left: auto;
-                  margin-right: auto; "></span>  
-                </div>
-                
-    <div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px;">
-    <div id="menuSettings" class="animate form" style="display:none; margin-top:-350px;">
-    <div class="closeBtn">
-      <a href="" class="close-thik" onlick="hideSettings(mainSettings)"></a>
-    </div>
-    <h1 id="MainS">Login</h1>
-    <p> 
-    <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
-                                </p>
-                                <p> 
-    <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
-                                </p>
-                <p class="login button"> 
-                <input type="submit" value="Login" /> 
-                </p>
-    </div>
-  </div>                 
 
-
+<body>
+  <div id="eventScanner" class="eventScanner">
+  </div>
+  <div id="fullscreen">
+  <!-- Blocks out the background -->
+  </div>
+  <div id="dialog-modal" title="Basic modal dialog" style="display: none;">
+  </div>
+  <div class="topmenu" style="height:190px">
+   <div id="logo">
+      <div id="menuwidgetShow"  onclick="showUserSettings(loginWrapper, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png">
+      </div>
+      <div id="menuwidgetHide"  onclick="hideUserSettings(loginWrapper, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
+      </div>
+      <span><img src="logo/logo2.png" style="align:center; display:block; margin-left: auto;  margin-right: auto; "></span>  
+    </div>
+    
+    <div id="loginWrapper"  class="wrapper"style="margin-top:100px; position: absolute; margin-right:180px; width:350px; height: 200px;  z-index:199; display:none">
+      <div id="menuSettings" class="animate form" style=" margin-top:-210px; height:200px;  padding-bottom:100;">
+      <h1 id="MainS">Login</h1>
+      <p> 
+        <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+      </p>
+      <p> 
+        <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
+      </p>
+      <p class="login button"> 
+        <input type="submit" value="Login" /> 
+      </p>
+      </div>
+    </div>       
+  <!-- navigation bar -->  
   <div class="navbar" style="background-color: #fafafa; ">
     <div class="navbar-inner" style="text-align:center; display:inline-block;
     list-style-type: none;">
               <ul class="nav">
                 <li><a href="Homepage.html">Home</a></li>
-                <li><a href="Homepage.html">About</a></li>
+                <li><a href="About.html">About</a></li>
                 <li><a href="Contact.html">Contact</a></li>
                 <li><a href="https://github.com">Download</a></li>
                 <li><a href="UserMainPage.html">User home</a></li>
                 <li class="active"><a href="UserOptions.html">User menu</a></li>
+                
                 <li><a href="login.html">Login</a></li>
               </ul>
             </div>
-            
-          </div>
-        </div>
-      </div>
-           
+  </div>
+  </div>
+    
+            <!--<div id="userMenu"><p> <span id="username"><u>Username</u> <a href="UserMainPage.html"><b>John Smith</b></a></span>  <span id="logoutBtn"><a href="">Logout</a> </span></p></div>
+            -->
                       <section>
                         
                 <div id="container_demo" >
-                    <!-- hidden anchor to stop jump  -->
-                    <!-- will need to be renamed. -->
-                     <div id="wrapper" style="margin-top:100px; width:50%">
+                  <div id="wrapper" class="wrapper" style="position: absolute; top: 230px; left: 30px; z-index:99;">
                    <div id="mainSettings" class="animate form">
-                            <form  action="mysuperscript.php" autocomplete="on"> <!-- will need to be replaced-->
                                 <h1 id="MainS">Settings</h1>
                                 <h2><a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneOne)"> User Privacy</a>
                                 <a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneTwo)"> Alerts</a>
                                 <a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneThree)"> Details</a></h2>
                                 <p>    
-                                User Options Menu, Were the user can change Their privacy settings, Adjust what emails they want to recieve, See a list of walls they are apart of and Change usernames and passwords.
+                                <b>User Options Menu</b><br>
+                                 Were the user can change Their privacy settings, Adjust what emails they want to recieve, See a list of walls they are apart of and Change usernames and passwords.
 								</p>
                             </form>
                         </div>
@@ -97,16 +97,13 @@
                              <h2><a class="SettingsBtn"> User Privacy</a>
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneTwo)"> Alerts</a>
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneThree)"> Details</a></h2>  
-                            <p>    
-                                User Privacy
-                  <div id="dd" class="wrapper-dropdown-5" tabindex="1">Privacy
-                        <ul class="dropdown">
-                            <li><a href="#"><i class="icon-user"></i>Public</a></li>
-                            <li><a href="#"><i class="icon-cog"></i>Private-invite only</a></li>
-                            
-                        </ul>
-                    </div>
-                            </p>
+                         <b>User Options Menu</b><br>
+                        <div class="styledSelect" style="width:200px;">
+                        <select style="width:201px;">
+                        <option title='Only users who have permission to access this wall will be able to see it.'>Private</option>
+                        <option title='Any user can view this wall, though they will need a direct link to be able to access it.'>Public</option>
+                        </select>
+                        </div>
                         </div>
 
                          <div id="optionPaneTwo" class="animate form" style="display:none;">
@@ -115,13 +112,9 @@
                                 <a class="SettingsBtn" > Alerts</a>
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneTwo, optionPaneThree)"> Details</a></h2>  
                             <p>    
-                                Alerts
-                                <ul class="optionList">
-                                    <li>test</li>
-                                    <li><input type="radio" name="test"value="test">radiobtn </li>
-                                    <li><input type="radio" name="test"value="test">radiobtn </li>
-                                    <li><input type="radio" name="test"value="test">radiobtn </li>
-                                </ul>
+                                <b>Alerts</b><br>
+                                  
+                                User alerts on wall updates will be comming soon. stay tuned!
                             </p>
                         </div>
 
@@ -131,11 +124,9 @@
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneThree, optionPaneTwo)"> Alerts</a>
                                 <a class="SettingsBtn"> Details</a></h2>  
                             <p>    
-                                User Details
-                                <ul class="optionList">
-                                    <li>test</li>
-                                    <li><input type="radio" name="test"value="test">radiobtn </li>
-                                </ul>
+                                <b>User Details</b><br>
+                                 User Details on wall updates will be comming soon. stay tuned!
+                                 <!-- <input></input>
                             </p>
                         </div>
             

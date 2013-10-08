@@ -30,35 +30,27 @@
         <div class="container">
          <div class="topmenu" style="height:300px">
                 <div id="logo">
-                  <div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
-                  <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
-                 </div>
-                 
-
-
-   
-                    <span><img src="logo/logo1.png" style="height:301px; align:center; display:block; margin-left: auto;
-    margin-right: auto; "></span>  
-                </div>
-
-
-    <div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px;">
-    <div id="menuSettings" class="animate form" style="display:none; margin-top:-350px;">
-    <div class="closeBtn">
-      <a href="" class="close-thik" onlick="hideSettings(mainSettings)"></a>
+      <div id="menuwidgetShow"  onclick="showUserSettings(loginWrapper, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png">
+      </div>
+      <div id="menuwidgetHide"  onclick="hideUserSettings(loginWrapper, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
+      </div>
+      <span><img src="logo/logo2.png" style="align:center; display:block; margin-left: auto;  margin-right: auto; "></span>  
     </div>
-    <h1 id="MainS">Login</h1>
-    <p> 
-    <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
-                                </p>
-                                <p> 
-    <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
-                                </p>
-                <p class="login button"> 
-                <input type="submit" value="Login" /> 
-                </p>
-    </div>
-  </div>              
+
+    <div id="loginWrapper"  class="wrapper"style="margin-top:100px; position: absolute; margin-right:180px; width:350px; height: 200px;  z-index:199; display:none">
+      <div id="menuSettings" class="animate form" style=" margin-top:-210px; height:200px;  padding-bottom:100;">
+      <h1 id="MainS">Login</h1>
+      <p> 
+        <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+      </p>
+      <p> 
+        <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
+      </p>
+      <p class="login button"> 
+        <input type="submit" value="Login" /> 
+      </p>
+      </div>
+    </div>                  
 
         
   <div class="navbar" style="background-color: #fafafa;">
@@ -78,12 +70,12 @@
             </div>
           </div>
         </div>
-      </div>          <section>
+        <section>
                         
                 <div id="container_demo" >
                     <!-- hidden anchor to stop jump  -->
                     <!-- will need to be renamed. -->
-                    <div id="wrapper" style="margin-top:100px; width:80%">
+                    <div id="wrapper" class="wrapper" style="margin-top:100px; width:80%">
                     <div id="mainSettings" class="animate form" >
                             <form  action="mysuperscript.php" autocomplete="on"> <!-- will need to be replaced-->
                                 <h1 id="MainS">Wall Creation</h1>
@@ -103,15 +95,16 @@
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneTwo)"> Wall Specs</a>
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneThree)"> Save Settings</a></h2>  
                             <p>    
-                                Set the privacy settings for your wall.
-                  <div id="dd" class="wrapper-dropdown-5" tabindex="1">Privacy
-                        <ul class="dropdown">
-                            <li><a href="#"><i class="icon-user"></i>Public</a></li>
-                            <li><a href="#"><i class="icon-cog"></i>Private-invite only</a></li>
-                            
-                        </ul>
+                     User Interaction<br><br>
 
-                    </div>
+                     <b>Privacy</b><br>
+
+                        <div class="styledSelect" style="width:200px;">
+                        <select style="width:201px;">
+                        <option title='Only users who have permission to access this wall will be able to see it.'>Private</option>
+                        <option title='Any user can view this wall, though they will need a direct link to be able to access it.'>Public</option>
+                        </select>
+                        </div>
                             </p>
                             <button class="continueBtn" onclick="goToPane(optionPaneOne, optionPaneTwo)">continue</button>
                         </div>
@@ -122,15 +115,19 @@
                                 <a class="SettingsBtn" > Wall Specs</a>
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneTwo, optionPaneThree)"> Save Settings</a></h2>  
                             <p>    
-                                Wall Specs
-                                <ul class="optionList" style="width:300px;">
-                                    <label for="amount" >Wall Size</label>
-                <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
-              </p> 
-               0 <div id="slider" style="width:300px;"></div> 15
-                            </p>
-                                </ul>
-                            </p>
+                                Wall Specs<br><br>
+                                  <b>Wall Size</b>
+        <div class="styledSelect" style="width:100px;">
+        <select style="width:101px;">
+          <option title=''>1</option>
+          <option title=''>2</option>
+          <option title=''>3</option>
+          <option title=''>4</option>
+          <option title=''>5</option>
+          <option title=''>6</option>
+          <option title=''>7</option>
+        </select>
+        </div>
                               <button class="continueBtn" onclick="goToPane(optionPaneTwo, optionPaneThree)">continue</button>
                         </div>
 
@@ -140,22 +137,9 @@
                                 <a class="SettingsBtn" onclick="goToPane(optionPaneThree, optionPaneTwo)"> Wall Specs</a>
                                 <a class="SettingsBtn"> Save Settings</a></h2>  
                             <p>    
-                               Save Settings
-                                <ul class="optionList">
-                                    <label for="amount" >Wall Size</label>
-                <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />15
-              </p> 
-                <div id="slider" style="width:300px;"></div> 
-                        Privacy settings:
-                        <div id="dd" class="wrapper-dropdown-5" tabindex="1">Privacy
-                        <ul class="dropdown">
-                            <li><a href="#"><i class="icon-user"></i>Public</a></li>
-                            <li><a href="#"><i class="icon-cog"></i>Private-invite only</a></li>
-                            
-                        </ul>
-                                </ul>
-                            </p>
-                              <a href="Wall.html"><button class="continueBtn" onclick="Wall.html">Create!</button></a>
+                               <b>Save Settings</b><br>
+                                Dynamic display of the settings will be added soon.
+                              <a href="Wall (2).html"><button class="continueBtn" onclick="Wall (2).html">Create!</button></a>
                         </div>
             
                       </div>

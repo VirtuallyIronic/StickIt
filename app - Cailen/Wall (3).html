@@ -5,6 +5,8 @@
     <title>hello-backbonejs</title>
 	 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link rel="stylesheet" href="css/stylesheet401.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
+
     <link rel="stylesheet" href="css/horizontalaccordion.css" type="text/css" /> 
     <link rel="stylesheet" href="css/verticalaccordion.css" type="text/css" />
 	<link rel="stylesheet" href="css/gridCSS.css" type="text/css" />
@@ -47,14 +49,14 @@
 					</div>
 					<div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
 					</div>
-					<span><img src="logo/logo.jpg" style="height:301px; align:center; display:block; margin-left: auto;
+					<span><img src="logo/logo1.png" style="height:301px; align:center; display:block; margin-left: auto;
 					margin-right: auto; "></span>  
 				</div>
 
-				<div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px;">
+				<div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px;  z-index:99;">
 					<div id="menuSettings" class="animate form" style="display:none; margin-top:-350px;">
 						<div class="closeBtn">
-							<a href="" class="close-thik" onclick="hideSettings(mainSettings)"></a>
+							<a  class="close-thik" onclick="hideSettings(mainSettings)"></a>
 						</div>
 						<h1 id="MainS">Login</h1>
 						<p> 
@@ -69,15 +71,15 @@
 					</div>
 				</div>               
 
-				<div class="navbar" style="background-color: #fafafa;">
-					<div class="navbar-inner" style="text-align:center; display:inline-block;
-					list-style-type: none;">
+				<div class="navbar" style="background-color: #fafafa; height:41px; ">
+    <div class="navbar-inner" style="text-align:center; display:inline-block;
+    list-style-type: none;">
 						<ul class="nav">
 							<li><a href="Homepage.html">Home</a></li>
 							<li><a href="Homepage.html">About</a></li>
 							<li><a href="Contact.html">Contact</a></li>
 							<li><a href="https://github.com">Download</a></li>
-							<li class="active"><a href="UserMainPage.html">User home</a></li>
+							<li><a href="UserMainPage.html">User home</a></li>
 							<li><a href="UserOptions.html">User menu</a></li>
 							<li><a href="login.html">Login</a></li>
 						</ul>
@@ -118,10 +120,10 @@
 		</div>
 	</div>
 	
-	<div id="wrapper" style="margin-top:100px;">
+	 <div id="wrapper" style="z-index=99;position: absolute;top: 130px;left: 30px;">
 		<div id="mainSettings" class="animate form" style="display:none;">
 			<div class="closeBtn">
-				<a href="" class="close-thik" onclick="hideSettings(mainSettings)">.</a>
+				<a  class="close-thik" onclick="hideSettings(mainSettings)">.</a>
 			</div>
 			<form  action="mysuperscript.php" autocomplete="on"> <!-- will need to be replaced-->
 				<h1 id="MainS">Settings</h1>
@@ -137,7 +139,7 @@
 		
 		<div id="optionPaneOne" class="animate form" style="display:none;">
 			<div class="closeBtn">
-				<a href="" class="close-thik" onclick="hideSettings(mainSettings)">.</a>
+				<a  class="close-thik" onclick="hideSettings(mainSettings)">.</a>
 			</div>
 			<h1 id="MainS" onclick="goToPane(optionPaneOne, mainSettings)">Settings</h1>
 			<h2>
@@ -162,7 +164,7 @@
 
 		<div id="optionPaneTwo" class="animate form" style="display:none;">
 			<div class="closeBtn">
-				<a href="" class="close-thik" onclick="hideSettings(mainSettings)">.</a>
+				<a class="close-thik" onclick="hideSettings(mainSettings)">.</a>
 			</div>
 			<h1 id="MainS" onclick="goToPane(optionPaneTwo, mainSettings)">Settings</h1>
 			<h2>
@@ -181,7 +183,7 @@
 
 		<div id="optionPaneThree" class="animate form" style="display:none;">
 			<div class="closeBtn">
-				<a href="" class="close-thik" onlick="hideSettings(mainSettings)">.</a>
+				<a  class="close-thik" onlick="hideSettings(mainSettings)">.</a>
 			</div>
 			<h1 id="MainS" onclick="goToPane(optionPaneThree, mainSettings)">Settings</h1>
 			<h2>

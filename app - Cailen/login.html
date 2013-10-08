@@ -26,43 +26,36 @@
     </head>
    <body>
         <div class="container">
-           <div class="topmenu" style="height:300px">
-                <div id="logo">
-                   
-                   
-                  <div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
-                  <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
-                  </div>
-                                     
-                  <span><img src="logo/logo1.png" style="height:301px; display:inline-block;  "></span>  
-
-                </div>
+           <div class="topmenu" style="height:190px">
+       <div id="logo">
+            <div id="menuwidgetShow"  onclick="showUserSettings(loginWrapper, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png">
+            </div>
+            <div id="menuwidgetHide"  onclick="hideUserSettings(loginWrapper, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
+            </div>
+            <span><img src="logo/logo2.png" style="align:center; display:block; margin-left: auto;  margin-right: auto; "></span>  
+        </div>
            
                 
-    <div id="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px; z-index:99;">
-    <div id="menuSettings" class="animate form" style="display:none; margin-top:-350px;">
-    <div class="closeBtn">
-      <a href="" class="close-thik" onlick="hideSettings(mainSettings)"></a>
-    </div>
-    <h1 id="MainS">Login</h1>
-    <p> 
-    <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
-                                </p>
-                                <p> 
-    <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
-                                </p>
-                <p class="login button"> 
-                <input type="submit" value="Login" /> 
-                </p>
-    </div>
-  </div>      
-  
+    <div id="loginWrapper"  class="wrapper"style="margin-top:100px; position: absolute; margin-right:180px; width:350px; height: 200px;  z-index:199; display:none">
+      <div id="menuSettings" class="animate form" style=" margin-top:-210px; height:200px;  padding-bottom:100;">
+      <h1 id="MainS">Login</h1>
+      <p> 
+        <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+      </p>
+      <p> 
+        <input id="password" name="password" required="required" type="password" placeholder="Password" /> 
+      </p>
+      <p class="login button"> 
+        <input type="submit" value="Login" /> 
+      </p>
+      </div>
+    </div>    
   <div class="navbar" style="background-color: #fafafa; height:41px; ">
     <div class="navbar-inner" style="text-align:center; display:inline-block;
     list-style-type: none;">
            <ul class="nav">
                 <li><a href="Homepage.html">Home</a></li>
-                <li><a href="Homepage.html">About</a></li>
+                <li><a href="About.html">About</a></li>
                 <li><a href="Contact.html">Contact</a></li>
                 <li><a href="https://github.com/VirtuallyIronic/StickIt">Download</a></li>
                 <li class="active"><a href="login.html">Login</a></li>
@@ -77,28 +70,26 @@
                     <a class="hiddenanchor" id="tologin"></a>
                     <div id="wrapper" style="margin-top:100px; z-index=99;">
                         <div id="login" class="animate form">
-                            <form  action="mysuperscript.php" autocomplete="on"> 
-                                <h1>Log in</h1> 
+                            <h1>Log in</h1> 
                                 <p> 
                                     <label for="username" class="uname" data-icon="u" > Your email or username </label>
-                                    <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+                                    <input id="LoginUsername" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
                                 </p>
                                 <p> 
                                     <label for="password" class="youpasswd" data-icon="p"> Your password </label>
-                                    <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" /> 
+                                    <input id="LoginPassword" name="password" required="required" type="password" placeholder="eg. X8df!90EO" /> 
                                 </p>
                                 <p class="keeplogin"> 
-									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
-									<label for="loginkeeping">Keep me logged in</label>
-								</p>
+                                    <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
+                                    <label for="loginkeeping">Keep me logged in</label>
+                                </p>
                                 <p class="login button"> 
                                     <input type="submit" value="Login" /> 
-								</p>
+                                </p>
                                 <p class="change_link">
-									Not a member yet ?
-									<a href="#toregister" class="to_register">Join us</a>
-								</p>
-                            </form>
+                                    Not a member yet ?
+                                    <a href="#toregister" class="to_register">Join us</a>
+                                </p>
                         </div>
 
                         <div id="register" class="animate form">
@@ -121,15 +112,15 @@
                                     <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
                                 </p>
                                 <p class="signin button"> 
-									<input type="submit" value="Sign up"/> 
-								</p>
+                                    <input type="submit" value="Sign up"/> 
+                                </p>
                                 <p class="change_link">  
-									Already a member ?
-									<a href="#tologin" class="to_register"> Go and log in </a>
-								</p>
+                                    Already a member ?
+                                    <a href="#tologin" class="to_register"> Go and log in </a>
+                                </p>
                             </form>
                         </div>
-						
+                        
                     </div>
                 </div>  
             </section>

@@ -6,17 +6,16 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="UTF-8" />
-        <title>Error</title>
-
-         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <title>About</title>
+       <!--bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="javascript/bootstrap.min.js"></script>
-
-                <link rel="stylesheet" type="text/css" href="css/demo.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
-        <link rel="stylesheet" type="text/css" href="css/stylesheet401.css" />
-         <link rel="stylesheet" type="text/css" href="css/dropdownstyle.css" />
-
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />        
+    <link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+    <link rel="stylesheet" type="text/css" href="css/stylesheet401.css" />
+    <link rel="stylesheet" type="text/css" href="css/dropdownstyle.css" />
+    <link rel="stylesheet" type="text/css" href="css/WallThumbnail.css" />
        
 
        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -25,9 +24,9 @@
         <script type="text/javascript" src="javascript/SettingsMenu.js"></script>
 
     </head>
-   <body>
-       <div class="container">
-        <div class="topmenu" style="height:190px">
+    <body>
+        <div class="container"> 
+           <div class="topmenu" style="height:190px">
     <div id="logo">
       <div id="menuwidgetShow"  onclick="showUserSettings(loginWrapper, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png">
       </div>
@@ -37,7 +36,7 @@
     </div>
 
                 
-    <div id="loginWrapper"  class="wrapper"style="margin-top:100px; position: absolute; margin-right:180px; width:350px; height: 200px;  z-index:199; display:none">
+    <div id="loginWrapper"  class="wrapper" style="margin-top:100px; position: absolute; margin-right:180px; width:350px; height: 200px;  z-index:199; display:none">
       <div id="menuSettings" class="animate form" style=" margin-top:-210px; height:200px;  padding-bottom:100;">
       <h1 id="MainS">Login</h1>
       <p> 
@@ -51,45 +50,49 @@
       </p>
       </div>
     </div>    
-        
-  <div class="navbar" style="background-color: #fafafa; ">
+  <div class="navbar" style="background-color: #fafafa;">
     <div class="navbar-inner" style="text-align:center; display:inline-block;
     list-style-type: none;">
-
-             <ul class="nav">
+              <ul class="nav" >
                 <li><a href="Homepage.html">Home</a></li>
-                <li><a href="About.html">About</a></li>
+                <li class="active"><a href="About.html">About</a></li>
                 <li><a href="Contact.html">Contact</a></li>
-                <li><a href="https://github.com">Download</a></li>
-                <li><a href="UserMainPage.html">User home</a></li>
-                <li><a href="UserOptions.html">User menu</a></li>
-                
+                <li><a href="https://github.com/VirtuallyIronic/StickIt">Download</a></li>
                 <li><a href="login.html">Login</a></li>
               </ul>
             </div>
           </div>
-        </div>
+        
             </div>
-                      <section>
-                        
+                        <section>
                 <div id="container_demo" >
                     <!-- hidden anchor to stop jump  -->
                     <a class="hiddenanchor" id="toregister"></a>
                     <a class="hiddenanchor" id="tologin"></a>
-                    <div id="wrapper" style="margin-top:100px;">
-                       <h1> Error!</h1>
-                       <p> 
-                        "Well it looks like something broke, bet this wouldn't have happened if we didn't employ monkeys for coding." --Anon.
-                       </p>
-                        </div>
+                    <div id="wrapper" class='wrapper' style="margin-top:100px;">
+                        <div id="login" class="animate form" >
+                           
 
-                       
-                       
-                    </div>
-                </div>  
+                           <h1>StickIt</h1>
+
+                           StickIt is a agile deveopment tool for communciation within design teams.
+
+
+<iframe width="440" height="360" src="http://www.youtube.com/embed/?feature=player_embedded" frameborder="0" allowfullscreen></iframe>
+
+                        <p>Be able to communicate with your team using a virtual stickynote board, perfect for development meetings. </p>
+
+                        <p>All view the same board from any location, updated in real time.</p>
+
+                        <p>Compatible with touch devices for use on Tablet devices.</p>
+
+                   <p class="change_link">  
+                                   <a href="login.html#toregister" class="to_register" style="float:left;">Register</a>
+                                    <a href="login.html" class="to_register"> Login </a>
+                                </p>
             </section>
         </div>
+        </div>
         <div class="footer"> StickIt copyright 2013 all rights reserved. "new tech may not be the most stable but it sure is the most fun"</div>
-    </div>
     </body>
 </html>
