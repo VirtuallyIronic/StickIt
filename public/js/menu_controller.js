@@ -402,7 +402,8 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		$("<span id='editspan'><img class='editButton' src='images/icons/edit-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
 		$("<span id='expandspan'><img class='expandButton' src='images/icons/Expand-icon.png' style='width: 30px;'>  </img></span>").appendTo($tb);
 
-		var checkVote = voteGet(1);
+		var checkVote = false;
+		//ADD PROPER CHECK HERE LATER TODO
 		if (checkVote != false)
 		{
 			$("<span id='voteBtnspan'><img class='removeVoteButton'> -1 </img></span>").appendTo($tb);
