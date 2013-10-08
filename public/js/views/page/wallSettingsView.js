@@ -4,6 +4,14 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 			template:Handlebars.compile(template),
 			modelEvents:{
 				"change": "render"
+			},
+			events: {
+				"click #updateButton": "updateSettings"
+			},
+			updateSettings: function(){
+				event.stopPropagation();
+				event.preventDefault();
+				console.log($('#isPrivateCheckbox').val());
 			}
 		});
 	}
