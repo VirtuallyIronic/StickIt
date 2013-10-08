@@ -67,6 +67,7 @@
 	/*--------------------------------*/
 	$(function(){
 		var initialData = wallGet(wallID);
+		console.log("here in init");
 		if (initialData.status != false)
 		{
 			initWall = initialData.data;

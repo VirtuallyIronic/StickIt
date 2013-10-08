@@ -2,6 +2,7 @@
 	/*-----------------------------WALL---------------------------------*/
 	function wallGet(wall_ID)
 	{
+		console.log("here in ajax");
 		$.ajax({ 
 			url: '/api/wall/'+wall_ID,
 			type: 'GET',
