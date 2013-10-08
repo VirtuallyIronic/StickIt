@@ -64,9 +64,12 @@ function enableItemView() {
 							
 						});
 						this.tagging.add(addTags);
+						if (this.newNoteData == true)
+						{
+							tagNew(addTags);
+						}
 					}
 				}
-				
 				if (this.incVoteData != false)
 				{
 					for (var k=0; k<this.incVoteData.length; k++)
@@ -274,6 +277,7 @@ function enableItemView() {
 								'tagItem': tags[k]
 							});
 							this.tagging.add(addTags);
+							tagNew(addTags);
 						}
 					}
 					

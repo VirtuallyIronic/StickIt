@@ -9,5 +9,10 @@
 		"username":	"devuser",
 		"password": "Qwerty1!",
 		"port":	"3306"
+	},
+	"databaseOptions": {
+		"maxConcurrentQueries": "100",
+		"poolMaxConnections": "10",
+		"poolMaxIdleTime": "20"
 	}
 }
