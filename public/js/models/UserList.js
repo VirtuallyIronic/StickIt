@@ -3,7 +3,7 @@ define(['jquery', 'underscore', 'backbone'],
 		var UserList = Backbone.Model.extend({
 			initialize:function () {
 			},
-            url: '/api/user'
+            url: '/api/users'
         });
         return UserList;
     }
