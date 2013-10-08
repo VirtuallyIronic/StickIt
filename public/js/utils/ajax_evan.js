@@ -139,17 +139,18 @@
 	function newNotePost(model_data)
 	{
 		console.log(model_data);
+		console.log(model_data.col);
+		console.log(model_data.col.val());
+		
 		$.ajax({ 
 			url: '/api/post',
 			type: 'POST',
-			data: JSON.stringify({	col: model_data.col, 
-									row: model_data.row,
-								//	author: model_data.userName,
-									wallId: model_data.wallId,
-									username: model_data.username,
-									text: model_data.text,
-									colour: model_data.colour,
-									fontSize: model_data.fontsize,
+			data: JSON.stringify({	col: model_data.col.val(), 
+									row: model_data.row.val(),
+									wallId: model_data.wallId.val(),
+									text: model_data.text.val(),
+									colour: model_data.colour.val(),
+									fontSize: model_data.fontsize.val(),
 									}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
