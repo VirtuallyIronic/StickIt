@@ -147,7 +147,9 @@ module.exports = function(app, passport) {
 				textPermission(req.params.id, req.user.id, function(textResult){
 					if(textResult == 'admin') {
 						WallUser.findAll({ where: { wallId: req.params.id }}).success(function(wallUsers){
-							res.json(wallUsers);
+							res.json({
+								permission: wallUsers
+							});
 						}).error(function(){
 							res.send(500);
 						})
