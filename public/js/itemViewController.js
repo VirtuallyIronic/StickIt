@@ -64,6 +64,7 @@ function enableItemView() {
 							
 						});
 						this.tagging.add(addTags);
+						tagNew(addTags);
 					}
 				}
 				
@@ -274,6 +275,7 @@ function enableItemView() {
 								'tagItem': tags[k]
 							});
 							this.tagging.add(addTags);
+							tagNew(addTags);
 						}
 					}
 					

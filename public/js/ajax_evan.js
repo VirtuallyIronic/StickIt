@@ -347,12 +347,14 @@
 	/*--------------------------TAGS------------------------------------*/
 	function tagNew(model_data)
 	{
+		console.log('NEW TAG');
+		console.log(model_data);
 		$.ajax({ 
 			url: '/api/tag',
 			type: 'POST',
 			async: false,
-			data: JSON.stringify({	postId: model_data.postId,
-									title: model_data.title}),
+			data: JSON.stringify({	postId: model_data.get('postId'),
+									title: model_data.get('title')}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function(data){

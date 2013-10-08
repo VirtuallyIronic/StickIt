@@ -496,12 +496,12 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 	}
 	
 function confirmSettings() {
-	var privacy=$('#privacySelect option:selected').text();    
-    var wallSize=$('#wallSizeSelect option:selected').text();    
+	//var privacy=$('#privacySelect option:selected').text();    
+   // var wallSize=$('#wallSizeSelect option:selected').text();    
 	hideSettings();
 }
 
 function qweqweqwe() {
-	var privacy=$('#privacySelect option:selected').text();    
-	var wallSize=$('#wallSizeSelect option:selected').text();    
+	//var privacy=$('#privacySelect option:selected').text();    
+	//var wallSize=$('#wallSizeSelect option:selected').text();    
 }
