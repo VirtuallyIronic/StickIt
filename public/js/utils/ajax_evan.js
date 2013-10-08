@@ -115,6 +115,7 @@
 		$.ajax({ 
 			url: '/api/wall/'+wall_ID,
 			type: 'PUT',
+			async: false,
 			data: JSON.stringify({title: title_data, isPrivate: isPrivate_data}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
@@ -142,6 +143,7 @@
 		$.ajax({ 
 			url: '/api/post',
 			type: 'POST',
+			async: false,
 			data: JSON.stringify({	col: model_data.get('col'), 
 									row: model_data.get('row'),
 								//	author: model_data.userName,
@@ -174,6 +176,7 @@
 		$.ajax({ 
 			url: url,
 			type: 'PUT',
+			async: false,
 			data: JSON.stringify({	col: model_data.get('col'), 
 									row: model_data.get('row'),
 									text: model_data.get('text'),
@@ -201,6 +204,7 @@
 		$.ajax({ 
 			url: url,
 			type: 'DELETE',
+			async: false,
 			success: function(data){
 				console.log('Note deleted: '+data);
 			}, 
@@ -212,14 +216,24 @@
 	/*--------------------------------------------------------------*/
 	
 	/*--------------------------COLUMNS------------------------------------*/
+	function addLanes()
+	{
+		//alert("!");
+		var modelData = ({wallId:initWall.id,colNum:(initWall.totalCols+1),'title': "Lane "+(initWall.totalCols+1)});
+		colCreate(modelData);
+	}
+	
 	function colCreate(model_data)
 	{
+		console.log('COLCREATE');
+		console.log(model_data);
 		$.ajax({ 
 			url: '/api/colname',
 			type: 'POST',
-			data: JSON.stringify({	wallId: model_data.get('wallId'), 
-									colNum: model_data.get('colNum'),
-									title: model_data.get('title')}),
+			async: false,
+			data: JSON.stringify({	wallId: model_data.wallId, 
+									colNum: model_data.colNum,
+									title: model_data.title}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function(data){
@@ -234,12 +248,15 @@
 	
 	function colUpdate(id, model_data)
 	{
+		console.log('COLUPDATE');
+		console.log(model_data);
 		$.ajax({ 
 			url: '/api/colname/'+id,
 			type: 'PUT',
-			data: JSON.stringify({	colNum: model_data.get('colNum'), 
-									title: model_data.get('title')
-								}),
+			async: false,
+			data: JSON.stringify({	colNum: model_data.colNum, 
+									title: model_data.title
+									}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function(data){
@@ -254,9 +271,12 @@
 	
 	function colDelete(id)
 	{
+		console.log('COLDELETE');
+		console.log(id);
 		$.ajax({ 
 			url: '/api/colname/'+id,
 			type: 'DELETE',
+			async: false,
 			success: function(data){
 				console.log('col Deleted: '+data);
 			}, 
@@ -273,6 +293,7 @@
 		$.ajax({ 
 			url: '/api/vote',
 			type: 'POST',
+			async: false,
 			data: JSON.stringify({postId: model_data.postId}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
@@ -291,6 +312,7 @@
 		$.ajax({ 
 			url: '/api/vote/'+id,
 			type: 'GET',
+			async: false,
 			success: function(data){
 				console.log('Get Vote');
 				console.log(data);
@@ -308,6 +330,7 @@
 		$.ajax({ 
 			url: '/api/vote/'+id,
 			type: 'DELETE',
+			async: false,
 			success: function(data){
 				console.log('vote Deleted: '+data);
 			}, 
@@ -324,6 +347,7 @@
 		$.ajax({ 
 			url: '/api/tag',
 			type: 'POST',
+			async: false,
 			data: JSON.stringify({	postId: model_data.postId,
 									title: model_data.title}),
 			contentType: "application/json; charset=utf-8",
@@ -343,6 +367,7 @@
 		$.ajax({ 
 			url: '/api/tag/'+id,
 			type: 'PUT',
+			async: false,
 			data: JSON.stringify({title: model_data.title}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
@@ -361,6 +386,7 @@
 		$.ajax({ 
 			url: '/api/tag/'+id,
 			type: 'DELETE',
+			async: false,
 			success: function(data){
 				console.log('tag Deleted: '+data);
 			}, 

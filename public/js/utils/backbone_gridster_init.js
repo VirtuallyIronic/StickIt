@@ -283,19 +283,19 @@
 					if (r==true)
 					{
 						var colID = $(ev).val();
-						
+						colDelete(colID);
 						//NEED TO UPDATE THIS TO THE BACKEND!
 						wallHeadings.splice(colID,1);
 						
 						var notesEdited = 0;
 						var idCount = parseInt(colID);
-						idCount = idCount+1;
-						colID = idCount.toString();
+						//idCount = idCount+1;
+						//colID = idCount.toString();
 						for (var q=idCount; q<=lanes;q++)
 						{
 							if (q==idCount)
 							{
-								var colData = this.collection.where({'col': colID});
+								var colData = this.collection.where({'col': idCount});
 								for (var i=0; i<colData.length; i++)
 								{
 									notesEdited++;
@@ -327,6 +327,7 @@
 						//remove Heading  --  unneeded
 						$(ev).parent().children('.titleSpan').html("DELETED");
 						$(ev).remove();
+						
 					}
 				}
 				else
@@ -472,7 +473,8 @@
 			$(input).parent().children('.titleSpan').text(fname);
 			//function trigger passing wallHeadings to update this wall data.
 		}
-		alert(input);
+		colUpdate(i, ({colNum:i,title:fname}));
+		//alert(input);
 	}
 	
 	function plzwork()
