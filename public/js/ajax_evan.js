@@ -162,6 +162,7 @@
 			success: function(data){
 				console.log('New Note');
 				console.log(model_data);
+				//location.reload(); 
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
@@ -192,6 +193,7 @@
 			success: function(data){
 				console.log('New Note');
 				console.log(model_data);
+				//location.reload(); 
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
@@ -211,6 +213,7 @@
 			async: false,
 			success: function(data){
 				console.log('Note deleted: '+data);
+				//location.reload(); 
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
@@ -243,6 +246,7 @@
 			success: function(data){
 				console.log('New Col');
 				console.log(model_data);
+				location.reload(); 
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
@@ -266,6 +270,7 @@
 			success: function(data){
 				console.log('Col Updated');
 				console.log(model_data);
+				location.reload(); 
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
@@ -283,6 +288,7 @@
 			async: false,
 			success: function(data){
 				console.log('col Deleted: '+data);
+				location.reload(); 
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
@@ -355,7 +361,7 @@
 			type: 'POST',
 			async: false,
 			data: JSON.stringify({	postId: model_data.get('noteID'),
-									title: model_data.get('tagItem')}),
+									text: model_data.get('tagItem')}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function(data){
@@ -389,6 +395,8 @@
 	
 	function tagDelete(id)
 	{
+		console.log('TAG DELETE');
+		console.log(id);
 		$.ajax({ 
 			url: '/api/tag/'+id,
 			type: 'DELETE',

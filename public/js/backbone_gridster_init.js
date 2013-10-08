@@ -89,7 +89,7 @@
 			
 			//-------SETS UP ALL LISTENERS AND PROCESSES-------
 			initialize: function(options){
-				_.bindAll(this, 'render', 'addItem', 'moreLanes','purgeData', 'editTitle', 'serverUpdate', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
+				_.bindAll(this, 'render', 'addItem', 'removeTag', 'moreLanes','purgeData', 'editTitle', 'serverUpdate', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
 				//this.collection = new noteList();
 				this.collection = new options.noteModel;//new noteList();
 				this.wallDetails = new options.wallModel;
@@ -100,6 +100,7 @@
 				this.on('newNote', this.addItem);
 				this.on('completeDelete', this.purgeData);
 				this.on('prepareLaneDelete', this.removeLane);
+				this.on('RIPtag', this.removeTag);
 				this.render();
 			},
 			
@@ -247,7 +248,10 @@
 					dataUpdate(noteJSON);
 				}
 			},
-			
+			removeTag: function(){
+				//alert(tagid);
+				//this.
+			},
 			editTitle: function(ev){
 				var i = $(ev.target).val();
 				var fname=prompt("New Lane Title",$(ev.target).parent().children('.titleSpan').text());
