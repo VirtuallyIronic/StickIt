@@ -1,5 +1,104 @@
-<section>
-	<div id="wall">
-		
+<div id="eventScanner" class="eventScanner"></div>
+<div id="fullscreen"></div>
+<div id="dialog-modal" title="Basic modal dialog" style="display: none;"></div>
+<section class="demo">
+	<div class="titleDisplay">
+		<ul id="laneHeadings" class="titleDisplay">
+			
+		</ul>
+	</div>
+	<div class="gridster">
+		<ul>
+			
+		</ul>
 	</div>
 </section>
+<div id="sidemenu"onclick="sideMenuOpen()">
+	<img src="images/arrow_icon_left.png">
+</div>	
+<div id="sidebar" style="display:none; z-index:97; position: fixed; right: 0; "> 
+	<div class="sidebar" style="margin-top:50px; padding-left:80px; ">
+		<div id="expand" style="margin:30px;">
+			<button id="newNoteButton" onclick="clearWall()">Clear Wall</button>
+			<button id="newLaneBut" onclick="moreLanes('0')">New Lane</button>
+			<button id='add' onclick='newNoteWorkaround()'>New Note</button>
+			<button id="SettingsButton" onclick="showSettings(mainSettings)">Settings</button>
+			<button id="screenCap" onclick="screenCap()">Screenshot</button>
+		</div>
+	</div>
+</div>
+<div id="wrapper" style="margin-top:100px; z-index=99;">
+	<div id="mainSettings" class="animate form" style="display:none;">
+		<div class="closeBtn" style="cursor:pointer;">
+			<img src="images/close-button.png " onclick="hideSettings(),sideMenuOpen()"/>
+		</div>
+		<form autocomplete="on">
+			<h1 id="MainS">Settings</h1>
+			<h2>
+				<a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneOne)"> Privacy</a>
+				<a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneTwo)">  Wall Size</a>
+				<a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneThree)"> option pane3</a>
+			</h2>
+			<p></p>
+		</form>
+	</div>
+	<div id="optionPaneOne" class="animate form" style="display:none;">
+		<div class="closeBtn" style="cursor:pointer;">
+			<img src="images/close-button.png " onclick="hideSettings(),sideMenuOpen()"/>
+		</div>
+		<h1 id="MainS" onclick="goToPane(optionPaneOne, mainSettings)">Settings</h1>
+		<h2>
+			<a class="SettingsBtn"> Privacy</a>
+			<a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneTwo)">  Wall Size</a>
+			<a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneThree)"> option pane3</a>
+		</h2>
+		<p>Privacy
+			<div id="dd" class="wrapper-dropdown-5" tabindex="1">Privacy
+				<ul class="dropdown">
+					<li>
+						<a href="#"><i class="icon-user"></i>Public</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-cog"></i>Private-invite only</a>
+					</li>
+				</ul>
+			</div>
+		</p>
+	</div>
+	<div id="optionPaneTwo" class="animate form" style="display:none;">
+		<div class="closeBtn" style="cursor:pointer;">
+			<img src="images/close-button.png " onclick="hideSettings(),sideMenuOpen()"/>
+		</div>
+		<h1 id="MainS" onclick="goToPane(optionPaneTwo, mainSettings)">Settings</h1>
+		<h2>
+			<a class="SettingsBtn" onclick="goToPane(optionPaneTwo, optionPaneOne)"> Privacy</a>
+			<a class="SettingsBtn" > Wall Size</a>
+			<a class="SettingsBtn" onclick="goToPane(optionPaneTwo, optionPaneThree)"> option pane3</a>
+		</h2>  
+		<p>
+			<p>                                            
+				<label for="amount">Wall Size</label>
+				<input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
+			</p> 
+			0 <div id="slider"></div> 15
+		</p>
+	</div>
+	<div id="optionPaneThree" class="animate form" style="display:none;">
+		<div class="closeBtn" style="cursor:pointer;">
+			<img src="images/close-button.png " onclick="hideSettings(),sideMenuOpen()"/>
+		</div>
+		<h1 id="MainS" onclick="goToPane(optionPaneThree, mainSettings)">Settings</h1>
+		<h2>
+			<a class="SettingsBtn" onclick="goToPane(optionPaneThree, optionPaneOne)"> Privacy</a>
+			<a class="SettingsBtn" onclick="goToPane(optionPaneThree, optionPaneTwo)">  Wall Size</a>
+			<a class="SettingsBtn"> option pane3</a>
+		</h2>  
+		<p>    
+			Option Pane Three
+			<ul class="optionList">
+				<li>test</li>
+				<li><input type="radio" name="test"value="test">radiobtn </li>
+			</ul>
+		</p>
+	</div>
+</div>

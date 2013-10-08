@@ -1,7 +1,7 @@
-define([ 'backbone', 'text!templates/page/wallTemplate.html', 'models/Wall', 'transit', 'settingsmenu'],
-	function (Backbone, template, CurrentWall, Transit, SettingsMenu){  
+define([ 'backbone', 'text!templates/page/wallTemplate.html', 'vendor/jquery.gridster.with-extras', 'utils/ajaxController', 'utils/backbone_gridster_init', 'transit', 'settingsmenu'],
+	function (Backbone, template, gridster, ajaxController, gridsterInit, Transit, SettingsMenu){  
 		return Backbone.View.extend({
-			el: $("#wall"),
+			el: $(".demo"),
 			initialize: function(){
 				this.listenTo(this.model, "change", this.render);
 			},
