@@ -221,6 +221,7 @@
 						tagObj[objCount] = newTags;
 						objCount++;
 					}
+					var newcolour = converstionCheck(postObj[w].colour);
 					item.set({
 						'col':postObj[w].col,
 						'row':postObj[w].row,
@@ -229,7 +230,7 @@
 						'username':postObj[w].username,
 						'text': postObj[w].text,
 						'votes': postObj[w].vote.length,
-						'color': postObj[w].colour,
+						'color': newcolour,
 						'fontsize': postObj[w].fontSize,
 						'wall_connection': wallModel_current
 					});
@@ -355,6 +356,7 @@
 					var row = 1;
 					var text = document.getElementById('formText').value;
 					var colour = document.getElementById('mainMenu').tempColour;
+					colour = converstionCheck(colour);
 					var fontsize = document.getElementById('sizeDrop').value;
 					var tags = document.getElementById('newTags');
 					var tagged = new Array();

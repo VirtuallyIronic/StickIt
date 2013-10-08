@@ -257,6 +257,7 @@ function enableItemView() {
 					var colour = data[1];
 					var fontsize = data[2];
 					var tags = data[3];
+					colour = converstionCheck(colour);
 					this.$el.children('.cssnote').children('.edit').children(".editSpan").text(textEdit);
 					linkify(this.$el.children('.cssnote').children('.edit').children(".editSpan"));
 
