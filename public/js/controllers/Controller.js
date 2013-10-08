@@ -36,9 +36,9 @@ define([
 		modelWall
 	){
 	var CurrentUser = new modelCurrentUser();
-	setInterval(function(){
-		CurrentUser.fetch();
-	}, 1000);
+	//setInterval(function(){
+	//	CurrentUser.fetch();
+	//}, 1000);
 	
 	return Backbone.Marionette.Controller.extend({
 		initialize:function (options) {
