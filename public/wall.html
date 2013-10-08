@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html><!-- credit to kirk for the js for the notes template. -->
+  <head>
+    <meta charset="utf-8">
+    <title>hello-backbonejs</title>
+	 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="css/stylesheet401.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
+
+    <link rel="stylesheet" href="css/horizontalaccordion.css" type="text/css" /> 
+    <link rel="stylesheet" href="css/verticalaccordion.css" type="text/css" />
+	<link rel="stylesheet" href="css/gridCSS.css" type="text/css" />
+	<link rel="stylesheet" href="css/jquery.gridster.css" type="text/css" />
+	<link rel="stylesheet" href="css/dropdownstyle.css" type="text/css" />
+
+
+	<script src="js/vendor/jquery.js" type="text/javascript"></script>
+	<script src="js/vendor/underscore.js" type="text/javascript"></script>
+	<script src="js/vendor/backbone.js" type="text/javascript"></script>
+	<script src="js/vendor/backbone-relational.js" type="text/javascript"></script>
+	<script src="js/vendor/json2.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/vendor/jquery.gridster.with-extras.js" charster="utf-8"></script>
+	<script src="js/utils/other_controller.js" type="text/javascript"></script>
+	<script src="js/utils/menu_controller.js" type="text/javascript"></script>
+	<script src="js/utils/ajax_controller.js" type="text/javascript"></script>
+	<script src="js/utils/itemViewController.js" type="text/javascript"></script>
+	<script src="js/utils/modelController.js" type="text/javascript"></script>
+	<script src="js/utils/backbone_gridster_init.js" type="text/javascript"></script>
+	<script src="js/utils/ajax_evan.js" type="text/javascript"></script>
+
+	<script type="text/javascript" src="js/vendor/jquery.transit.min.js"></script>
+	<script type="text/javascript" src="js/utils/SettingsMenu.js"></script>
+
+
+  </head>
+
+<body>
+	<div id="eventScanner" class="eventScanner">
+	</div>
+	<div id="fullscreen">
+	<!-- Blocks out the background -->
+	</div>
+	<div id="dialog-modal" title="Basic modal dialog" style="display: none;">
+	</div>
+
+	<div class="topmenu" style="height:190px">
+		<div id="logo">
+			<div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png">
+		</div>
+			<div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png">
+		</div>
+		<span><img src="logo/logo2.png" style="align:center; display:block; margin-left: auto;	margin-right: auto; "></span>  
+	</div>
+
+				<div id="wrapper" style="margin-top:100px; position: absolute; margin-right:180px; width:350px; height: 200px;  z-index:99;">
+					<div id="menuSettings" class="animate form" style="display:none; margin-top:-210px; height:200px;	padding-bottom:100;">
+				<h1 id="MainS">Login</h1>
+				<p> 
+					<input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+						</p>
+						<p> 
+							<input id="password" name="password" required="required" type="password" placeholder="Password" /> 
+						</p>
+						<p class="login button"> 
+							<button onclick="preformLogin()" value="Login"> LOGIN </button> 
+						</p>
+					</div>
+				</div>               
+	<div class="navbar" style="background-color: #fafafa; height:41px; ">
+    <div class="navbar-inner" style="text-align:center; display:inline-block;
+    list-style-type: none;">
+	<ul class="nav">
+		<li><a href="Homepage.html">Home</a></li>
+		<li><a href="About.html">About</a></li>
+		<li><a href="Contact.html">Contact</a></li>
+		<li><a href="https://github.com">Download</a></li>
+		<li><a href="UserMainPage.html">User home</a></li>
+		<li><a href="UserOptions.html">User menu</a></li>
+		<li><a href="login.html">Login</a></li>
+	</ul>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	
+			<section class="demo">
+			<div class="titleDisplay">
+				<ul id="laneHeadings" class="titleDisplay">		
+				</ul>
+			</div>
+			<div class="gridster">
+				<ul>			
+				</ul>
+			</div>
+
+	
+
+		</section>
+
+			
+	</div>
+
+	<div id="sidemenu"onclick="sideMenuOpen()">
+			<img src="images/arrow_icon_left.png">
+	</div>	
+	<div id="sidebar" style="display:none; z-index:97; position: fixed;
+right: 0; "> 
+	<div class="sidebar" style="margin-top:50px; padding-left:80px; "><!-- padding is needed to keep the buttons working for some reason. -->
+		<div id="expand" style="margin:30px;">
+		<button id="newNoteButton" onclick="clearWall()">Clear Wall</button>
+		<button id="newLaneBut" onclick="moreLanes('0')">New Lane</button>
+		<button id='add' onclick='newNoteWorkaround()'>New Note</button>		
+		<button id="SettingsButton" onclick="showSettings(mainSettings)">Settings</button>
+		<button id="screenCap" onclick="screenCap()">Screenshot</button>
+		</div>
+	</div>
+	</div>
+	 <div id="wrapper" style="margin-top:100px; z-index=99;">
+		<div id="mainSettings" class="animate form" style="display:none;">
+			<div class="closeBtn" style="cursor:pointer;">
+				<img src="images/close-button.png " onclick="hideSettings(),sideMenuOpen()"/>
+			</div>
+			<form  action="mysuperscript.php" autocomplete="on"> <!-- will need to be replaced-->
+				<h1 id="MainS">Settings</h1>
+				<h2>
+					<a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneOne)"> Privacy</a>
+					<a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneTwo)">  Wall Size</a>
+					<a class="SettingsBtn" onclick="goToPane(mainSettings, optionPaneThree)"> option pane3</a>
+				</h2>
+				<p>    
+				</p>
+			</form>
+		</div>
+		
+		<div id="optionPaneOne" class="animate form" style="display:none;">
+			<div class="closeBtn" style="cursor:pointer;">
+				<img src="images/close-button.png " onclick="hideSettings(),sideMenuOpen()"/>
+			</div>
+			<h1 id="MainS" onclick="goToPane(optionPaneOne, mainSettings)">Settings</h1>
+			<h2>
+				<a class="SettingsBtn"> Privacy</a>
+				<a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneTwo)">  Wall Size</a>
+				<a class="SettingsBtn" onclick="goToPane(optionPaneOne, optionPaneThree)"> option pane3</a>
+			</h2>  
+			<p>    
+				Privacy
+				<div id="dd" class="wrapper-dropdown-5" tabindex="1">Privacy
+					<ul class="dropdown">
+						<li>
+							<a href="#"><i class="icon-user"></i>Public</a>
+						</li>
+						<li>
+							<a href="#"><i class="icon-cog"></i>Private-invite only</a>
+						</li>
+					</ul>
+				</div>
+			</p>
+		</div>
+
+		<div id="optionPaneTwo" class="animate form" style="display:none;">
+			<div class="closeBtn" style="cursor:pointer;">
+				<img src="images/close-button.png " onclick="hideSettings(),sideMenuOpen()"/>
+			</div>
+			<h1 id="MainS" onclick="goToPane(optionPaneTwo, mainSettings)">Settings</h1>
+			<h2>
+				<a class="SettingsBtn" onclick="goToPane(optionPaneTwo, optionPaneOne)"> Privacy</a>
+				<a class="SettingsBtn" > Wall Size</a>
+				<a class="SettingsBtn" onclick="goToPane(optionPaneTwo, optionPaneThree)"> option pane3</a>
+			</h2>  
+			<p>
+				<p>                                            
+					<label for="amount">Wall Size</label>
+					<input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
+				</p> 
+				0 <div id="slider"></div> 15
+			</p>
+		</div>
+
+		<div id="optionPaneThree" class="animate form" style="display:none;">
+			<div class="closeBtn" style="cursor:pointer;">
+				<img src="images/close-button.png " onclick="hideSettings(),sideMenuOpen()"/>
+			</div>
+			<h1 id="MainS" onclick="goToPane(optionPaneThree, mainSettings)">Settings</h1>
+			<h2>
+				<a class="SettingsBtn" onclick="goToPane(optionPaneThree, optionPaneOne)"> Privacy</a>
+				<a class="SettingsBtn" onclick="goToPane(optionPaneThree, optionPaneTwo)">  Wall Size</a>
+				<a class="SettingsBtn"> option pane3</a>
+			</h2>  
+			<p>    
+				Option Pane Three
+				<ul class="optionList">
+					<li>test</li>
+					<li><input type="radio" name="test"value="test">radiobtn </li>
+				</ul>
+			</p>
+		</div>
+		
+	</div>
+<!--	<div class="wall">
+
+  	</div>
+<!-- functionality of create div bracket on command, resize, title etc. will be requried-->
+</body>
+
+</html>
