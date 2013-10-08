@@ -6,11 +6,11 @@ function enableItemView() {
 			
 			// `ItemView`s now respond to two clickable actions for each `Item`: swap and delete.
 			events: {
-				'click button.deleteButton': 'remove',//'remove',
-				'click button.editButton': 'editMe',
-				'click button.expandButton': 'expanding',
-				'click button.voteButton': 'voting',
-				'click button.removeVoteButton': 'cancelVote'
+				'click img.deleteButton': 'remove',//'remove',
+				'click img.editButton': 'editMe',
+				'click img.expandButton': 'expanding',
+				'click img.voteButton': 'voting',
+				'click img.removeVoteButton': 'cancelVote'
 			},
 			
 			// `initialize()` now binds model change/removal to the corresponding handlers below.
@@ -21,6 +21,7 @@ function enableItemView() {
 				this.model.bind('remove', this.unrender);
 				this.voteObj = new options.voteModel;
 				this.tagging = new options.tagModel;
+				this.newNoteData = options.newNote;
 				//this.newNoteStatus = 
 				if(options.newNoteInput == 'tv')
 				{
@@ -57,8 +58,10 @@ function enableItemView() {
 					{
 						var addTags = new taggedFormat();
 						addTags.set({
-							'noteID': this.model.get('id'),
-							'tagItem': this.incTagData[k].get('tagItem')
+							'noteID': this.model.get('noteId'),
+							'tagItem': this.incTagData[k].get('tagItem'),
+							//'tags_note' :this.model
+							
 						});
 						this.tagging.add(addTags);
 					}
@@ -71,12 +74,15 @@ function enableItemView() {
 						var addVotes = new voteFormat();
 						addVotes.set({
 							'noteID': this.incVoteData[k].get('noteID'),
-							'votes_note': this.incVoteData[k].get('votes_note'),
+							//'votes_note': this.incVoteData[k].get('votes_note'),
 						});
 						this.voteObj.add(addVotes);
 					}
 				}
-				
+				if (this.newNoteData == true)
+				{
+					newNotePost(this.model);
+				}
 				Note(this);
 				return this; // for chainable calls, like .render().el
 			},
@@ -143,7 +149,7 @@ function enableItemView() {
 					votes = (parseInt(votes)+1);//.toString();
 					this.model.set('votes',votes);
 					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-					$("<button class='removeVoteButton'> -1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+					$("<img class='removeVoteButton' src='images/icons/dislike-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
 				}				
 				else
@@ -193,7 +199,7 @@ function enableItemView() {
 					votes = (parseInt(votes)-1);//.toString();
 					this.model.set('votes',votes);
 					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-					$("<button class='voteButton'> +1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+					$("<img class='voteButton' src='images/icons/Like-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');					
 				}				
 				else
@@ -217,7 +223,6 @@ function enableItemView() {
 			//------AFTER DELETE PROMPT, REMOVE NOTE WIDGET--------
 			unrender: function(){
 				removeWidgets($(this.el));
-				//this.model.trigger('updateServer');
 			},
 			
 			//------AFTER DRAG,CHANGES MODEL DATA--------
@@ -259,47 +264,31 @@ function enableItemView() {
 					var newColour = getTintedColor(colour, -75);
 					this.$el.children('.cssnote').children('.dragbar').css('background-color', newColour);					
 					this.$el.children('.cssnote').children('.toolbar').css('background-color', newColour);
-					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontsize', fontsize+"px");
+					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontSize', fontsize+"px");
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('color', fontColour);
 
 					if (tags != 0)
 					{
-						//var oldTags = this.model.get('tagged');
-						//var newTags = oldTags.concat(tags);
-
 						for (var k=0; k<tags.length; k++)
-						{
+						{					
 							var addTags = new taggedFormat();
 							addTags.set({
-								'noteID': this.model.get('id'),
+								'noteID': this.model.get('noteId'),
 								'tagItem': tags[k]
 							});
 							this.tagging.add(addTags);
 						}
-
-						this.model.set({
-							'tagged': newTags,
-							'text': textEdit,
-							'fontsize': fontsize,
-							'color': colour
-							// modify item defaults
-						});
-						//this.model.set('tagged',newTags);
 					}
-					else
-					{
-						this.model.set({
-							'text': textEdit,
-							'fontsize': fontsize,
-							'color': colour
-							// modify item defaults
-						});
-					}
+					
+					this.model.set({
+						'text': textEdit,
+						'fontsize': fontsize,
+						'colour-note': colour
+						// modify item defaults
+					});
+					
+					noteUpdate(this.model.get('noteId'), this.model);
 					closeMenu();
-					//TODO
-					//SERVER UPDATE NOTE
-					//updateNote(this.model);
-					//this.model.trigger('updateServer');
 				}
 				else
 				{
@@ -314,11 +303,8 @@ function enableItemView() {
 					var r=confirm("Delete note?");
 					if (r==true)
 					{
-						//TODO
-						//SERVER UPDATE NOTE
-						//removeNote(this.model);
+						note_Delete(this.model.get('noteId'));
 						this.model.destroy();
-						//this.model.set('col', oldCol);
 					}	
 				}
 				else
@@ -329,6 +315,7 @@ function enableItemView() {
 			
 			//------LANE DELETION FUNCTION -NOTE --------
 			removenoprompt: function(){
+				note_Delete(this.model.get('noteId'));
 				this.model.destroy();
 			},
 			

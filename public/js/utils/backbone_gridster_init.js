@@ -49,6 +49,7 @@
 	var confirmLogin = false;
 	var currentUser_ID = 0;
 	var currentUser = "";
+	var newNoteInc = false;
 	/*NEEDS TO BE DYNAMICALLY UPDATED!*/
 	if (location.search == "")
 	{
@@ -68,82 +69,9 @@
 		var initialData = wallGet(wallID);
 		evan_data = initialData.data;		
 		initWall = initialData.data;		
-		/*initWall = {"id": "eJU6kroyQ",
-					"title": "Console Wall",
-					"owner": "x1TzuEjk",
-					"isPrivate": true,
-					"permission": "admin",
-					"totalCols": 2,
-					"cols": [
-						{
-							"id": 1,
-							"wallId": "eJU6kroyQ",
-							"colNum": 1,
-							"title": "One"
-						},
-						{
-							"id": 2,
-							"wallId": "eJU6kroyQ",
-							"colNum": 2,
-							"title": "Two"
-						}
-					],
-					"posts":[
-							{
-								"id": 1,
-								"col": 1,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "vass",
-								"text": "blah",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [],
-								"tag": []
-							},
-							{
-								"id": 2,
-								"col": 2,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "kirk",
-								"text": "NOPE",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [{
-										'noteID': 2,
-										}
-								],
-								"tag": []
-							},
-														{
-								"id": 3,
-								"col": 1,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "vass",
-								"text": "Preas",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [{
-										'noteID': 3,
-										},
-										{
-										'noteID': 3,
-										}],
-								"tag": [{
-										'noteID': 1,
-										'tagItem': 'TEXT TAG'
-										}]
-							}
-							
-						]
-					};
-		*/
+
 		modelInit();
 		enableItemView();
-
-
 		// Wall View Handler
 		ListView = Backbone.View.extend({
 			el: $('.wall'), // el attaches to existing element
@@ -178,55 +106,26 @@
 			render: function(){
 				var self = this;
 				console.log(this.model+" KIRK TEST");
-				
+				lanes = initWall.totalCols;
 				plzwork();
-				/*
-				if (initialData.status != false)
+				if (initWall.permission == 'admin')
 				{
-					//initWall = initialData.data;
-					confirmLogin == true;
-					if (initWall.permission == 'admin')
-					{
-						admin = true;
-						confirmLogin = true;
-						permission = 'admin';
-					}
-					else if (initWall.permission == 'post')
-					{
-						admin = false;
-						confirmLogin = true;
-						permission = 'post'
-					}
-					else
-					{
-						admin = false;
-						confirmLogin = false;
-						permission = 'read'
-					}	
+					admin = true;
+					confirmLogin = true;
+					permission = 'admin';
+				}
+				else if (initWall.permission == 'post')
+				{
+					admin = false;
+					confirmLogin = true;
+					permission = 'post'
 				}
 				else
-				{*/
-					//initWall = initialData.data;
-					
-					if (initWall.permission == 'admin')
-					{
-						admin = true;
-						confirmLogin = true;
-						permission = 'admin';
-					}
-					else if (initWall.permission == 'post')
-					{
-						admin = false;
-						confirmLogin = true;
-						permission = 'post'
-					}
-					else
-					{
-						admin = false;
-						confirmLogin = false;
-						permission = 'read'
-					}			
-				//}
+				{
+					admin = false;
+					confirmLogin = false;
+					permission = 'read'
+				}			
 				//--------DEMO SETUP TODO-----------
 				wallModel_current = new wallFormat();
 				wallModel_current.set({
@@ -272,7 +171,7 @@
 					var $tSpan = jQuery('<span/>', {
 						class:'titleSpan',
 					});
-
+					wallHeadings[i] = this.colDetails.models[i].get('heading');
 					$($tSpan).text(this.colDetails.models[i].get('heading'));
 					//--- attempt to put the title inside a <p> tag. ---
 					$("<p>").appendTo($headDetails);
@@ -438,6 +337,7 @@
 				this.collection.each(function(model) 
 				{ 
 					//removeNote(model);
+					note_Delete(model.get('noteId'));
 					model.destroy(); 
 				});
 				//delete ALL note AJAX   search tag: TODO
@@ -447,12 +347,13 @@
 			prepareItem: function(){
 				//MAY REQUIRE REWRITE DUE TO MODEL CHANGES!
 				//TODO
+				newNoteInc = true;
 				if (confirm('Confirm new Note?')) 
 				{   
 					var col = document.getElementById('laneDrop').value;
 					var row = 1;
 					var text = document.getElementById('formText').value;
-					var colour = document.getElementById('colourDrop').value;
+					var colour = document.getElementById('mainMenu').tempColour;
 					var fontsize = document.getElementById('sizeDrop').value;
 					var tags = document.getElementById('newTags');
 					var tagged = new Array();
@@ -472,15 +373,14 @@
 					
 					var item = new noteFormat();
 					item.set({
+						'wallId': wallColData.get('wallID'),
 						'col': col,
 						'row': row,
 						'userId':currentUser_ID,
 						'userName':currentUser,
 						'text': text,
-						//'tagged': tagged,
-						'color': colour,
+						'colour-note': colour,
 						'fontsize': fontsize,
-						//'taggedKey'
 						'wall_connection': wallModel_current//.get('_id')
 					});
 					tagObj = new Array;
@@ -498,9 +398,10 @@
 						tagCount++;
 						//this.tagging.add(newNoteTags);
 					}
+					
 					this.collection.add(item);
-					////newInsert(item);
 				}
+	
 				closeMenu();
 			},
 			
@@ -531,12 +432,13 @@
 					model: item,
 					voteModel: votingList,
 					tagModel: tagList,
+					newNote: newNoteInc,
 					newNoteInput: objdata,
 					incTags: tagObj,
 					incVotes: voteObj
 				});
 				var newWidget = itemView.render().el;
-					
+				
 				gridster.add_widget(newWidget, 1, 1, col, row);
 			}
 		});
@@ -592,8 +494,8 @@
 				}
 			}
 		}).data('gridster');
-		if (confirmLogin == false)// || permission == 'read')
+		/*if (confirmLogin == false)// || permission == 'read')
 		{
 			gridster.disable();
-		}
+		}*/
 	}

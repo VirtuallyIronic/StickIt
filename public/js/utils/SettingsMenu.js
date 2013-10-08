@@ -46,6 +46,8 @@
 		});
 		
 		wallNails();
+
+
 		
     });
 
@@ -84,7 +86,7 @@
 				}, 
 				error: function(jqXHR, textStatus, err){
 					//alert('text status '+textStatus+', err '+err);
-					alert('Offline');
+					//alert('Offline');
 					var wallImg = new Array();
 					var wallPath = new Array();
 					for (var k=0; k<5; k++)
@@ -121,6 +123,7 @@
 // close the settings menu.
         function hideSettings()
         {
+        	/*
         	var targetName = document.getElementById("mainSettings");
         	var targetName2 = document.getElementById("optionPaneOne");
         	var targetName3 = document.getElementById("optionPaneTwo");
@@ -137,6 +140,13 @@
        		$(targetName4).fadeOut(5, function() {
        			$(targetName4).hide();
        		});
+
+    		*/
+			var targetName = document.getElementById("wrapper");
+       		$(targetName).fadeOut(10, function() {
+       			$(targetName).hide();
+       		});
+
         }
 
 // the swap function between setting boxes.
@@ -152,7 +162,7 @@
  
 
         function sideMenuOpen(){
-            var targetName = document.getElementById("sidebar");
+            var targetName = document.getElementById("sidebarSlider");
             var targetName2 = document.getElementById("sidemenu");
             if($(targetName).width() == 300){
                 $(targetName).transition({y:'0'});
@@ -167,11 +177,65 @@
                 $(targetName).transition({width:'300px' });
                 
                 $(targetName).show();
-                $(targetName).transition({y:'100'});
+                $(targetName).transition({y:'50'});
            		$(targetName2).transition({width:'190'});           		
-           		$(targetName2).transition({y:'310'});
+           		//$(targetName2).transition({y:'310'});
 				
             }
            
         }
- 
+
+ 		function sideMenuOpen2(){
+            var targetName = document.getElementById("sidebarSlider");
+            var targetName2 = document.getElementById("sidemenu");
+	//closing the menu
+            if($(targetName2).width() == 300){
+                $(targetName).delay(30).fadeOut(800, function(){   });
+                $(targetName2).transition({width:'100'});
+
+                
+                
+
+
+	//opening the menu                
+            }else{
+                //$(targetName).transition({width:'300px' });
+                $(targetName).fadeIn(800, function(){     });
+           
+                $(targetName2).transition({width:'300'});           		
+           		//$(targetName2).transition({y:'310'});
+				
+            }
+           
+        }
+function confirmSettings() {
+	hideSettings();
+
+}
+
+    function colourChange(field){
+    console.log("colour clicked");
+    	var c=field.style.background;
+    	//$('#mainMenu').attr('tempColour',c);
+    	document.getElementById('mainMenu').tempColour=c;
+	
+		var c=document.getElementsByClassName('colourOption')
+    	for(var i=0; i<c.length;i++){
+    		c[i].id='';
+    	};
+    		
+    	field.id='colourSelected';
+
+    }
+
+    /* self made dynamic event listenter implementation, not used for debuging time reasons. 
+    
+    function addColourlistener(){
+    	var c=document.getElementsByClassName('colourOption')
+    	for(var i=0; i<c.length;i++){
+    		c[i].on('click',colourChange(this));
+    	};
+    		
+    }
+    */
+

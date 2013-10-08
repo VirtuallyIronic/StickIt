@@ -11,6 +11,7 @@ design template CSS sheet.
 }
 
 .titleDisplay { 
+	padding-top: 10px;
 	min-height:20px;
 	overflow:hidden;
 }
@@ -31,12 +32,12 @@ design template CSS sheet.
 
   
 .laneTitle {  
-	background-color: yellow;
+	opacity: .9;
+	border-radius: 15px;
+	background-color: rgb(225, 233, 170);
 	width: 200px;  
 	min-height: 40px;  
 	border: solid 2px #ccc; 
-	border-top-right-radius: 10px; 
-	border-top-left-radius: 5px;  
 	display: inline-block;
 	overflow-y: visible;
 	text-align: center;
@@ -75,7 +76,7 @@ body{
   margin-left:0em;
   margin-right: 0em;
   margin-top: 0em;
-  background-color:#8ca1ef;
+  background-color:#427580;
   border-radius: 15px; 
 }
 
@@ -104,7 +105,7 @@ body{
 
 .popupMenu {
     position: absolute;
-    top: 50%;
+    top: 300px;
     left: 50%;
     margin-top: 0px;
     margin-left: -200px;
@@ -158,7 +159,7 @@ h2,p{
   margin-right:auto;
   margin-left:auto;
   position: relative;
-  border: 1px solid #0758AF;
+  border-bottom: 1px solid #0758AF;
   background-color: #0758AF;
 }
 
@@ -222,6 +223,7 @@ h2,p{
 	display:inline-block;
 	outline: none;
 	width: 200px;
+	padding-top: 4px;
 	min-height: 150px;
 	max-height: 165px;
 	line-height: 100%;
@@ -348,54 +350,79 @@ lane btns.
 /*
 Note btns.
 */
+.sliderButton,
 .deleteButton,
 .editButton,
 .expandButton,
 .tagButton,
 .continueBtn
-.confirmBtn{
+.confirmBtn,
+.confirmEditBtn,
+.cancelEditBtn,
+.voteButton{
 	color: white;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
-
+.sliderButton{
+	font-size: 130%;
+background: rgb(66, 184, 221); /* this is a light blue */
+}
 .deleteButton{
- background: rgb(202, 60, 60); /* this is a maroon */
+background-color: transparent;	
+ /*background: rgb(202, 60, 60); /* this is a maroon */
 }
 .editButton{
- background: #045cdc; /* this is a light blue */
+	background-color: transparent;	
+ /*background: #045cdc; /* this is a light blue */
 }
 .expandButton{
-background: rgb(66, 184, 221); /* this is a light blue */
- background-attachment: "../images/icons/expand-icon.png"
+	background-color: transparent;	
+/*background: rgb(66, 184, 221); /* this is a light blue */
+ 
 }
-
+.voteButton{
+	background-color: transparent;	
+/*background: rgb(66, 184, 221); /* this is a light blue */
+ 
+}
 .continueBtn{
 	float: right;
 	font-size: 130%;
 background: rgb(66, 184, 221); /* this is a light blue */
- background-attachment: "../images/icons/expand-icon.png"
+ 
+}
+.cancelEditBtn{
+	position: absolute;
+	right: 100px;
+	bottom: 0px;
+	font-size: 130%;
+	background: rgb(66, 184, 221); /* this is a light blue */
+}
+.confirmEditBtn{
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	font-size: 130%;
+	background: rgb(66, 184, 221); /* this is a light blue */
 }
 
 .confirmBtn{
-	float: right;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
 	font-size: 130%;
 background: rgb(66, 184, 221); /* this is a light blue */
- background-attachment: "../images/icons/expand-icon.png"
+ 
+ 
 }
 
 .tagButton{
 	width:70px;
+	margin-bottom: 12px;
 background: #045cdc; /* this is a light blue */	
 }
-#confirmPopup{
-	margin-top: 30px;
-}
-#cancelPopup{
-margin-top: 30px;	
-}
-
 #colourSelect{
     width: 140px;
     height: 34px;
@@ -454,21 +481,51 @@ background: white;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 /* note bar*/
-#bottombar{
-	margin-top: 10px;
+#bottomBar{
+	
+	position: absolute;
+	bottom: 5px;
+	width: 450px;
 }
 
 #wallCreationBtn{
+	position: absolute;
+	right: 10px;
+	top: 400px;
 	color: white;
+	width: 150px;
+	height: 70px;
+
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
- background: rgb(202, 60, 60); /* this is a maroon */    
+    cursor: pointer;
+ 	background: rgb(202, 60, 60); /* this is a maroon */    
 }
-
-#sidemenu {
-	
-	position: fixed;
+.sidemenuwrapper{
+	position: absolute;
 	right:0;
+	bottom: 10px;
+	
+	
+}
+.settingsWrapper{
+	position: absolute;
+	top: 300px;
+	left: 50px;
+}
+#loginWrapper{
+	width: 60%;
+	right: 0px;
+	min-height: 560px;	
+	margin: 0px auto;	
+	width: 500px;
+	position: relative;	
+}
+#sidemenu {
+	/* the menu is fixed to under the wall starting point.*/
+	position: absolute;
+	right:0;
+	bottom: 10px;
 	width: 100px;
 	height: 50px;
 	padding-top: 22px;
@@ -478,22 +535,108 @@ background: white;
 	border-top-left-radius: 10px;  
 	opacity: 0.4;
 	cursor: pointer;
+	z-index:97; 
 }
+/*note creation sidebar */
+#sideBar{
+position: absolute;
+top: 10px;
+right: 0px;
+}
+/*wall settings slider btn*/
+#sidebarSlider{
 
+}
 .sidebar {
-  display:none;
-  float: right;
-  display: inline-block;
-  border-bottom-left-radius:10px;
-  border-top-left-radius: 10px;  
-  
-  
-  position: relative;
-  border: 1px solid #071e3c;
-  background-color: #071e3c;
+	position: absolute;
+	top:-70px;
+	opacity: 1.0;
+  	display:none;
+  	float: right;
+  	display: inline-block;
+  	border-bottom-left-radius:10px;
+  	border-top-left-radius: 10px;  	
+    position: relative;
+	border: 1px solid #071e3c;
+  	background-color: #071e3c;
 }
 
-.closebtn{
-	float:right;
+.closeBtn{
+	position: absolute;
+	right: 5px;	
+	top: 5px;
 }
+.styledSelect{
+   width: 240px;
+   height: 34px;
+   overflow: hidden;
+   background: url(../images/new-arrow-down.jpg) no-repeat right #ddd;
+   border: 1px solid #ccc;
+}
+.styledSelect select{
+	background: transparent;
+    width: 240px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 34px;
+    -webkit-appearance: none;
+
+}
+
+#userMenu{
+	position: absolute;
+	z-index: 99;
+	right: 0px;
+	top: 160px;
+}
+
+.navbar{
+margin-bottom: 20px;
+overflow: visible;
+}
+.navbar-inner{
+margin-left: auto;
+margin-right: auto;
+text-align:center;
+min-height: 40px;
+padding-right: 20px;
+padding-left: 20px;
+background-color: #fafafa;
+background-image: -moz-linear-gradient(top,#fff,#f2f2f2);
+background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#f2f2f2));
+background-image: -webkit-linear-gradient(top,#fff,#f2f2f2);
+background-image: -o-linear-gradient(top,#fff,#f2f2f2);
+background-image: linear-gradient(to bottom,#fff,#f2f2f2);
+background-repeat: repeat-x;
+border: 1px solid #d4d4d4;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#fff2f2f2',GradientType=0);
+-webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+-moz-box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+}
+
+.navUl {
+
+list-style: none;
+padding: 0;
+
+
+}
+.navLi{
+padding-left: 10px;
+
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+border-width: 1px;
+border-color: #ffe #aaab9c #ccc #fff;
+border-style: solid;
+
+list-style: none;
+display: inline-block;
+
 }

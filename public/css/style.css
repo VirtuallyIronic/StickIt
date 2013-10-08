@@ -39,7 +39,7 @@ a.hiddenanchor{
 	margin-left: 70px;
 }
 
-#wrapper{
+.wrapper{
 	width: 60%;
 	right: 0px;
 	min-height: 560px;	
@@ -50,13 +50,13 @@ a.hiddenanchor{
 /**** Styling the form elements **/
 
 /**** general text styling ****/
-#wrapper a{
+.wrapper a{
 	color: rgb(95, 155, 198);
 	text-decoration: underline;
 }
 
 /** For the moment only webkit supports the background-clip:text; */
-#wrapper h1{
+.wrapper h1{
  	font-size: 35px;
 	color: rgb(6, 106, 117);
 	padding: 0px 0 10px 0;
@@ -74,7 +74,7 @@ a.hiddenanchor{
 	-webkit-background-clip: text;
 	cursor:pointer;
 }
-#wrapper h1:after{
+.wrapper h1:after{
 	content: ' ';
 	display: block;
 	width: 100%;
@@ -87,7 +87,7 @@ a.hiddenanchor{
 	background: -ms-linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
 	background: linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
 }
-#wrapper h2{
+.wrapper h2{
     background: -webkit-repeating-linear-gradient(-45deg, 
 	rgb(18, 83, 93) , 
 	rgb(18, 83, 93) 20px, 
@@ -98,7 +98,7 @@ a.hiddenanchor{
 	-webkit-text-fill-color: transparent;
 	-webkit-background-clip: text;
 }
-#wrapper h2:after{
+.wrapper h2:after{
 	content: ' ';
 	display: block;
 	width: 100%;
@@ -112,13 +112,13 @@ a.hiddenanchor{
 	background: linear-gradient(left, rgba(147,184,189,0) 0%,rgba(147,184,189,0.8) 20%,rgba(147,184,189,1) 53%,rgba(147,184,189,0.8) 79%,rgba(147,184,189,0) 100%); 
 }
 
-#wrapper p{
+.wrapper p{
 	margin-bottom:5px;
 }
-#wrapper p:first-child{
+.wrapper p:first-child{
 	margin: 0px;
 }
-#wrapper label{
+.wrapper label{
 	color: rgb(64, 92, 96);
 	position: relative;
 }
@@ -139,7 +139,7 @@ input {
 }
 
 /* all the input except submit and checkbox */
-#wrapper input:not([type="checkbox"]){
+.wrapper input:not([type="checkbox"]){
 	width: 92%;
 	margin-top: 4px;
 	padding: 10px 5px 10px 32px;	
@@ -159,8 +159,8 @@ input {
 	     -o-transition: all 0.2s linear;
 	        transition: all 0.2s linear;
 }
-#wrapper input:not([type="checkbox"]):active,
-#wrapper input:not([type="checkbox"]):focus{
+.wrapper input:not([type="checkbox"]):active,
+.wrapper input:not([type="checkbox"]):focus{
 	border: 1px solid rgba(91, 90, 90, 0.7);
 	background: rgba(238, 236, 240, 0.2);	
 	-webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
@@ -180,7 +180,7 @@ input {
 }
 
 /*styling both submit buttons */
-#wrapper p.button input{
+.wrapper p.button input{
 	width: 30%;
 	cursor: pointer;	
 	background: rgb(61, 157, 179);
@@ -208,11 +208,11 @@ input {
 	     -o-transition: all 0.2s linear;
 	        transition: all 0.2s linear;
 }
-#wrapper p.button input:hover{
+.wrapper p.button input:hover{
 	background: rgb(74, 179, 198);
 }
-#wrapper p.button input:active,
-#wrapper p.button input:focus{
+.wrapper p.button input:active,
+.wrapper p.button input:focus{
 	background: rgb(40, 137, 154);
 	position: relative;
 	top: 1px;
@@ -291,7 +291,7 @@ p.change_link{
 	rgb(247, 247, 247) 30px
 	);
 }
-#wrapper p.change_link a {
+.wrapper p.change_link a {
 	display: inline-block;
 	font-weight: bold;
 	background: rgb(247, 248, 241);
@@ -309,12 +309,12 @@ p.change_link{
 	-ms-transition: all 0.4s  linear;
 	transition: all 0.4s  linear;
 }
-#wrapper p.change_link a:hover {
+.wrapper p.change_link a:hover {
 	color: rgb(57, 191, 215);
 	background: rgb(247, 247, 247);
 	border: 1px solid rgb(74, 179, 198);
 }
-#wrapper p.change_link a:active{
+.wrapper p.change_link a:active{
 	position: relative;
 	top: 1px;
 }
@@ -325,6 +325,7 @@ p.change_link{
 #optionPaneOne, 
 #optionPaneTwo,
 #optionPaneThree,
+#homepageMenu,
 #login{
 	position: absolute;
 	top: 0px;
@@ -340,98 +341,4 @@ p.change_link{
 	-moz-border-radius: 5px;
 		 border-radius: 5px;
 }
-#register{	
-	z-index: 21;
-	opacity: 0;
-}
-#login{
-	z-index: 22;
-}
 
-
-#toregister:target ~ #wrapper #register,
-#tologin:target ~ #wrapper #login,
-#toFirstOption:target ~ #wrapper #optionOne,
-#toSecondOption:target ~ #wrapper #optionTwo,
-#toThirdOption:target ~ #wrapper #optionThree,
-#toMainSettings:target ~#wrapper #login{
-	z-index: 22;
-	-webkit-animation-name: fadeInLeft;
-	-moz-animation-name: fadeInLeft;
-	-ms-animation-name: fadeInLeft;
-	-o-animation-name: fadeInLeft;
-	animation-name: fadeInLeft;
-	-webkit-animation-delay: .1s;
-	-moz-animation-delay: .1s;
-	-o-animation-delay: .1s;
-	-ms-animation-delay: .1s;
-	animation-delay: .1s;
-}
-
-#toregister:target ~ #wrapper #login,
-#tologin:target ~ #wrapper #register{
-	-webkit-animation-name: fadeOutLeft;
-	-moz-animation-name: fadeOutLeft;
-	-ms-animation-name: fadeOutLeft;
-	-o-animation-name: fadeOutLeft;
-	animation-name: fadeOutLeft;
-}
-
-/** the actual animation, credit where due : http://daneden.me/animate/ ***/
-.animate{
-	-webkit-animation-duration: 0.5s;
-	-webkit-animation-timing-function: ease;
-	-webkit-animation-fill-mode: both;
-	
-	-moz-animation-duration: 0.5s;
-	-moz-animation-timing-function: ease;
-	-moz-animation-fill-mode: both;
-	
-	-o-animation-duration: 0.5s;
-	-o-animation-timing-function: ease;
-	-o-animation-fill-mode: both;
-	
-	-ms-animation-duration: 0.5s;
-	-ms-animation-timing-function: ease;
-	-ms-animation-fill-mode: both;
-	
-	animation-duration: 0.5s;
-	animation-timing-function: ease;
-	animation-fill-mode: both;
-}
-
-/** yerk some ugly IE fixes 'cause I know someone will ask "why does it look ugly in IE?", no matter how many warnings I will put in the article */
-
-.lt8 #wrapper input{
-	padding: 10px 5px 10px 32px;
-    width: 92%;
-}
-.lt8 #wrapper input[type=checkbox]{
-	width: 10px;
-	padding: 0;
-}
-.lt8 #wrapper h1{
-	color: #066A75;
-}
-.lt8 #register{	
-	display: none;
-}
-.lt8 p.change_link,
-.ie9 p.change_link{
-	position: absolute;
-	height: 90px;
-	background: transparent;
-}
-#UserMenu{
-	text-align: right;
-	display: inline-block;
-	float: right;
-	margin-top: 10px;
-}
-#username,
-#menuLink,
-#logoutBtn{
-
-	
-	margin-right: 40px;
-}
