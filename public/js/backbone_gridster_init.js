@@ -41,7 +41,7 @@
 	var lanes;
 	var notes;
 	var wallHeadings = new Array();
-	var globalData = {};
+	var globalData = new Array;
 	var initWall;
 	var online = false;
 	var admin = false;
@@ -315,7 +315,7 @@
 						$(ev).remove();
 						//pagerefresh
 					}
-				}
+				
 			},
 			
 			purgeData: function(){
@@ -473,11 +473,12 @@
 			draggable: {
 				stop: function(event, ui){
 					var temp = this.$helper.context;					
-					var cul = this.$helper.context.attributes[2].nodeValue;
-					var row = this.$helper.context.attributes[3].nodeValue;
-					globalData[0] = cul;
-					//alert(cul);
+					var cul = this.$helper.context.attributes[1].nodeValue;
+					var row = this.$helper.context.attributes[2].nodeValue;
+					globalData = new Array();
 					globalData[1] = row;
+					//alert(cul);
+					globalData[0] = cul;
 					$(temp).trigger('custom');//, [cul, row]);
 				}
 			}

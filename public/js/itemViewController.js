@@ -236,7 +236,7 @@ function enableItemView() {
 				var newRow = globalData[1];
 				this.model.set('col', newCol);
 				this.model.set('row', newRow);
-				globalData = {};
+				//globalData = {};
 				
 				noteUpdate(this.model.get('noteId'), this.model);
 
