@@ -397,19 +397,15 @@ module.exports = function(app, passport) {
 							colour: colour,
 							fontSize: fontSize
 						}).success(function(post){
-							res.send(200);
+							res.json(post);
 						}).error(function(){
 							res.send(500);
 						});
 					} else {
-						console.log('textResult Error:');
-						console.log(textResult);
 						res.send(401);
 					}
 				});
 			} else {
-				console.log('Result Error:');
-				console.log(result);
 				res.send(401);
 			}
 		});
