@@ -76,7 +76,7 @@ define([
         	App.mainRegion.show(new errorView());
         },
         wall: function(id) {
-        	App.mainRegion.show(new wallView());
+        	window.redirect('wall.html?' + id);
         }
         
     });
