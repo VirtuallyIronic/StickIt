@@ -647,6 +647,7 @@
 			//-------CREATES INITIAL OBJECTS-------
 			render: function(){
 				var self = this;
+				console.log(this.model+" KIRK TEST");
 				//--------DEMO SETUP TODO-----------
 				wallModel_current = new wallFormat();
 				wallModel_current.set({
