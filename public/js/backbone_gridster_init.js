@@ -250,7 +250,13 @@
 			},
 			removeTag: function(){
 				//alert(tagid);
-				//this.
+				var pp = this.collection.where({'noteId': parseInt(notetrigger)});
+				var tt = pp[0].get('taggedKey');
+				var result = tt.where({'tagID':parseInt(tagid)});
+				for (var i=0; i<result.length; i++)
+				{
+					result[i].destroy();
+				}
 			},
 			editTitle: function(ev){
 				var i = $(ev.target).val();
