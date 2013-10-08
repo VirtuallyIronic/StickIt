@@ -45,12 +45,12 @@
 			$( "#amount" ).val( $( "#slider" ).slider( "value" ) + " Lanes");
 		});
 		*/
-		wallNails();
+		//wallNails();
 
 
 		
     });
-		
+		/**
 		function wallNails(){
 			//<li class="thumbnail"><a href="wall.html"><img src="images/Wall-Sample.png" style="width:300px; height:300px;"></a></li>
 			var data = moreLanes();
@@ -65,6 +65,7 @@
 				$('<a href="'+webpath+'"> <img src="'+imgpath+'" style="width:300px; height:300px;"> </a>').appendTo($thumbnail);
 			}
 		}
+		**/
 		
 		/**
 		function moreLanes()
