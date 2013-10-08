@@ -1,85 +1,4 @@
 <section>
-	<script type="text/javascript">
-		function makeAdmin(id){
-			var url = '/api/walluser/' + id;
-			var formValues = {
-				permission: "admin";
-			};
-			$.ajax({
-				url: url,
-				type: 'PUT',
-				dataType: 'json',
-				data: formValues,
-				success: function(data){
-					if(data.error){
-						console.log("error: " + data.error.text);
-					}
-					else {
-						window.location.reload();
-					}
-				},
-				error: function(error) {
-					window.location.replace('/login');
-				}
-			});
-		}
-		
-		function makePost(id){
-			var url = '/api/walluser/' + id;
-			var formValues = {
-				permission: "post";
-			};
-			$.ajax({
-				url: url,
-				type: 'PUT',
-				dataType: 'json',
-				data: formValues,
-				success: function(data){
-					if(data.error){
-						console.log("error: " + data.error.text);
-					}
-					else {
-						window.location.reload();
-					}
-				},
-				error: function(error) {
-					window.location.replace('/login');
-				}
-			});
-		}
-		
-		function makeView(){
-			var url = '/api/walluser/' + id;
-			var formValues = {
-				permission: "view";
-			};
-			$.ajax({
-				url: url,
-				type: 'PUT',
-				dataType: 'json',
-				data: formValues,
-				success: function(data){
-					if(data.error){
-						console.log("error: " + data.error.text);
-					}
-					else {
-						window.location.reload();
-					}
-				},
-				error: function(error) {
-					window.location.replace('/login');
-				}
-			});
-		}
-		
-		function removePermission(id){
-			
-		}
-		
-		function addPermission(){
-			
-		}
-	</script>
 	<div id="container_demo" >
 		<div id="wrapper" class="wrapper" style="position: absolute; top: 230px; left: 30px; z-index:99;">
 			<div id="login" class="animate form" >
@@ -88,8 +7,8 @@
 				<p style="text-align: center;"> 
 					<b>{{ user.username }}</b> has {{ permission }} permission
 					<p style="text-align: center;">
-						<a href="#" class="to_button" onclick="makeAdmin({{ id }})">Grant Viewer</a>&nbsp;
-						<a href="#" class="to_button" onclick="makeAdmin({{ id }})">Grant Poster</a>&nbsp;
+						<a href="#" class="to_button" onclick="makeView({{ id }})">Grant Viewer</a>&nbsp;
+						<a href="#" class="to_button" onclick="makePost({{ id }})">Grant Poster</a>&nbsp;
 						<a href="#" class="to_button" onclick="makeAdmin({{ id }})">Grant Admin</a>&nbsp;
 						<a href="#" class="to_button" onclick="removePermission({{ id }})">Remove Permission</a>
 					</p>
