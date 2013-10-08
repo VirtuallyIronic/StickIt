@@ -163,8 +163,9 @@
 		console.log("----------DATA-------");
 		console.log(model_data);
 		console.log("-----------------");
+		var url = '/api/post/' + id;
 		$.ajax({ 
-			url: '/api/post/'+id,
+			url: url,
 			type: 'PUT',
 			data: JSON.stringify({	col: model_data.col, 
 									row: model_data.row,
@@ -189,8 +190,9 @@
 		console.log("--------ID---------");
 		console.log(id);
 		console.log("----------------");
+		var url = '/api/post/' + id;
 		$.ajax({ 
-			url: '/api/post/'+id,
+			url: url,
 			type: 'DELETE',
 			success: function(data){
 				console.log('Note deleted: '+data);
