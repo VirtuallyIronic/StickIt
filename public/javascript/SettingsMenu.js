@@ -86,7 +86,7 @@
 				}, 
 				error: function(jqXHR, textStatus, err){
 					//alert('text status '+textStatus+', err '+err);
-					alert('Offline');
+					//alert('Offline');
 					var wallImg = new Array();
 					var wallPath = new Array();
 					for (var k=0; k<5; k++)

@@ -131,6 +131,7 @@
 	/*---------------------------NOTES-----------------------------------*/
 	function newNotePost(model_data)
 	{
+		alert(model_data);
 		$.ajax({ 
 			url: '/api/post',
 			type: 'POST',
@@ -140,8 +141,8 @@
 									wallId: model_data.wallId,
 									username: model_data.username,
 									text: model_data.text,
-									colour: model_data.colour,
-									fontSize: model_data.fontSize,
+									colour: model_data.colour-note,
+									fontSize: model_data.fontsize,
 									}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",

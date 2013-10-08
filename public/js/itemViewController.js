@@ -21,6 +21,7 @@ function enableItemView() {
 				this.model.bind('remove', this.unrender);
 				this.voteObj = new options.voteModel;
 				this.tagging = new options.tagModel;
+				this.newNoteData = options.newNote;
 				//this.newNoteStatus = 
 				if(options.newNoteInput == 'tv')
 				{
@@ -58,7 +59,9 @@ function enableItemView() {
 						var addTags = new taggedFormat();
 						addTags.set({
 							'noteID': this.model.get('id'),
-							'tagItem': this.incTagData[k].get('tagItem')
+							'tagItem': this.incTagData[k].get('tagItem'),
+							//'tags_note' :this.model
+							
 						});
 						this.tagging.add(addTags);
 					}
@@ -76,7 +79,10 @@ function enableItemView() {
 						this.voteObj.add(addVotes);
 					}
 				}
-				
+				if (this.newNoteData == true)
+				{
+					newNotePost(this.model);
+				}
 				Note(this);
 				return this; // for chainable calls, like .render().el
 			},

@@ -49,6 +49,7 @@
 	var confirmLogin = false;
 	var currentUser_ID = 0;
 	var currentUser = "";
+	var newNoteInc = false;
 	/*NEEDS TO BE DYNAMICALLY UPDATED!*/
 	if (location.search == "")
 	{
@@ -345,6 +346,7 @@
 			prepareItem: function(){
 				//MAY REQUIRE REWRITE DUE TO MODEL CHANGES!
 				//TODO
+				newNoteInc = true;
 				if (confirm('Confirm new Note?')) 
 				{   
 					var col = document.getElementById('laneDrop').value;
@@ -395,9 +397,10 @@
 						tagCount++;
 						//this.tagging.add(newNoteTags);
 					}
+					
 					this.collection.add(item);
-					////newInsert(item);
 				}
+	
 				closeMenu();
 			},
 			
@@ -428,12 +431,13 @@
 					model: item,
 					voteModel: votingList,
 					tagModel: tagList,
+					newNote: newNoteInc,
 					newNoteInput: objdata,
 					incTags: tagObj,
 					incVotes: voteObj
 				});
 				var newWidget = itemView.render().el;
-					
+				
 				gridster.add_widget(newWidget, 1, 1, col, row);
 			}
 		});
