@@ -132,7 +132,6 @@
 					'text': '',
 					'votes': 0,
 					/*REMOVE*/'voted': new Array(),
-					/*REMOVE*/'tagged': new Array(),
 					'colour-note': '#FFFFFF',
 					'fontsize': 18
 				}
@@ -445,7 +444,6 @@
 					}
 					
 					var voteSearch = this.voteObj.where({'userID':currentUser_ID, 'noteID': this.model.get('id')});
-					//alert(voteSearch.length);
 					if (voteSearch.length != 0)
 					{
 						for (var q=0; q<voteSearch.length; q++)
@@ -503,7 +501,6 @@
 				{
 					alert('PLEASE LOG IN');
 				}
-				//this.model.trigger('updateServer');
 			},
 			
 			//------AFTER EDIT, CHANGES MODEL DATA--------
@@ -517,28 +514,20 @@
 					var tags = data[3];
 					this.$el.children('.cssnote').children('.edit').children(".editSpan").text(textEdit);
 					linkify(this.$el.children('.cssnote').children('.edit').children(".editSpan"));
-					/*this.$el.children('.edit').children(".editSpan").text( textEdit);
-					linkify(this.$el.children('.edit').children(".editSpan"));*/
-					//$($note).css("background-color", input.model.get('colour'));
-					
-					//this.$el.children('.cssnote').css('background-color', colour);
+
 					this.$el.css('background-color', colour);
-					
-					//colour = this.$el.children('.cssnote').css('background-color');
-					//this.model.set('colour', colour);
+
 					var fontColour = getContrastYIQ(colour);
 					var newColour = getTintedColor(colour, -75);
 					this.$el.children('.cssnote').children('.dragbar').css('background-color', newColour);					
 					this.$el.children('.cssnote').children('.toolbar').css('background-color', newColour);
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontsize', fontsize+"px");
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('color', fontColour);
-					
-					//this.model.set('fontsize', fontsize);
-					//this.model.set('text', textEdit);
+
 					if (tags != 0)
 					{
-						var oldTags = this.model.get('tagged');
-						var newTags = oldTags.concat(tags);
+						//var oldTags = this.model.get('tagged');
+						//var newTags = oldTags.concat(tags);
 
 						for (var k=0; k<tags.length; k++)
 						{
@@ -886,8 +875,6 @@
 						tagged[count] = $(tags).children().eq(i).text();
 						count=count+1;
 					}
-					//ELEPHANT
-
 					
 					while (gridster.is_widget(col,row))
 					{
@@ -911,7 +898,6 @@
 					var tagCount=0;
 					for (var i=1; i<tagSize; i=i+3)
 					{
-						
 						var newNoteTags = new taggedFormat();
 						newNoteTags.set({
 							'noteID': item.get('id'),
