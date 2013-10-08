@@ -16,7 +16,7 @@ define([
     'views/page/wallPermissionView',
     'views/page/successfulRegistrationView',
     'views/page/userListView',
-    'view/page/wallSettingsView',
+    'views/page/wallSettingsView',
     'models/CurrentUser',
     'models/WallPermission',
     'models/WallList',
