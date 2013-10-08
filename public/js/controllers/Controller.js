@@ -101,7 +101,7 @@ define([
         successfulRegistration: function(){
         	App.mainRegion.show(new successfulRegistrationView());
         },
-        userList: funciton(){
+        userList: function(){
         	var UserList = new modelWallList();
         	setInterval(function(){
         		UserList.fetch();
