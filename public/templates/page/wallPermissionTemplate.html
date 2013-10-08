@@ -1,11 +1,13 @@
 <section>
+	<script type="text/javascript" async="false">
+	</script>
 	<div id="container_demo" >
 		<div id="wrapper" class="wrapper" style="position: absolute; top: 230px; left: 30px; z-index:99;">
 			<div id="login" class="animate form" >
 				<h1>StickIt</h1>
 				{{#each permission}}
 				<p>
-					{{ id }} :: {{ user.username }} :: {{ permission }}
+					{{ id }} :: {{ user.username }} :: {{ permission }} <a onclick="makeAdmin({{ id }})">Make Admin</a>
 				</p>
 				{{/each}}
 			</div>
