@@ -148,6 +148,7 @@ module.exports = function(app, passport) {
 					if(textResult == "admin") {
 						WallUser.findAll({ where: { wallId: req.params.id }, include: [User]}).success(function(wallUsers){
 							res.json({
+								wallId: req.params.id,
 								permission: wallUsers
 							});
 						}).error(function(){
