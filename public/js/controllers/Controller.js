@@ -76,7 +76,7 @@ define([
         	App.mainRegion.show(new errorView());
         },
         wall: function(id) {
-        	var CurrentWall = new modelWall(id);
+        	var CurrentWall = new modelWall({ id: id });
         	setInterval(function(){
         		CurrentWall.fetch();
         	}, 500);
