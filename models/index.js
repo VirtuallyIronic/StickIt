@@ -12,7 +12,8 @@
 var fs = require('fs')
   , mysql = require('mysql')
   , Sequelize = require('sequelize')
-  , db = require('config').database;
+  , db = require('config').database
+  , dbOptions = require('config').databaseOptions;
 
 // setup a new sequelize instance
 var sequelize = new Sequelize(
@@ -23,7 +24,7 @@ var sequelize = new Sequelize(
 			host: db.host,
 			port: db.port,
 			dialect: 'mysql',
-			maxConcurrentQueries: 100,
+			maxConcurrentQueries: dbOptions.maxConcurrentQueries,
 			define: {
 			    charset: 'utf8',
 			    collate: 'utf8_general_ci',
@@ -34,7 +35,10 @@ var sequelize = new Sequelize(
 				force: false
 			},
 			syncOnAssociation: false,
-			pool: { maxConnections: 10, maxIdleTime: 20 }
+			pool: {
+				maxConnections: dbOptions.poolMaxConnections,
+				maxIdleTime: dbOptions.poolMaxIdleTime 
+			}
 		}
 	);
 
