@@ -11,12 +11,20 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 			updateSettings: function(){
 				event.stopPropagation();
 				event.preventDefault();
+				var privacy;
 				console.log($('#isPrivateCheckbox').val());
 				if ($('#isPrivateCheckbox').is(":checked")){
-					console.log("checked!");
+					privacy = 1;
 				} else {
-					console.log("unchecked!");
+					privacy = 0;
 				}
+				var formValues = {
+					title: $('#wallTitle').val(),
+					isPrivate: privacy
+				}
+				var url = '/api/wall/' + $('#settingsWallId').val();
+				console.log(url);
+				console.log(formValues);
 			}
 		});
 	}
