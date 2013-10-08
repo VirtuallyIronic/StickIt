@@ -259,7 +259,7 @@ function enableItemView() {
 					var newColour = getTintedColor(colour, -75);
 					this.$el.children('.cssnote').children('.dragbar').css('background-color', newColour);					
 					this.$el.children('.cssnote').children('.toolbar').css('background-color', newColour);
-					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontsize', fontsize+"px");
+					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontSize', fontsize+"px");
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('color', fontColour);
 
 					if (tags != 0)
@@ -281,7 +281,7 @@ function enableItemView() {
 							'tagged': newTags,
 							'text': textEdit,
 							'fontsize': fontsize,
-							'color': colour
+							'colour-note': colour
 							// modify item defaults
 						});
 						//this.model.set('tagged',newTags);
@@ -291,7 +291,7 @@ function enableItemView() {
 						this.model.set({
 							'text': textEdit,
 							'fontsize': fontsize,
-							'color': colour
+							'colour-note': colour
 							// modify item defaults
 						});
 					}

@@ -107,53 +107,24 @@
 				console.log(this.model+" KIRK TEST");
 				lanes = initWall.totalCols;
 				plzwork();
-				/*
-				if (initialData.status != false)
+				if (initWall.permission == 'admin')
 				{
-					//initWall = initialData.data;
-					confirmLogin == true;
-					if (initWall.permission == 'admin')
-					{
-						admin = true;
-						confirmLogin = true;
-						permission = 'admin';
-					}
-					else if (initWall.permission == 'post')
-					{
-						admin = false;
-						confirmLogin = true;
-						permission = 'post'
-					}
-					else
-					{
-						admin = false;
-						confirmLogin = false;
-						permission = 'read'
-					}	
+					admin = true;
+					confirmLogin = true;
+					permission = 'admin';
+				}
+				else if (initWall.permission == 'post')
+				{
+					admin = false;
+					confirmLogin = true;
+					permission = 'post'
 				}
 				else
-				{*/
-					//initWall = initialData.data;
-					
-					if (initWall.permission == 'admin')
-					{
-						admin = true;
-						confirmLogin = true;
-						permission = 'admin';
-					}
-					else if (initWall.permission == 'post')
-					{
-						admin = false;
-						confirmLogin = true;
-						permission = 'post'
-					}
-					else
-					{
-						admin = false;
-						confirmLogin = false;
-						permission = 'read'
-					}			
-				//}
+				{
+					admin = false;
+					confirmLogin = false;
+					permission = 'read'
+				}			
 				//--------DEMO SETUP TODO-----------
 				wallModel_current = new wallFormat();
 				wallModel_current.set({
@@ -379,7 +350,7 @@
 					var col = document.getElementById('laneDrop').value;
 					var row = 1;
 					var text = document.getElementById('formText').value;
-					var colour = document.getElementById('colourDrop').value;
+					var colour = document.getElementById('mainMenu').tempColour;
 					var fontsize = document.getElementById('sizeDrop').value;
 					var tags = document.getElementById('newTags');
 					var tagged = new Array();
@@ -399,15 +370,14 @@
 					
 					var item = new noteFormat();
 					item.set({
+						'wallId': wallColData.get('wallID'),
 						'col': col,
 						'row': row,
 						'userId':currentUser_ID,
 						'userName':currentUser,
 						'text': text,
-						//'tagged': tagged,
-						'color': colour,
+						'colour-note': colour,
 						'fontsize': fontsize,
-						//'taggedKey'
 						'wall_connection': wallModel_current//.get('_id')
 					});
 					tagObj = new Array;

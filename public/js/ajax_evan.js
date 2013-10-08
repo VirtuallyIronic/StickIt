@@ -63,7 +63,7 @@
 			"username": "kirk",
 			"text": "NOPE",
 			"colour": "#FFFFFF",
-			"fontSize": 15,
+			"fontSize": 25,
 			"vote": [{
 				'noteID': 2,
 			}],
