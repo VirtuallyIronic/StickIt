@@ -11,7 +11,8 @@
 			type: 'GET',
 			async: false,
 			success: function(data){
-				console.log('Wall obtained '+data);
+				console.log('Wall obtained');
+				console.log(data);
 				output = {data:data, status:true};
 			}, 
 			error: function(jqXHR, textStatus, err){
