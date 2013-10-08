@@ -281,8 +281,6 @@
 		});		
 	}
 	
-	function()
-	
 	function colUpdate(id, model_data)
 	{
 		console.log('COLUPDATE');
