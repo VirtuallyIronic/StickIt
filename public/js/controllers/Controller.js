@@ -14,6 +14,7 @@ define([
     'views/page/homeView',
     'views/page/errorView',
     'views/page/wallPermissionView',
+    'views/page/successfulRegistrationView',
     'models/CurrentUser',
     'models/WallPermission'], 
 	function(
@@ -32,6 +33,7 @@ define([
 		homeView,
 		errorView,
 		wallPermissionView,
+		successfulRegistrationView,
 		modelCurrentUser,
 		modelWallPermission
 	){
@@ -85,6 +87,9 @@ define([
         	}, 500);
         	WallPermission.fetch();
         	App.mainRegion.show(new wallPermissionView({ model: WallPermission }));
+        },
+        successfulRegistration: function(){
+        	App.mainRegion.show(new successfulRegistrationView());
         }
         
     });

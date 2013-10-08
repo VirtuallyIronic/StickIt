@@ -182,14 +182,7 @@ module.exports = function(app, passport) {
 						res.send(401);
 					}
 					else {
-						req.login(user, function(error){
-							if(error){
-								res.send(500);
-							}
-							else {
-								res.send(200);
-							}
-						});
+						res.json(user);
 					}
 				});
 			} else {
