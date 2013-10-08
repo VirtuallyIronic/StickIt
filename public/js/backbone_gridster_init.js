@@ -105,7 +105,7 @@
 			render: function(){
 				var self = this;
 				console.log(this.model+" KIRK TEST");
-				
+				lanes = initWall.totalCols;
 				plzwork();
 				/*
 				if (initialData.status != false)
@@ -199,7 +199,7 @@
 					var $tSpan = jQuery('<span/>', {
 						class:'titleSpan',
 					});
-
+					wallHeadings[i] = this.colDetails.models[i].get('heading');
 					$($tSpan).text(this.colDetails.models[i].get('heading'));
 					//--- attempt to put the title inside a <p> tag. ---
 					$("<p>").appendTo($headDetails);

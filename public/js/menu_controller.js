@@ -41,6 +41,7 @@
 		var $mainMenu = jQuery('<div/>', {
 			class: 'popupMenu',
 			title: 'Menu',
+			id: 'mainMenu',
 			tempData: bonusTry,
 		})
 		$($mainMenu).appendTo("body");
