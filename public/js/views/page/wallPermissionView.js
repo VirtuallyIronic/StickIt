@@ -16,7 +16,22 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallPermission
 					username: $('#permissionAddUsername').val(),
 					permission: $('#permissionAddSelect').val(),
 				}
-				console.log(formValues);
+				$.ajax({
+					url: '/api/wallpermissions',
+					type: 'POST',
+					dataType: 'json',
+					data: formValues,
+					success: function(data){
+						if(data.error){
+							console.log("error: " + data.error.text);
+						}
+						else {
+							window.location.reload();
+						}
+					},
+					error: function(error) {
+						console.log(error);
+					}
 			}
 		});
 	}
