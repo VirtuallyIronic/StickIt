@@ -5,6 +5,7 @@
 		$.ajax({ 
 			url: '/api/wall/'+wall_ID,
 			type: 'GET',
+			async: false,
 			success: function(data){
 				console.log('Wall obtained '+data);
 				var output = {data:data, status:true};
