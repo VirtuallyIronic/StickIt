@@ -400,13 +400,13 @@ module.exports = function(app, passport) {
 							res.send(500);
 						});
 					} else {
-						console.log('textResult Error:');'
+						console.log('textResult Error:');
 						console.log(textResult);
 						res.send(401);
 					}
 				});
 			} else {
-				console.log('Result Error:');'
+				console.log('Result Error:');
 				console.log(result);
 				res.send(401);
 			}
