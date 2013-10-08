@@ -11,7 +11,7 @@
 					'row': 1,
 					'text': '',
 					'votes': 0,
-					'colour-note': '#FFFFFF',
+					'colour': '#FFFFFF',
 					'fontsize': 18
 				}
 			},
@@ -60,6 +60,7 @@
 		voteFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
+					'voteID': '',
 					'noteID': ''//noteID
 			},
 			relations: [{

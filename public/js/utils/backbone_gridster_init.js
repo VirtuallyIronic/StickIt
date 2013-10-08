@@ -201,6 +201,7 @@
 					{
 						var newVotes = new voteFormat();
 						newVotes.set({
+							'voteID': postObj[w].vote[v].voteID,
 							'noteID': postObj[w].vote[v].noteID,
 							'votes_note': item
 						});
@@ -379,7 +380,7 @@
 						'userId':currentUser_ID,
 						'userName':currentUser,
 						'text': text,
-						'colour-note': colour,
+						'colour': colour,
 						'fontsize': fontsize,
 						'wall_connection': wallModel_current//.get('_id')
 					});

@@ -22,76 +22,83 @@
 				}
 			});
 
-			var obj = {	"id": "eJU6kroyQ",
-			"title": "Console Wall",
-			"owner": "x1TzuEjk",
-			"isPrivate": true,
-			"permission": "admin",
-			"totalCols": 2,
-			"cols": [
-			{
-			"id": 1,
-			"wallId": "eJU6kroyQ",
-			"colNum": 1,
-			"title": "One"
-			},
-			{
-			"id": 2,
-			"wallId": "eJU6kroyQ",
-			"colNum": 2,
-			"title": "Two"
-			}
-			],
-			"posts":[
-			{
-			"id": 1,
-			"col": 1,
-			"row": 1,
-			"wallId": "eJU6kroyQ",
-			"username": "vass",
-			"text": "blah",
-			"colour": "#FFFFFF",
-			"fontSize": 15,
-			"vote": [],
-			"tag": []
-			},
-			{
-			"id": 2,
-			"col": 2,
-			"row": 1,
-			"wallId": "eJU6kroyQ",
-			"username": "kirk",
-			"text": "NOPE",
-			"colour": "#FFFFFF",
-			"fontSize": 25,
-			"vote": [{
-				'noteID': 2,
-			}],
-			"tag": []
-			},
-			{
-			"id": 3,
-			"col": 1,
-			"row": 1,
-			"wallId": "eJU6kroyQ",
-			"username": "vass",
-			"text": "Preas",
-			"colour": "#FFFFFF",
-			"fontSize": 15,
-			"vote": [{
-					'noteID': 3,
-				},
-				{
-					'noteID': 3,
-				}
-			],
-			"tag": [{
-			'noteID': 1,
-			'tagItem': 'TEXT TAG'
-			}]
-			}
-
-			]
+			var obj = 
+			{	
+				"id": "eJU6kroyQ",
+				"title": "Console Wall",
+				"owner": "x1TzuEjk",
+				"isPrivate": true,
+				"permission": "admin",
+				"totalCols": 2,
+				"cols": [
+					{
+						"id": 1,
+						"wallId": "eJU6kroyQ",
+						"colNum": 1,
+						"title": "One"
+					},
+					{
+						"id": 2,
+						"wallId": "eJU6kroyQ",
+						"colNum": 2,
+						"title": "Two"
+					}
+				],
+				"posts":
+				[
+					{
+					"id": 1,
+					"col": 1,
+					"row": 1,
+					"wallId": "eJU6kroyQ",
+					"username": "vass",
+					"text": "blah",
+					"colour": "#FFFFFF",
+					"fontSize": 15,
+					"vote": [],
+					"tag": []
+					},
+					{
+					"id": 2,
+					"col": 2,
+					"row": 1,
+					"wallId": "eJU6kroyQ",
+					"username": "kirk",
+					"text": "NOPE",
+					"colour": "#FFFFFF",
+					"fontSize": 25,
+					"vote": [{
+						'voteID': 1,
+						'noteID': 2,
+					}],
+					"tag": []
+					},
+					{
+					"id": 3,
+					"col": 1,
+					"row": 1,
+					"wallId": "eJU6kroyQ",
+					"username": "vass",
+					"text": "Preas",
+					"colour": "#FFFFFF",
+					"fontSize": 15,
+					"vote": [
+						{
+							'voteID': 1,
+							'noteID': 3,
+						},
+						{
+							'voteID': 2,
+							'noteID': 3,
+						}
+					],
+					"tag": [
+						{
+							'noteID': 1,
+							'tagItem': 'TEXT TAG'
+						}
+					]}
+				]
 			};
 			
 			if (output.status == false)
@@ -141,7 +148,7 @@
 									wallId: model_data.wallId,
 									username: model_data.username,
 									text: model_data.text,
-									colour: model_data.colour-note,
+									colour: model_data.colour,
 									fontSize: model_data.fontsize,
 									}),
 			contentType: "application/json; charset=utf-8",
@@ -163,13 +170,14 @@
 		console.log("----------DATA-------");
 		console.log(model_data);
 		console.log("-----------------");
+		var url = '/api/post/' + id;
 		$.ajax({ 
-			url: '/api/post/'+id,
+			url: url,
 			type: 'PUT',
 			data: JSON.stringify({	col: model_data.col, 
 									row: model_data.row,
 									text: model_data.text,
-									colour: model_data.colour-note,
+									colour: model_data.colour,
 									fontSize: model_data.fontsize,
 								}),
 			contentType: "application/json; charset=utf-8",
@@ -189,8 +197,9 @@
 		console.log("--------ID---------");
 		console.log(id);
 		console.log("----------------");
+		var url = '/api/post/' + id;
 		$.ajax({ 
-			url: '/api/post/'+id,
+			url: url,
 			type: 'DELETE',
 			success: function(data){
 				console.log('Note deleted: '+data);
