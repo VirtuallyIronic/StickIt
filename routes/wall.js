@@ -382,6 +382,8 @@ module.exports = function(app, passport) {
 		sanitize(fontSize).xss();
 		sanitize(fontSize).escape();
 		
+		console.log(wallId);
+		
 		hasPermission(wallId, req.user.id, function(result){
 			if(result) {
 				textPermission(wallId, req.user.id, function(textResult){
