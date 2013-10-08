@@ -73,6 +73,7 @@ function enableItemView() {
 					{
 						var addVotes = new voteFormat();
 						addVotes.set({
+							'voteID': this.incVoteData[k].get('voteID'),
 							'noteID': this.incVoteData[k].get('noteID'),
 							//'votes_note': this.incVoteData[k].get('votes_note'),
 						});
@@ -139,8 +140,10 @@ function enableItemView() {
 					//SERVER UPDATE NOTE
 					*/
 					var votes = this.model.get('votes');
+					var newID = 0;
 					var newVotings = new voteFormat();
 					newVotings.set({
+						'voteID': newID,
 						'noteID': this.model.get('noteId'),//noteID
 						'votes_note': this.model
 					});
@@ -236,9 +239,7 @@ function enableItemView() {
 				
 				if (confirmLogin == true)
 				{
-					//TODO
-					//SERVER UPDATE NOTE
-					//updateNote(this.model);
+					//noteUpdate(this.model.get('noteId'), this.model);
 				}
 				else
 				{

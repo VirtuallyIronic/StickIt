@@ -201,6 +201,7 @@
 					{
 						var newVotes = new voteFormat();
 						newVotes.set({
+							'voteID': postObj[w].vote[v].voteID,
 							'noteID': postObj[w].vote[v].noteID,
 							'votes_note': item
 						});

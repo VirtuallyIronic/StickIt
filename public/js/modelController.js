@@ -60,6 +60,7 @@
 		voteFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
+					'voteID': '',
 					'noteID': ''//noteID
 			},
 			relations: [{
