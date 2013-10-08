@@ -2,20 +2,23 @@
 	/*-----------------------------WALL---------------------------------*/
 	function wallGet(wall_ID)
 	{
+		var output = {};// = {data:obj,status:false};
+		console.log(wall_ID);
 		$.ajax({ 
 			url: '/api/wall/'+wall_ID,
 			type: 'GET',
+			async: false,
 			success: function(data){
 				console.log('Wall obtained '+data);
-				var output = {data:data, status:true};
-				return output;
+				output = {data:data, status:true};
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
-				
+				output = {data: '', status:false};
 				//return output;
 			}
 		});
+		
 		var  obj = {"id": "eJU6kroyQ",
 					"title": "Console Wall",
 					"owner": "x1TzuEjk",
@@ -87,7 +90,10 @@
 							
 						]
 					};
-		var output = {data:obj,status:false};
+		if (output.status == false)
+		{
+			output = {data:obj,status:false};
+		}
 		return output;
 	}
 	
