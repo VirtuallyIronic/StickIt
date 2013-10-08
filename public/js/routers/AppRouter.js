@@ -11,7 +11,8 @@ define(['marionette', 'controllers/Controller'], function(Marionette, Controller
            "wall": "home",
            "wall/:id": "wall",
            "permissions/:id": "wallPermission",
-           "register/success": "successfulRegistration"
+           "register/success": "successfulRegistration",
+           "users": "userList"
        }
    });
 });

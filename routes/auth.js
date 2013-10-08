@@ -195,4 +195,120 @@ module.exports = function(app, passport) {
 	});
 	
 	app.get('/auth/current', currentUser);
+	
+	app.get('/api/users', function(req, res){
+		if(req.user){
+			User.find({ where: { id: req.user.id }, limit: 1}).success(function(user){
+				if(user.role == "admin") {
+					User.findAll().success(function(users){
+						if(users){
+							res.json({
+								user: users
+							});	
+						} else {
+							res.send(401, {"error" : "unauthorized"});
+						}
+					}).error(function(){
+						res.send(500, {"error" : "internal server error"});
+					});
+				} else {
+					res.send(401, {"error" : "unauthorized"});
+				}
+			}).error(function(){
+				res.send(500, {"error" : "internal server error"});
+			})
+		} else {
+			res.send(401, {"error" : "unauthorized"});
+		}
+	});
+	
+	app.put('/api/user/view/:id', function(req, res){
+		if(req.user){
+			User.find({ where: { id: req.user.id }, limit: 1}).success(function(user){
+				if(user.role == "admin") {
+					User.find({ where: { id: req.params.id }, limit: 1 }).success(function(user){
+						user.updateAttributes({
+							role: "view"
+						}).success(function(user){
+							if(user){
+								res.json(user);
+							} else {
+								res.send(401, {"error" : "unauthorized"});
+							}
+						}).error(function(){
+							res.send(500, {"error" : "internal server error"});
+						});
+					}).error(function(){
+						res.send(500, {"error" : "internal server error"});
+					});
+				} else {
+					res.send(401, {"error" : "unauthorized"});
+				}
+			}).error(function(){
+				res.send(500, {"error" : "internal server error"});
+			})
+		} else {
+			res.send(401, {"error" : "unauthorized"});
+		}	
+	});
+	
+	app.put('/api/user/post/:id', function(req, res){
+		if(req.user){
+			User.find({ where: { id: req.user.id }, limit: 1}).success(function(user){
+				if(user.role == "admin") {
+					User.find({ where: { id: req.params.id }, limit: 1 }).success(function(user){
+						user.updateAttributes({
+							role: "post"
+						}).success(function(user){
+							if(user){
+								res.json(user);
+							} else {
+								res.send(401, {"error" : "unauthorized"});
+							}
+						}).error(function(){
+							res.send(500, {"error" : "internal server error"});
+						});
+					}).error(function(){
+						res.send(500, {"error" : "internal server error"});
+					});
+				} else {
+					res.send(401, {"error" : "unauthorized"});
+				}
+			}).error(function(){
+				res.send(500, {"error" : "internal server error"});
+			})
+		} else {
+			res.send(401, {"error" : "unauthorized"});
+		}	
+	});
+	
+	app.put('/api/user/admin/:id', function(req, res){
+		if(req.user){
+			User.find({ where: { id: req.user.id }, limit: 1}).success(function(user){
+				if(user.role == "admin") {
+					User.find({ where: { id: req.params.id }, limit: 1 }).success(function(user){
+						user.updateAttributes({
+							role: "admin"
+						}).success(function(user){
+							if(user){
+								res.json(user);
+							} else {
+								res.send(401, {"error" : "unauthorized"});
+							}
+						}).error(function(){
+							res.send(500, {"error" : "internal server error"});
+						});
+					}).error(function(){
+						res.send(500, {"error" : "internal server error"});
+					});
+				} else {
+					res.send(401, {"error" : "unauthorized"});
+				}
+			}).error(function(){
+				res.send(500, {"error" : "internal server error"});
+			})
+		} else {
+			res.send(401, {"error" : "unauthorized"});
+		}	
+	});
 };

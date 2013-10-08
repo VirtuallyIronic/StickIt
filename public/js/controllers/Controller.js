@@ -15,9 +15,11 @@ define([
     'views/page/errorView',
     'views/page/wallPermissionView',
     'views/page/successfulRegistrationView',
+    'views/page/userListView',
     'models/CurrentUser',
     'models/WallPermission',
-    'models/WallList'], 
+    'models/WallList',
+    'models/UserList'], 
 	function(
 		App,
 		Backbone,
@@ -35,9 +37,11 @@ define([
 		errorView,
 		wallPermissionView,
 		successfulRegistrationView,
+		userListView,
 		modelCurrentUser,
 		modelWallPermission,
-		modelWallList
+		modelWallList,
+		modelUserList
 	){
 	var CurrentUser = new modelCurrentUser();
 	setInterval(function(){
@@ -96,6 +100,14 @@ define([
         },
         successfulRegistration: function(){
         	App.mainRegion.show(new successfulRegistrationView());
+        },
+        userList: funciton(){
+        	var UserList = new modelWallList();
+        	setInterval(function(){
+        		UserList.fetch();
+        	}, 2000);
+        	App.mainRegion.show(new userListView({ model: UserList }));
+        	UserList.fetch();
         }
         
     });
