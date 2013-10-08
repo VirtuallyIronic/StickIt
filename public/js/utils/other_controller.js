@@ -16,47 +16,13 @@
 	/*
 	Remove all notes on wall
 	*/
-	function clearWall()
-	{
-		if (admin == true && confirmLogin == true)
-		{
-			/*ASK USER FOR CONFIRMATION*/
-			var r=confirm("Delete ALL Notes?");
-			if (r==true)
-			{
-				/*ASK USER FOR CONFIRMATION*/
-				var rr=confirm("Are you sure?");
-				if (rr==true)
-				{
-					/*FIND ALL NOTES VIA SERIALIZE*/
-					var serialGrid = gridster.serialize();
-					for (var i=0; i<serialGrid.length; i++)
-					{
-						/*FOR EACH NOTE
-						  FIND GRIDSTER ELEMENT
-						  REMOVE IT
-						*/
-						var col = serialGrid[i].col;
-						var row = serialGrid[i].row;
-						var widget = gridster.is_widget(col,row);
-						gridster.remove_widget(widget);
-					}
-					/*delete all model data*/
-					listView.trigger('completeDelete');
-				}
-			}
-		}
-		else
-		{
-			alert('ADMIN ONLY: PLEASE LOG IN');
-		}
-	}
+
 	
 	/*
 	CHECKS IF CURRENT USER IS AN ADMIN
 	MISSING SERVER REQUEST FOR DATA
 	*/
-	function adminCheck()
+function adminCheck()
 	{
 		//check if the current user is an admin
 		checkAdminAJAX();

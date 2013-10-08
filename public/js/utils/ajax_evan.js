@@ -230,6 +230,33 @@
 		colCreate(modelData);
 	}
 	
+	function clearWall()
+	{
+		var modelData = ({wallId:initWall.id});
+		killAllWall(modelData);
+	}
+	
+	function killAllWall(model_data){
+		/*ASK USER FOR CONFIRMATION*/
+		var r=confirm("Delete ALL Notes?");
+		if (r==true)
+		{
+			var url = '/api/clearwall/' + model_data.wallId;
+			$.ajax({
+				url: url,
+				type: 'DELETE',
+				async: false,
+				dataType: "json",
+				success: function(data){
+					location.reload(); 
+				}, 
+				error: function(jqXHR, textStatus, err){
+					console.log('text status '+textStatus+', err '+err);
+				}
+			});
+		}
+	}
+	
 	function colCreate(model_data)
 	{
 		console.log('COLCREATE');
@@ -253,6 +280,8 @@
 			}
 		});		
 	}
+	
+	function()
 	
 	function colUpdate(id, model_data)
 	{

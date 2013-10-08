@@ -894,4 +894,29 @@ module.exports = function(app, passport) {
 			res.send(500, {"error" : "internal server error"});
 		});
 	});
+	
+	app.delete('/api/clearwall/:id', function(req, res){
+		hasPermission(req.params.id, req.user.id, function(result){
+			if(result){
+				textPermission(req.params.id, req.user.id, function(textResult){
+					if(textResult == "admin"){
+						Post.destroy({ wallId: req.params.id }).success(function(){
+							res.send(200, {"data" : "success"});
+						}).error(function(){
+							res.send(500, {"error" : "internal server error"});
+						});
+						ColName.destroy({ wallId: req.params.id}).success(function(){
+							res.send(200, {"data" : "success"});
+						}).error(function(){
+							res.send(500, {"error" : "internal server error"});
+						});
+					} else {
+						res.send(401, {"error" : "unauthorized"});
+					}
+				});
+			} else {
+				res.send(401, {"error" : "unauthorized"});
+			}
+		});
+	});
 };
