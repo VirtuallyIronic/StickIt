@@ -197,7 +197,7 @@ function enableItemView() {
 					var voteSearch = this.voteObj.where({'noteID': this.model.get('noteId')});
 					if (voteSearch.length != 0)
 					{
-						for (var q=0; q<voteSearch.length; q++)
+						for (var q=voteSearch.length; q=voteSearch.length; q++)
 						{
 							voteSearch[q].destroy();
 						}
