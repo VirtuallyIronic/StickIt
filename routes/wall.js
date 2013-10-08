@@ -650,12 +650,11 @@ module.exports = function(app, passport) {
 			if(result) {
 				textPermission(wallId, req.user.id, function(textResult){
 					if(textResult != "view"){
-						ColName.create({
-							wallId: wallId,
-							colNum: colNum,
+						Tag.create({
+							postId: postId,
 							title: title
-						}).success(function(colname){
-							res.json(colname);
+						}).success(function(tag){
+							res.json(tag);
 						}).error(function(){
 							res.send(500, {"error" : "internal server error"});
 						});
