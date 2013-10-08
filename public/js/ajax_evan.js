@@ -1,101 +1,107 @@
 	
 	/*-----------------------------WALL---------------------------------*/
-	function wallGet(wall_ID)
-	{
-		var output = {};// = {data:obj,status:false};
-		console.log(wall_ID);
-		$.ajax({ 
-			url: '/api/wall/'+wall_ID,
-			type: 'GET',
-			async: false,
-			success: function(data){
-				console.log('Wall obtained '+data);
-				output = {data:data, status:true};
-			}, 
-			error: function(jqXHR, textStatus, err){
-				console.log('text status '+textStatus+', err '+err);
-				output = {data: '', status:false};
-				//return output;
-			}
-		});
-		
-		var  obj = {"id": "eJU6kroyQ",
-					"title": "Console Wall",
-					"owner": "x1TzuEjk",
-					"isPrivate": true,
-					"permission": "admin",
-					"totalCols": 2,
-					"cols": [
-						{
-							"id": 1,
-							"wallId": "eJU6kroyQ",
-							"colNum": 1,
-							"title": "One"
-						},
-						{
-							"id": 2,
-							"wallId": "eJU6kroyQ",
-							"colNum": 2,
-							"title": "Two"
-						}
-					],
-					"posts":[
-							{
-								"id": 1,
-								"col": 1,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "vass",
-								"text": "blah",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [],
-								"tag": []
-							},
-							{
-								"id": 2,
-								"col": 2,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "kirk",
-								"text": "NOPE",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [{
-										'noteID': 2,
-										}
-								],
-								"tag": []
-							},
-														{
-								"id": 3,
-								"col": 1,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "vass",
-								"text": "Preas",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [{
-										'noteID': 3,
-										},
-										{
-										'noteID': 3,
-										}],
-								"tag": [{
-										'noteID': 1,
-										'tagItem': 'TEXT TAG'
-										}]
-							}
-							
-						]
-					};
-		if (output.status == false)
+		function wallGet(wall_ID)
 		{
+			var output = {};// = {data:obj,status:false};
+			console.log(wall_ID);
+			var url = '/api/wall/' + wall_ID;
+			console.log('URL IS: ' + url);
+			$.ajax({
+				url: url,
+				type: 'GET',
+				async: false,
+				success: function(data){
+					console.log('Wall obtained');
+					console.log(data);
+					output = {data:data, status:true};
+				},
+				error: function(jqXHR, textStatus, err){
+					console.log('text status '+textStatus+', err '+err);
+					output = {data: '', status:false};
+					//return output;
+				}
+			});
+
+			var obj = {	"id": "eJU6kroyQ",
+			"title": "Console Wall",
+			"owner": "x1TzuEjk",
+			"isPrivate": true,
+			"permission": "admin",
+			"totalCols": 2,
+			"cols": [
+			{
+			"id": 1,
+			"wallId": "eJU6kroyQ",
+			"colNum": 1,
+			"title": "One"
+			},
+			{
+			"id": 2,
+			"wallId": "eJU6kroyQ",
+			"colNum": 2,
+			"title": "Two"
+			}
+			],
+			"posts":[
+			{
+			"id": 1,
+			"col": 1,
+			"row": 1,
+			"wallId": "eJU6kroyQ",
+			"username": "vass",
+			"text": "blah",
+			"colour": "#FFFFFF",
+			"fontSize": 15,
+			"vote": [],
+			"tag": []
+			},
+			{
+			"id": 2,
+			"col": 2,
+			"row": 1,
+			"wallId": "eJU6kroyQ",
+			"username": "kirk",
+			"text": "NOPE",
+			"colour": "#FFFFFF",
+			"fontSize": 15,
+			"vote": [{
+				'noteID': 2,
+			}],
+			"tag": []
+			},
+			{
+			"id": 3,
+			"col": 1,
+			"row": 1,
+			"wallId": "eJU6kroyQ",
+			"username": "vass",
+			"text": "Preas",
+			"colour": "#FFFFFF",
+			"fontSize": 15,
+			"vote": [{
+					'noteID': 3,
+				},
+				{
+					'noteID': 3,
+				}
+			],
+			"tag": [{
+			'noteID': 1,
+			'tagItem': 'TEXT TAG'
+			}]
+			}
+
+			]
+			};
+			
+			if (output.status == false)
+			{
 			output = {data:obj,status:false};
-		}
-		return output;
-	}
+			}
+			console.log('output data');
+			console.log(output);
+			return output;
+}
 	
 	function wallUpdate(wall_ID, title_data, isPrivate_data)
 	{
