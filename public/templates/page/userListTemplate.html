@@ -7,7 +7,7 @@
 				<p style="text-align: center;"> 
 					<b>{{ username }}</b> has {{ role }} permission.
 					<p style="text-align: center;">
-						<a href="#" class="to_button" onclick="userMakeView({{ id }})">Grant Viewer</a>&nbsp;
+						<a href="#" class="to_button" onclick="userMakeView('{{ id }}')">Grant Viewer</a>&nbsp;
 						<a href="#" class="to_button" onclick="userMakePost({{ id }})">Grant Poster</a>&nbsp;
 						<a href="#" class="to_button" onclick="userMakeAdmin({{ id }})">Grant Admin</a>&nbsp;
 						<a href="#" class="to_button" onclick="removeUser({{ id }})">Remove User</a>
