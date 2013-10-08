@@ -12,10 +12,9 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 				event.stopPropagation();
 				event.preventDefault();
 				var formValues = {
-					title: $('#wallTitle').val()
+					title: $('#wallTitle').val(),
+					isPrivate: $('#isPrivateCheckbox').is(":checked")
 				}
-				var url = '/api/wall/' + $('#settingsWallId').val();
-				console.log(url);
 				console.log(formValues);
 			}
 		});
