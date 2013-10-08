@@ -3,6 +3,7 @@
 		function wallGet(wall_ID)
 		{
 			var output = {};// = {data:obj,status:false};
+			console.log("GET WALL");
 			console.log(wall_ID);
 			var url = '/api/wall/' + wall_ID;
 			console.log('URL IS: ' + url);
@@ -112,6 +113,7 @@
 	
 	function wallUpdate(wall_ID, title_data, isPrivate_data)
 	{
+		console.log("WALL UPDATE");
 		$.ajax({ 
 			url: '/api/wall/'+wall_ID,
 			type: 'PUT',
@@ -139,6 +141,7 @@
 	/*---------------------------NOTES-----------------------------------*/
 	function newNotePost(model_data)
 	{
+		console.log("NEW NOTE");
 		console.log(model_data);
 		$.ajax({ 
 			url: '/api/post',
@@ -167,7 +170,7 @@
 	
 	function noteUpdate(id, model_data)
 	{
-		console.log("--------ID---------");
+		console.log("-----UPDATE NOTE---ID---------");
 		console.log(id);
 		console.log("----------DATA-------");
 		console.log(model_data);
@@ -197,7 +200,7 @@
 	
 	function note_Delete(id)
 	{
-		console.log("--------ID---------");
+		console.log("--------DELETE NOTE--ID-------");
 		console.log(id);
 		console.log("----------------");
 		var url = '/api/post/' + id;

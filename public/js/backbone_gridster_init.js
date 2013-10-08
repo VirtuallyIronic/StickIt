@@ -275,10 +275,6 @@
 			},
 			//-------DELETES A COLUMN OF NOTES AND MOVES REST TO THE LEFT-------
 			removeLane: function(ev){
-				var a = 1;
-				//if (online == true)
-				if (a == 1)
-				{
 					var r=confirm("Delete lane? ");
 					if (r==true)
 					{
@@ -289,8 +285,6 @@
 						
 						var notesEdited = 0;
 						var idCount = parseInt(colID);
-						//idCount = idCount+1;
-						//colID = idCount.toString();
 						for (var q=idCount; q<=lanes;q++)
 						{
 							if (q==idCount)
@@ -305,7 +299,7 @@
 							}
 							else
 							{
-								var colPos = q.toString();
+								var colPos = q;//.toString();
 								var colMove = this.collection.where({'col': colPos});
 								for (var i=0; i<colMove.length; i++)
 								{
@@ -315,24 +309,12 @@
 									moveNote.trigger('moveNote');
 								}
 							}
-						}
-						if (notesEdited > 0)
-						{
-							var colMove = this.collection.where({'wallID': wallID});
-							updateNote(colMove);
-							//this.serverUpdate();
-						}
-						
-						
+						}					
 						//remove Heading  --  unneeded
 						$(ev).parent().children('.titleSpan').html("DELETED");
 						$(ev).remove();
-						
+						//pagerefresh
 					}
-				}
-				else
-				{
-					alert('Currently Offline');
 				}
 			},
 			
