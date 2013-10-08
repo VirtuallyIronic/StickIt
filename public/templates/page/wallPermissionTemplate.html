@@ -2,7 +2,7 @@
 	<div id="container_demo" >
 		<div id="wrapper" class="wrapper" style="position: absolute; top: 230px; left: 30px; z-index:99;">
 			<div id="login" class="animate form" >
-				<h1>StickIt</h1>
+				<h1>Wall Permissions for Wall: {{ wallId }}</h1>
 				{{#each permission}}
 				<p style="text-align: center;"> 
 					<b>{{ user.username }}</b> has {{ permission }} permission
@@ -13,7 +13,26 @@
 						<a href="#" class="to_button" onclick="removePermission({{ id }})">Remove Permission</a>
 					</p>
 				</p>
+				<hr>
 				{{/each}}
+				<form autocomplete="on">
+					<h2>Add User to Wall</h2>
+					<input id="permissionWallId" name="permissionWallId" type="hidden" value="{{ wallId }}">
+					<p>
+						<label for="permissionAddUsername" class="uname">Username</label>
+						<input id="permissionAddUsername" name="permissionAddUsername" required="required" type="text" placeholder="myusername"/>
+					</p>
+					<p> 
+						<select id="permissionAddSelect">
+							<option value="view">View</option>
+							<option value="post">Post</option>
+							<option value="admin">Admin</option>
+						</select> 
+					</p>
+					<p class="login button"> 
+						<input type="submit" id="addPermission" value="Add User" /> 
+					</p>
+				</form>
 			</div>
 		</div>
 	</div>

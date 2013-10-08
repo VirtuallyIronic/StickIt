@@ -71,7 +71,21 @@ function makeView(id){
 }		
 
 function removePermission(id){
-}		
-
-function addPermission(){			
+	var url = '/api/walluser/' + id;
+	$.ajax({
+		url: url,
+		type: 'DELETE',
+		dataType: 'json',
+		success: function(data){
+			if(data.error){
+				console.log("error: " + data.error.text);
+			}
+			else {
+				window.location.reload();
+			}
+		},
+		error: function(error) {
+			window.location.replace('/login');
+		}
+	});
 }

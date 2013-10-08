@@ -164,6 +164,49 @@ module.exports = function(app, passport) {
 		});
 	});
 	
+	app.post('/api/wallpermissions', function(req, res){
+		var wallId = req.body.wallId
+		  , username = req.body.username
+		  , permission = req.body.permission;
+		
+		sanitize(wallId).xss();
+		sanitize(wallId).escape();
+		sanitize(username).xss();
+		sanitize(username).escape();
+		sanitize(permission).xss();
+		sanitize(permission).escape();
+		
+		hasPermission(wallId, req.user.id, function(result){
+			if(result){
+				textPermission(wallId, req.user.id, function(textResult){
+					if(textResult == "admin") {
+						User.find({ where: { username: username }, limit: 1 }).success(function(user){
+							if(user){
+								WallUser.create({
+									userId: user.id,
+									wallId: wallId,
+									permission: permission
+								}).success(function(walluser){
+									res.json(walluser);
+								}).error(function(){
+									res.send(500, {"error" : "internal server error"});
+								});
+							} else {
+								res.send(401, {"error" : "unauthorized"});
+							}
+						}).error(function(){
+							res.send(500, {"error" : "internal server error"});
+						})
+					} else {
+						res.send(401, {"error" : "unauthorized"});
+					}
+				});
+			} else {
+				res.send(401, {"error" : "unauthorized"});
+			}
+		});
+	});
+	
 	app.get('/api/post/:id', function(req, res){
 		Post.find({ where: { id: req.params.id }, include: [Vote, Tag]}).success(function(post){
 			if(post){
