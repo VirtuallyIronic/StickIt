@@ -82,13 +82,14 @@
 				'click button#confirmPopup': 'prepareItem',
 				'click button.deleteLane': 'removeLane',
 				//'click button.editLaneBut': 'editTitle'
-				'click button#editLB': 'editTitle'
+				'click button#editLB': 'editTitle',
+				'click button#newLaneBut': 'moreLanes'
 				//editLB
 			},
 			
 			//-------SETS UP ALL LISTENERS AND PROCESSES-------
 			initialize: function(options){
-				_.bindAll(this, 'render', 'addItem', 'purgeData', 'editTitle', 'serverUpdate', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
+				_.bindAll(this, 'render', 'addItem', 'moreLanes','purgeData', 'editTitle', 'serverUpdate', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
 				//this.collection = new noteList();
 				this.collection = new options.noteModel;//new noteList();
 				this.wallDetails = new options.wallModel;
@@ -268,7 +269,10 @@
 					alert('PLEASE LOG IN');
 				}
 			},
-			
+			moreLanes: function(){
+				alert('');
+				addLanes();
+			},
 			//-------DELETES A COLUMN OF NOTES AND MOVES REST TO THE LEFT-------
 			removeLane: function(ev){
 				var a = 1;
@@ -323,9 +327,6 @@
 						//remove Heading  --  unneeded
 						$(ev).parent().children('.titleSpan').html("DELETED");
 						$(ev).remove();
-						
-						//AJAX: SET SERVER COL NUMBER TO 1 LESS
-						//l editWall();
 					}
 				}
 				else
