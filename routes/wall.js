@@ -103,11 +103,11 @@ module.exports = function(app, passport) {
 				  , post = false
 				  , view = false;
 				
-				if(user.permission == "admin") {
+				if(user.role == "admin") {
 					admin = true;
 					post = true;
 					view = true;
-				} else if (user.permission == "post") {
+				} else if (user.role == "post") {
 					post = true;
 					view = true;
 				} else {
