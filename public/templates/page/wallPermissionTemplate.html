@@ -1,4 +1,23 @@
 <section>
+	<style type="text/css>">
+		.to_button{
+			display: inline-block;
+			font-weight: bold;
+			background: rgb(247, 248, 241);
+			padding: 2px 6px;
+			color: rgb(29, 162, 193);
+			text-decoration: none;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			border: 1px solid rgb(203, 213, 214);
+			-webkit-transition: all 0.4s linear;
+			-moz-transition: all 0.4s linear;
+			-o-transition: all 0.4s linear;
+			-ms-transition: all 0.4s linear;
+			transition: all 0.4s linear;
+		}
+	</style>
 	<script type="text/javascript" async="false">
 		function makeAdmin(id){
 			
@@ -25,13 +44,13 @@
 			<div id="login" class="animate form" >
 				<h1>StickIt</h1>
 				{{#each permission}}
-				<p> 
-					{{ user.username }} is {{ permission }}
-					<p class="change_link">
-						<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Grant Viewer</a>&nbsp;
-						<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Grant Poster</a>&nbsp;
-						<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Grant Admin</a>&nbsp;
-						<a href="#" class="to_register" onclick="removePermission({{ id }})">Remove Permission</a>
+				<p style="text-align: center;"> 
+					<b>{{ user.username }}</b> has {{ permission }} permission
+					<p style="text-align: center;">
+						<a href="#" class="to_button" onclick="makeAdmin({{ id }})">Grant Viewer</a>&nbsp;
+						<a href="#" class="to_button" onclick="makeAdmin({{ id }})">Grant Poster</a>&nbsp;
+						<a href="#" class="to_button" onclick="makeAdmin({{ id }})">Grant Admin</a>&nbsp;
+						<a href="#" class="to_button" onclick="removePermission({{ id }})">Remove Permission</a>
 					</p>
 				</p>
 				{{/each}}
