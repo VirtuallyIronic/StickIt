@@ -268,7 +268,7 @@
 	function voteGet(id)
 	{
 		$.ajax({ 
-			url: '/api/vote'+id,
+			url: '/api/vote/'+id,
 			type: 'GET',
 			success: function(data){
 				console.log('Get Vote');
