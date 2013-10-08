@@ -54,7 +54,7 @@
 	if (location.search == "")
 	{
 		//alert('NO WALL ID');
-		wallID = eJU6kroyQ;
+		wallID = "eJU6kroyQ";
 	}
 	else
 	{
