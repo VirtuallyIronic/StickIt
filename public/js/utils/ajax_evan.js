@@ -4,8 +4,10 @@
 	{
 		var output = {};// = {data:obj,status:false};
 		console.log(wall_ID);
+		var url = '/api/wall' + wall_ID;
+		console.log('URL IS: ' + url);
 		$.ajax({ 
-			url: '/api/wall/'+wall_ID,
+			url: url,
 			type: 'GET',
 			async: false,
 			success: function(data){
