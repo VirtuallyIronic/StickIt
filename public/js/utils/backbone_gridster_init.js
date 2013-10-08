@@ -65,10 +65,10 @@
 	}
 	/*--------------------------------*/
 	$(function(){
-		
 		var initialData = wallGet(wallID);
 		evan_data = initialData.data;		
-		initWall = {"id": "eJU6kroyQ",
+		initWall = initialData.data;		
+		/*initWall = {"id": "eJU6kroyQ",
 					"title": "Console Wall",
 					"owner": "x1TzuEjk",
 					"isPrivate": true,
@@ -139,7 +139,7 @@
 							
 						]
 					};
-
+		*/
 		modelInit();
 		enableItemView();
 
@@ -178,6 +178,7 @@
 			render: function(){
 				var self = this;
 				console.log(this.model+" KIRK TEST");
+				
 				plzwork();
 				/*
 				if (initialData.status != false)
