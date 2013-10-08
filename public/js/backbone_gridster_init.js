@@ -289,13 +289,13 @@
 						
 						var notesEdited = 0;
 						var idCount = parseInt(colID);
-						idCount = idCount+1;
-						colID = idCount.toString();
+						//idCount = idCount+1;
+						//colID = idCount.toString();
 						for (var q=idCount; q<=lanes;q++)
 						{
 							if (q==idCount)
 							{
-								var colData = this.collection.where({'col': colID});
+								var colData = this.collection.where({'col': idCount});
 								for (var i=0; i<colData.length; i++)
 								{
 									notesEdited++;

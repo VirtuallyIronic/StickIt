@@ -317,19 +317,26 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 	}
 	
 	function converstionCheck(color)
-	{
-		if (color.substring(0,3)=='rgb')
+	{	
+		if (color == null)
 		{
-			var newRGB = color.substring(3, color.length)
-			newRGB = newRGB.split(",");
-			var rA = newRGB[0].split('(');
-			var rV = parseInt(rA[1]);
-			var gV = parseInt(newRGB[1]);
-			var bA = newRGB[2].split(')');
-			var bV = parseInt(bA[0]);
-			color = rgbToHex(rV,gV,bV);
+			return color;
 		}
-		return color;
+		else
+		{
+			if (color.substring(0,3)=='rgb')
+			{
+				var newRGB = color.substring(3, color.length)
+				newRGB = newRGB.split(",");
+				var rA = newRGB[0].split('(');
+				var rV = parseInt(rA[1]);
+				var gV = parseInt(newRGB[1]);
+				var bA = newRGB[2].split(')');
+				var bV = parseInt(bA[0]);
+				color = rgbToHex(rV,gV,bV);
+			}
+			return color;
+		}
 	}
 	function componentToHex(c) {
 		var hex = c.toString(16);
