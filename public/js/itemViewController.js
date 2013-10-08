@@ -284,7 +284,7 @@ function enableItemView() {
 					this.model.set({
 						'text': textEdit,
 						'fontsize': fontsize,
-						'colour-note': colour
+						'colour': colour
 						// modify item defaults
 					});
 					

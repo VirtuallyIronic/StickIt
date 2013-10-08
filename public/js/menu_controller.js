@@ -129,7 +129,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		if (edit == true)
 		{
 			$("#sizeDrop > [value='"+data.model.get('fontsize')+"']").attr("selected", "true");
-			document.getElementById('mainMenu').tempColour=data.model.get('colour-note');
+			document.getElementById('mainMenu').tempColour=data.model.get('colour');
 		}
 		
 		//------------------------------------------------
@@ -233,7 +233,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		}
 		
 		var newColour = document.getElementById('mainMenu').tempColour;
-		var oldColour = field.model.get('colour-note');
+		var oldColour = field.model.get('colour');
 		
 		var newFontSize = document.getElementById('sizeDrop').value;
 		var oldFontSize = field.model.get('fontsize');
@@ -306,9 +306,9 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		var $note = jQuery('<div/>', {
 			class: 'cssnote',
 		});
-		var fontColour = getContrastYIQ(input.model.get('colour-note'));
-		$(input.el).css("background-color", input.model.get('colour-note'));
-		//$($note).css("background-color", input.model.get('colour-note'));
+		var fontColour = getContrastYIQ(input.model.get('colour'));
+		$(input.el).css("background-color", input.model.get('colour'));
+		//$($note).css("background-color", input.model.get('colour'));
 		
 		$($note).appendTo($(input.el));
 		
@@ -342,7 +342,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 			class: 'toolbar',
 		});
 		$tb.appendTo($note);
-		var oldColour = input.model.get('colour-note');
+		var oldColour = input.model.get('colour');
 		var colour = getTintedColor(oldColour, -75);
 		$($db).css("background-color", colour);
 		$($tb).css("background-color", colour);
@@ -407,7 +407,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 	function expandNote(field)
 	{	
 		var fullText = field.model.get('text');
-		var fontColour = getContrastYIQ(field.model.get('colour-note'));
+		var fontColour = getContrastYIQ(field.model.get('colour'));
 		//create a new div with all details of the original
 		$('#fullscreen').show();
 		var $exMenu = jQuery('<div/>', {
@@ -415,7 +415,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		});
 		$($exMenu).appendTo("body");
 		
-		$($exMenu).css("background-color", field.model.get('colour-note'));
+		$($exMenu).css("background-color", field.model.get('colour'));
 		$("<span id='expandTitle'>Note</span></br>").appendTo(".popupMenu");
 		$('#expandTitle').css("color", fontColour);
 		$("<div id='popupDetails'></div>").appendTo(".popupMenu");

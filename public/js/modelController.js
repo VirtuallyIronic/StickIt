@@ -11,7 +11,7 @@
 					'row': 1,
 					'text': '',
 					'votes': 0,
-					'colour-note': '#FFFFFF',
+					'colour': '#FFFFFF',
 					'fontsize': 18
 				}
 			},

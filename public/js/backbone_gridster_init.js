@@ -380,7 +380,7 @@
 						'userId':currentUser_ID,
 						'userName':currentUser,
 						'text': text,
-						'colour-note': colour,
+						'colour': colour,
 						'fontsize': fontsize,
 						'wall_connection': wallModel_current//.get('_id')
 					});
