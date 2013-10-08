@@ -283,7 +283,7 @@
 					if (r==true)
 					{
 						var colID = $(ev).val();
-						
+						colDelete(colID);
 						//NEED TO UPDATE THIS TO THE BACKEND!
 						wallHeadings.splice(colID,1);
 						
@@ -327,6 +327,7 @@
 						//remove Heading  --  unneeded
 						$(ev).parent().children('.titleSpan').html("DELETED");
 						$(ev).remove();
+						
 					}
 				}
 				else
@@ -472,7 +473,8 @@
 			$(input).parent().children('.titleSpan').text(fname);
 			//function trigger passing wallHeadings to update this wall data.
 		}
-		alert(input);
+		colUpdate(i, ({colNum:i,title:fname}));
+		//alert(input);
 	}
 	
 	function plzwork()

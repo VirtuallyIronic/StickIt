@@ -248,13 +248,15 @@
 	
 	function colUpdate(id, model_data)
 	{
+		console.log('COLUPDATE');
+		console.log(model_data);
 		$.ajax({ 
 			url: '/api/colname/'+id,
 			type: 'PUT',
 			async: false,
-			data: JSON.stringify({	colNum: model_data.get('colNum'), 
-									title: model_data.get('title')
-								}),
+			data: JSON.stringify({	colNum: model_data.colNum, 
+									title: model_data.title
+									}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function(data){
@@ -269,6 +271,8 @@
 	
 	function colDelete(id)
 	{
+		console.log('COLDELETE');
+		console.log(id);
 		$.ajax({ 
 			url: '/api/colname/'+id,
 			type: 'DELETE',
