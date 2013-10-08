@@ -11,16 +11,9 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 			updateSettings: function(){
 				event.stopPropagation();
 				event.preventDefault();
-				var privacy;
-				console.log($('#isPrivateCheckbox').val());
-				if ($('#isPrivateCheckbox').is(":checked")){
-					privacy = 1;
-				} else {
-					privacy = 0;
-				}
 				var formValues = {
 					title: $('#wallTitle').val(),
-					isPrivate: privacy
+					isPrivate: $('#isPrivateCheckbox').is(":checked")
 				}
 				var url = '/api/wall/' + $('#settingsWallId').val();
 				console.log(url);
