@@ -4,7 +4,7 @@
 	{
 		var output = {};// = {data:obj,status:false};
 		console.log(wall_ID);
-		var url = '/api/wall' + wall_ID;
+		var url = '/api/wall/' + wall_ID;
 		console.log('URL IS: ' + url);
 		$.ajax({ 
 			url: url,
