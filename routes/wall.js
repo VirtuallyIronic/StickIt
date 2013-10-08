@@ -385,7 +385,7 @@ module.exports = function(app, passport) {
 		hasPermission(wallId, req.user.id, function(result){
 			if(result) {
 				textPermission(wallId, req.user.id, function(textResult){
-					if(textResult != 'view'){
+					if(textResult != "view"){
 						Post.create({
 							col: col,
 							row: row,
@@ -400,10 +400,14 @@ module.exports = function(app, passport) {
 							res.send(500);
 						});
 					} else {
+						console.log('textResult Error:');'
+						console.log(textResult);
 						res.send(401);
 					}
 				});
 			} else {
+				console.log('Result Error:');'
+				console.log(result);
 				res.send(401);
 			}
 		});
