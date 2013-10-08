@@ -5,7 +5,7 @@
 			defaults: function(){
 				return {
 					'noteId': '',
-					'wallId': initWall.id,
+					'wallId': '',//initWall.id,
 					'username': '',
 					'col': 1,
 					'row': 1,
@@ -32,8 +32,8 @@
 			idAttribute: '_id',
 			defaults:{
 					"title": 'NEW WALL',
-					'wallID': initWall.id,
-					'owner': initWall.owner,
+					'wallID': '',//initWall.id,
+					'owner': '',//initWall.owner,
 					'cols': 5,
 			}
 		});
@@ -41,7 +41,7 @@
 		colFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
-					'wallID': initWall.id,
+					'wallID':'',// initWall.id,
 					'colID': 0,
 					'heading': 'Lane :id'
 			},
