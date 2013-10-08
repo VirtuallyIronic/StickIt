@@ -1,12 +1,17 @@
 <section>
-	<div id="container_demo" >
-		<div id="ThumbnailWrapper">
-			<h1>Accessable Walls</h1>
-			<ul class="multiLine">
-				{{#each wall}}	
-				<li class="thumbnail"><a href="/wall.html?{{ id }}"><img src="images/Wall-Sample.png" style="width:300px; height:300px;"></a></li>
-				{{/each}}
-			</ul>			
-		</div>
+	<div id="ThumbnailWrapper">
+		<p style="width:500px; margin-left:auto; margin-right:auto;">
+			<b>Accessable Walls</b>
+		</p>
+		{{#if post}}
+			<a href="WallCreation.html">
+				<button id="wallCreationBtn" onclick="/newWall">Don't have a wall yet? Click here to create one now!</button>
+			</a>
+		{{/if}}
+		<ul class="multiLine">
+			{{#each wall}}	
+			<li class="thumbnail"><a href="/wall.html?{{ id }}"><img src="images/Wall-Sample.png" style="width:300px; height:300px;"></a></li>
+			{{/each}}
+		</ul>			
 	</div>
 </section>
