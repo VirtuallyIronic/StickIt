@@ -231,9 +231,9 @@
 			url: '/api/colname',
 			type: 'POST',
 			async: false,
-			data: JSON.stringify({	wallId: model_data.get('wallId'), 
-									colNum: model_data.get('colNum'),
-									title: model_data.get('title')}),
+			data: JSON.stringify({	wallId: model_data.wallId, 
+									colNum: model_data.colNum,
+									title: model_data.title}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function(data){
