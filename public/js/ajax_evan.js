@@ -131,7 +131,7 @@
 	/*---------------------------NOTES-----------------------------------*/
 	function newNotePost(model_data)
 	{
-		alert(model_data);
+		console.log(model_data);
 		$.ajax({ 
 			url: '/api/post',
 			type: 'POST',
