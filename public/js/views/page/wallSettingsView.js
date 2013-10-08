@@ -12,8 +12,7 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 				event.stopPropagation();
 				event.preventDefault();
 				var formValues = {
-					title: $('#wallTitle').val(),
-					isPrivate: $('#isPrivateCheckbox').is(":checked")
+					title: $('#wallTitle').val()
 				}
 				var url = '/api/wall/' + $('#settingsWallId').val();
 				console.log(url);
