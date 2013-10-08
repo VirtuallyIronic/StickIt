@@ -1,15 +1,12 @@
 <section>
 	<div id="container_demo" >
-		<div id="wrapper" class="wrapper" style="position: absolute; top: 230px; left: 30px; z-index:99;">
-			<div id="login" class="animate form" >
-				<h1>Accessable Walls</h1>
-				{{#each wall}}
-				<p style="text-align: center;"> 
-					<b>{{ id }}</b>
-				</p>
-				<hr>
+		<div id="ThumbnailWrapper">
+			<h1>Accessable Walls</h1>
+			<ul class="multiLine">
+				{{#each wall}}	
+				<li class="thumbnail"><a href="/wall.html?{{ id }}"><img src="images/Wall-Sample.png" style="width:300px; height:300px;"></a></li>
 				{{/each}}
-			</div>
+			</ul>			
 		</div>
 	</div>
 </section>
