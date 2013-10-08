@@ -1,7 +1,7 @@
 define(['jquery', 'underscore', 'backbone'],
 	function ($, _, Backbone) {
 		var WallSetting = Backbone.Model.extend({
-			urlRoot: '/api/wall',
+			urlRoot: '/api/wallpermissions',
             idAttribute: 'id'
         });
         return WallSetting;
