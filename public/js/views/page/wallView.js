@@ -5,6 +5,9 @@ define([ 'marionette', 'handlebars', 'text!templates/page/wallTemplate.html', 'm
 			template: template,
 			modelEvents:{
 				"change": "render"
+			},
+			onRender: function(){
+				console.log(this.model);
 			}
 		});
 	}
