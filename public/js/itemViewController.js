@@ -58,7 +58,7 @@ function enableItemView() {
 					{
 						var addTags = new taggedFormat();
 						addTags.set({
-							'noteID': this.model.get('id'),
+							'noteID': this.model.get('noteId'),
 							'tagItem': this.incTagData[k].get('tagItem'),
 							//'tags_note' :this.model
 							
@@ -74,7 +74,7 @@ function enableItemView() {
 						var addVotes = new voteFormat();
 						addVotes.set({
 							'noteID': this.incVoteData[k].get('noteID'),
-							'votes_note': this.incVoteData[k].get('votes_note'),
+							//'votes_note': this.incVoteData[k].get('votes_note'),
 						});
 						this.voteObj.add(addVotes);
 					}
@@ -223,7 +223,6 @@ function enableItemView() {
 			//------AFTER DELETE PROMPT, REMOVE NOTE WIDGET--------
 			unrender: function(){
 				removeWidgets($(this.el));
-				//this.model.trigger('updateServer');
 			},
 			
 			//------AFTER DRAG,CHANGES MODEL DATA--------
@@ -270,42 +269,26 @@ function enableItemView() {
 
 					if (tags != 0)
 					{
-						//var oldTags = this.model.get('tagged');
-						//var newTags = oldTags.concat(tags);
-
 						for (var k=0; k<tags.length; k++)
-						{
+						{					
 							var addTags = new taggedFormat();
 							addTags.set({
-								'noteID': this.model.get('id'),
+								'noteID': this.model.get('noteId'),
 								'tagItem': tags[k]
 							});
 							this.tagging.add(addTags);
 						}
-
-						this.model.set({
-							'tagged': newTags,
-							'text': textEdit,
-							'fontsize': fontsize,
-							'colour-note': colour
-							// modify item defaults
-						});
-						//this.model.set('tagged',newTags);
 					}
-					else
-					{
-						this.model.set({
-							'text': textEdit,
-							'fontsize': fontsize,
-							'colour-note': colour
-							// modify item defaults
-						});
-					}
+					
+					this.model.set({
+						'text': textEdit,
+						'fontsize': fontsize,
+						'colour-note': colour
+						// modify item defaults
+					});
+					
+					noteUpdate(this.model.get('noteId'), this.model);
 					closeMenu();
-					//TODO
-					//SERVER UPDATE NOTE
-					//updateNote(this.model);
-					//this.model.trigger('updateServer');
 				}
 				else
 				{
@@ -320,11 +303,8 @@ function enableItemView() {
 					var r=confirm("Delete note?");
 					if (r==true)
 					{
-						//TODO
-						//SERVER UPDATE NOTE
-						//removeNote(this.model);
+						note_Delete(this.model.get('noteId'));
 						this.model.destroy();
-						//this.model.set('col', oldCol);
 					}	
 				}
 				else
@@ -335,6 +315,7 @@ function enableItemView() {
 			
 			//------LANE DELETION FUNCTION -NOTE --------
 			removenoprompt: function(){
+				note_Delete(this.model.get('noteId'));
 				this.model.destroy();
 			},
 			

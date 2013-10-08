@@ -158,14 +158,19 @@
 	
 	function noteUpdate(id, model_data)
 	{
+		console.log("--------ID---------");
+		console.log(id);
+		console.log("----------DATA-------");
+		console.log(model_data);
+		console.log("-----------------");
 		$.ajax({ 
 			url: '/api/post/'+id,
 			type: 'PUT',
 			data: JSON.stringify({	col: model_data.col, 
 									row: model_data.row,
 									text: model_data.text,
-									colour: model_data.colour,
-									fontSize: model_data.fontSize,
+									colour: model_data.colour-note,
+									fontSize: model_data.fontsize,
 								}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
@@ -179,8 +184,11 @@
 		});
 	}
 	
-	function noteDelete(id)
+	function note_Delete(id)
 	{
+		console.log("--------ID---------");
+		console.log(id);
+		console.log("----------------");
 		$.ajax({ 
 			url: '/api/post/'+id,
 			type: 'DELETE',
@@ -272,7 +280,7 @@
 	function voteGet(id)
 	{
 		$.ajax({ 
-			url: '/api/vote'+id,
+			url: '/api/vote/'+id,
 			type: 'GET',
 			success: function(data){
 				console.log('Get Vote');

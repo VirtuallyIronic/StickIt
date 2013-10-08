@@ -337,6 +337,7 @@
 				this.collection.each(function(model) 
 				{ 
 					//removeNote(model);
+					note_Delete(model.get('noteId'));
 					model.destroy(); 
 				});
 				//delete ALL note AJAX   search tag: TODO
