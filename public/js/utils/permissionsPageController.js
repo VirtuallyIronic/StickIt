@@ -1,7 +1,7 @@
 function makeAdmin(id){
 	var url = '/api/walluser/' + id;
 	var formValues = {
-		permission: "admin";
+		permission: "admin"
 	};
 	$.ajax({
 		url: url,
@@ -25,7 +25,7 @@ function makeAdmin(id){
 function makePost(id){
 	var url = '/api/walluser/' + id;
 	var formValues = {
-		permission: "post";
+		permission: "post"
 	};
 	$.ajax({
 		url: url,
@@ -49,7 +49,7 @@ function makePost(id){
 function makeView(id){
 	var url = '/api/walluser/' + id;
 	var formValues = {
-		permission: "view";
+		permission: "view"
 	};
 	$.ajax({
 		url: url,
