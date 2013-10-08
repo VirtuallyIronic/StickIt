@@ -82,7 +82,8 @@ define([
         	var WallPermission = new modelWallPermission({ id: id });
         	setInterval(function(){
         		WallPermission.fetch();
-        	}, 5000);
+        	}, 500);
+        	WallPermission.fetch();
         	App.mainRegion.show(new wallPermissionView({ model: WallPermission }));
         }
         
