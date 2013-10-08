@@ -12,6 +12,11 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 				event.stopPropagation();
 				event.preventDefault();
 				console.log($('#isPrivateCheckbox').val());
+				if ($('#isPrivateCheckbox').is(":checked")){
+					console.log("checked!");
+				} else {
+					console.log("unchecked!");
+				}
 			}
 		});
 	}
