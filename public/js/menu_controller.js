@@ -340,30 +340,21 @@
 		var voteScore = input.model.get('votes');
 		var authorUser = input.model.get('username');
 		//var authorUser = input.model.get();
+		
 		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+authorUser+"  </span>").appendTo($tb);
 		$("<span id='closespan'><button class='deleteButton'> Delete </button></span>").appendTo($tb);
 		$("<span id='editspan'><button class='editButton' > Edit </button></span>").appendTo($tb);
 		$("<span id='expandspan'><button class='expandButton'> Expand </button></span>").appendTo($tb);
-		
-		
-		var votedList = input.model.get('voted');
-		var votedLength = _.size(votedList);
-		var alreadyVoted;
-		for (var i=0; i<votedLength; i++)
+
+		var checkVote = voteGet(1);
+		if (checkVote != false)
 		{
-			if (currentUser == votedList[i])
-			{
-				alreadyVoted = 1;
-			}
-		}
-		if (alreadyVoted != 1)
-		{
-			$("<span id='voteBtnspan'><button class='voteButton'> +1 </button></span>").appendTo($tb);
+			$("<span id='voteBtnspan'><button class='removeVoteButton'> -1 </button></span>").appendTo($tb);
 		}
 		else
 		{
-			$("<span id='voteBtnspan'><button class='removeVoteButton'> -1 </button></span>").appendTo($tb);
+			$("<span id='voteBtnspan'><button class='voteButton'> +1 </button></span>").appendTo($tb);
 		}
 	}
 

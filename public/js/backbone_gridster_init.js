@@ -360,52 +360,44 @@
 			voting: function(){
 				if (confirmLogin == true)
 				{
+					/*
 					var votes = this.model.get('votes');
-					votes = (parseInt(votes)+1);//.toString();
-					var voted = this.model.get('voted');
-					var tat = _.size(voted);//.length;
-					if (tat === 0)
+					var checkVotes = voteGet(id);
+					if (checkVotes != false) //need a better search criteria
 					{
-						voted[0] = currentUser;
+					
 					}
 					else
-					{
-						voted[tat] = currentUser;
-					}
-
-					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-					$("<button class='removeVoteButton'> -1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
-					////.remove();
-					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
-					
-					
-					this.model.set({
-						'votes': votes,
-						'voted': voted
-						// modify item defaults
-					});
-					
-					var voteSearch = this.voteObj.where({'userID':currentUser_ID, 'noteID': this.model.get('id')});
-					//alert(voteSearch.length);
-					if (voteSearch.length == 0)
 					{
 						var newVotings = new voteFormat();
 						newVotings.set({
-							'userID': currentUser_ID,
-							'noteID': this.model.get('_id'),//noteID
+							'noteID': this.model.get('noteId'),//noteID
 							'votes_note': this.model
 						});
 						this.voteObj.add(newVotings);
-					}
-					else
-					{
-						//VOTING ERROR
-						//alert('error');
+						
+						votes = (parseInt(votes)+1);//.toString();
+						this.model.set('votes',votes);
+						this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
+						$("<button class='removeVoteButton'> -1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+						this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
 					}
 					//TODO
 					//SERVER UPDATE NOTE
-					//updateNote(this.model);
-					//this.model.trigger('updateServer');	
+					*/
+					var votes = this.model.get('votes');
+					var newVotings = new voteFormat();
+					newVotings.set({
+						'noteID': this.model.get('noteId'),//noteID
+						'votes_note': this.model
+					});
+					this.voteObj.add(newVotings);
+					
+					votes = (parseInt(votes)+1);//.toString();
+					this.model.set('votes',votes);
+					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
+					$("<button class='removeVoteButton'> -1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
 				}				
 				else
 				{
@@ -416,47 +408,46 @@
 			cancelVote: function(){
 				if (confirmLogin == true)
 				{
-					var changed =0;
+					/*
+					var checkVotes = voteGet(id);
 					var votes = this.model.get('votes');
-					
-					var voted = this.model.get('voted');
-					var tat = _.size(voted);//.length;
-					for (var i=0; i<tat; i++)
+					if (checkVotes != false) //need a better search criteria
 					{
-						if (voted[i] == currentUser)
+					
+					}
+					else
+					{
+						var voteSearch = this.voteObj.where({'noteID': this.model.get('noteId')});
+						if (voteSearch.length != 0)
 						{
-							voted.splice(i,1);
-							changed++;
-						}
-					}
-					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-					$("<button class='voteButton'> +1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
-					if (changed > 0)
-					{
-						votes = (votes-1);
-						this.model.set('votes', votes);
-						this.model.set('voted', voted);
+							for (var q=0; q<voteSearch.length; q++)
+							{
+								voteSearch[q].destroy();
+							}
+						}	
+						
+						votes = (parseInt(votes)-1);//.toString();
+						this.model.set('votes',votes);
+						this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
+						$("<button class='voteButton'> +1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 						this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
-						//TODO
-						//SERVER UPDATE NOTE
-						//updateNote(this.model);
-						//this.model.trigger('updateServer');		
 					}
-					
-					var voteSearch = this.voteObj.where({'userID':currentUser_ID, 'noteID': this.model.get('id')});
+					*/
+					var votes = this.model.get('votes');
+					var voteSearch = this.voteObj.where({'noteID': this.model.get('noteId')});
 					if (voteSearch.length != 0)
 					{
 						for (var q=0; q<voteSearch.length; q++)
 						{
-							//alert(voteSearch[q].get('userID'));
 							voteSearch[q].destroy();
 						}
-					}
-					else
-					{
-						//VOTING ERROR
-						//alert('error');
-					}
+					}	
+					
+					votes = (parseInt(votes)-1);//.toString();
+					this.model.set('votes',votes);
+					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
+					$("<button class='voteButton'> +1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');					
 				}				
 				else
 				{
@@ -888,7 +879,7 @@
 						'userId':currentUser_ID,
 						'userName':currentUser,
 						'text': text,
-						'tagged': tagged,
+						//'tagged': tagged,
 						'color': colour,
 						'fontsize': fontsize,
 						//'taggedKey'
