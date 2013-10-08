@@ -19,7 +19,7 @@
 
 define(['jquery', 'underscore', 'backbone'],
 	function($, _, Backbone) {
-		var Wall = Backbone.model.extend({
+		var Wall = Backbone.Model.extend({
 			urlRoot: '/api/wall',
 			idAttribute: 'id',
 		});
