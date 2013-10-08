@@ -58,6 +58,7 @@ function enableItemView() {
 					{
 						var addTags = new taggedFormat();
 						addTags.set({
+							'tagID': Math.floor((Math.random()*100)+1),
 							'noteID': this.model.get('noteId'),
 							'tagItem': this.incTagData[k].get('tagItem'),
 							//'tags_note' :this.model
@@ -266,13 +267,13 @@ function enableItemView() {
 					this.$el.children('.cssnote').children('.toolbar').css('background-color', newColour);
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontSize', fontsize+"px");
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('color', fontColour);
-
 					if (tags != 0)
 					{
 						for (var k=0; k<tags.length; k++)
 						{					
 							var addTags = new taggedFormat();
 							addTags.set({
+								'tagID': Math.floor((Math.random()*100)+1),
 								'noteID': this.model.get('noteId'),
 								'tagItem': tags[k]
 							});

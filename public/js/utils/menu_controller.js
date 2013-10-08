@@ -484,13 +484,13 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		field.tagging.each(function (obj){
 			//alert('test');
 			//alert(obj);
-			tagged[tagCount] = obj.get('tagItem');
+			tagged[tagCount] = obj;
 			tagCount++;
 		},this);
 		var tagSize = _.size(tagged);
 		for (var i=0; i<tagSize; i++)
 		{
-			$("<span class='taggedUser'>Tag: "+tagged[i]+"</span><br/>").appendTo("#bottomBar");
+			$("<span onclick='q(this)' value="+tagged[i].get('tagID')+" class='taggedUser'>Tag: "+tagged[i].get('tagItem')+"</span><br/>").appendTo("#bottomBar");
 		}		
 		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
 		document.getElementById('cancelPopup').focus();
@@ -502,7 +502,8 @@ function confirmSettings() {
 	hideSettings();
 }
 
-function qweqweqwe() {
+function q(ev) {
+	alert('');
 	//var privacy=$('#privacySelect option:selected').text();    
 	//var wallSize=$('#wallSizeSelect option:selected').text();    
 }

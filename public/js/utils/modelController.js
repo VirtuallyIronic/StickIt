@@ -78,6 +78,7 @@
 		taggedFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
+					'tagID':'',
 					'noteID': '',
 					'tagItem': ''
 			},

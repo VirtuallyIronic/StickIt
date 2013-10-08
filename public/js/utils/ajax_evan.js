@@ -95,6 +95,7 @@
 					],
 					"tag": [
 						{
+							'tagID': 0,
 							'noteID': 1,
 							'tagItem': 'TEXT TAG'
 						}
@@ -353,8 +354,8 @@
 			url: '/api/tag',
 			type: 'POST',
 			async: false,
-			data: JSON.stringify({	postId: model_data.get('postId'),
-									title: model_data.get('title')}),
+			data: JSON.stringify({	postId: model_data.get('noteID'),
+									title: model_data.get('tagItem')}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function(data){

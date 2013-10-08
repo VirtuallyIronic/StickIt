@@ -215,6 +215,7 @@
 						var newTags = new taggedFormat();
 						var test = postObj[w].tag[t];
 						newTags.set({
+							'tagID': postObj[w].tag[t].tagID,
 							'noteID': postObj[w].tag[t].noteID,
 							'tagItem': postObj[w].tag[t].tagItem,
 							'tags_note': item
@@ -376,6 +377,7 @@
 					{
 						var newNoteTags = new taggedFormat();
 						newNoteTags.set({
+							'tagID': Math.floor((Math.random()*100)+1),
 							'noteID': item.get('id'),
 							'tagItem': $(tags).children().eq(i).text(),
 							'tags_note': item,
