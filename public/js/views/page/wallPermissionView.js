@@ -32,7 +32,6 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallPermission
 					error: function(error) {
 						console.log(error);
 					}
+				});
 			}
-		});
-	}
-);
+		);
