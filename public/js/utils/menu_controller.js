@@ -398,9 +398,9 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		
 		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+authorUser+"  </span>").appendTo($tb);
-		$("<span id='closespan'><img class='deleteButton' src='images/icons/delete-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
-		$("<span id='editspan'><img class='editButton' src='images/icons/edit-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
-		$("<span id='expandspan'><img class='expandButton' src='images/icons/Expand-icon.png' style='width: 30px;'>  </img></span>").appendTo($tb);
+		$("<span id='closespan'><img class='deleteButton' src='/images/icons/delete-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
+		$("<span id='editspan'><img class='editButton' src='/images/icons/edit-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
+		$("<span id='expandspan'><img class='expandButton' src='/images/icons/Expand-icon.png' style='width: 30px;'>  </img></span>").appendTo($tb);
 
 		var checkVote = voteGet(1);
 		if (checkVote != false)
@@ -409,7 +409,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		}
 		else
 		{
-			$("<span id='voteBtnspan'><img class='voteButton' src='images/icons/Like-button-transparent.png' style='width: 30px;'> </img></span>").appendTo($tb);
+			$("<span id='voteBtnspan'><img class='voteButton' src='/images/icons/Like-button-transparent.png' style='width: 30px;'> </img></span>").appendTo($tb);
 		}
 	}
 
