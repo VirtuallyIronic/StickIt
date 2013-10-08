@@ -11,6 +11,7 @@ require.config({
         "transit":"vendor/jquery.transit.min",
         "settingsmenu":"utils/SettingsMenu",
         "bootstrap": "vendor/bootstrap.min",
+        "json2" : "vendor/json2",
         "templates":"../templates"
     },
     shim:{
