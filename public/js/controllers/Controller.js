@@ -13,9 +13,9 @@ define([
     'views/footer/footerView',
     'views/page/homeView',
     'views/page/errorView',
-    'views/page/wallView',
+    'views/page/wallPermissionView',
     'models/CurrentUser',
-    'models/Wall'], 
+    'models/WallPermission'], 
 	function(
 		App,
 		Backbone,
@@ -31,14 +31,14 @@ define([
 		footerView,
 		homeView,
 		errorView,
-		wallView,
+		wallPermissionView,
 		modelCurrentUser,
-		modelWall
+		modelWallPermission
 	){
 	var CurrentUser = new modelCurrentUser();
-	//setInterval(function(){
-	//	CurrentUser.fetch();
-	//}, 1000);
+	setInterval(function(){
+		CurrentUser.fetch();
+	}, 2000);
 	
 	return Backbone.Marionette.Controller.extend({
 		initialize:function (options) {
@@ -77,6 +77,13 @@ define([
         },
         wall: function(id) {
         	window.location.replace('/wall.html?' + id);
+        },
+        wallPermission: function(id) {
+        	var WallPermission = new modelWallPermission({ id: id });
+        	setInterval(function(){
+        		WallPermission.fetch();
+        	}, 5000);
+        	App.mainRegion.show(new wallPermissionView({ model: WallPermission }));
         }
         
     });
