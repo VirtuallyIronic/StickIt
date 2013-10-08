@@ -49,11 +49,12 @@
 	var confirmLogin = false;
 	var currentUser_ID = 0;
 	var currentUser = "";
+	var wallID;
 	/*NEEDS TO BE DYNAMICALLY UPDATED!*/
 	if (location.search == "")
 	{
-		alert('NO WALL ID');
-		var wallID = 1;
+		//alert('NO WALL ID');
+		wallID = eJU6kroyQ;
 	}
 	else
 	{
@@ -65,7 +66,7 @@
 	}
 	/*--------------------------------*/
 	$(function(){
-		var initialData = wallGet(1);
+		var initialData = wallGet(wallID);
 		if (initialData.status != false)
 		{
 			initWall = initialData.data;
