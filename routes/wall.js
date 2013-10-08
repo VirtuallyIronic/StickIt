@@ -98,9 +98,32 @@ module.exports = function(app, passport) {
 	
 	app.get('/api/wall', function(req, res){
 		models.sequelize.query('SELECT * FROM `Wall` WHERE `Wall`.`owner`=\'' + req.user.id + '\' OR `Wall`.`isPrivate`=\'0\' OR `Wall`.`id` IN (SELECT `WallUser`.`WallId` FROM `WallUser` WHERE `WallUser`.`UserId`=\'' + req.user.id + '\')', Wall).success(function(walls){
-			res.json(walls);
+			User.find({ where: { id : req.user.id}, limit: 1}).success(function(user){
+				var admin = false
+				  , post = false
+				  , view = false;
+				
+				if(user.permission == "admin") {
+					admin = true;
+					post = true;
+					view = true;
+				} else if (user.permission == "post") {
+					post = true;
+					view = true;
+				} else {
+					view = true;
+				}
+				res.json({
+					admin: admin,
+					post: post,
+					view: view,
+					walls: walls
+				});
+			}).error(function(){
+				res.send(500, {"error" : "internal server error"});
+			});
 		}).error(function(error){
-			console.log(error);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
