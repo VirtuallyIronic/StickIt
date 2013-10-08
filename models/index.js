@@ -62,7 +62,7 @@ module.exports.Wall.hasMany(module.exports.ColName, {foreignKey: 'wallId'});
 module.exports.Post.hasMany(module.exports.Vote, {foreignKey: 'postId'});
 module.exports.Post.hasMany(module.exports.Tag, {foreignKey: 'postId'});
 
-module.exports.WallUser.hasOne(module.exports.User, {foreignKey: 'userId'});
+module.exports.WallUser.belongsTo(module.exports.User, {foreignKey: 'userId'});
 
 models.forEach(function(model){
 	module.exports[model].sync();
