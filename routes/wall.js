@@ -123,20 +123,20 @@ module.exports = function(app, passport) {
 										posts: posts
 									});
 								}).error(function(){
-									res.send(500);
+									res.send(500, {"error" : "internal server error"});
 								});
 							}).error(function(){
-								res.send(500);
+								res.send(500, {"error" : "internal server error"});
 							});
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				}).error(function(){
-					res.send(500);
+					res.send(500, {"error" : "internal server error"});
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		});
 	});
@@ -145,20 +145,20 @@ module.exports = function(app, passport) {
 		hasPermission(req.params.id, req.user.id, function(result){
 			if(result){
 				textPermission(req.params.id, req.user.id, function(textResult){
-					if(textResult == 'admin') {
+					if(textResult == "admin") {
 						WallUser.findAll({ where: { wallId: req.params.id }}).success(function(wallUsers){
 							res.json({
 								permission: wallUsers
 							});
 						}).error(function(){
-							res.send(500);
+							res.send(500, {"error" : "internal server error"});
 						})
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		});
 	});
@@ -170,14 +170,14 @@ module.exports = function(app, passport) {
 					if(result) {
 						res.json(post);
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			} else {
-				res.send(500);
+				res.send(500, {"error" : "internal server error"});
 			}
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -188,14 +188,14 @@ module.exports = function(app, passport) {
 					if(result){
 						res.json(colname);
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -208,20 +208,20 @@ module.exports = function(app, passport) {
 							if(result) {
 								res.json(vote);
 							} else {
-								res.send(401);
+								res.send(401, {"error" : "unauthorized"});
 							}
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				}).error(function(){
-					res.send(500);
+					res.send(500, {"error" : "internal server error"});
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -234,20 +234,20 @@ module.exports = function(app, passport) {
 							if(result) {
 								res.json(tag);
 							} else {
-								res.send(401);
+								res.send(401, {"error" : "unauthorized"});
 							}
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				}).error(function(){
-					res.send(500);
+					res.send(500, {"error" : "internal server error"});
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -258,20 +258,20 @@ module.exports = function(app, passport) {
 					if(result){
 						res.json(walluser);
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
 	app.post('/api/wall', function(req, res){
 		if(req.user.role == 'view'){
-			res.send(401);
+			res.send(401, {"error" : "unauthorized"});
 		} else {
 			var title = req.body.title
 			  , isPrivate = req.body.isPrivate;
@@ -286,7 +286,7 @@ module.exports = function(app, passport) {
 			Wall.create({ id: wallId, title: title, owner: req.user.id, isPrivate: isPrivate }).success(function(wall){
 				res.json(wall);
 			}).error(function(){
-				res.send(500);
+				res.send(500, {"error" : "internal server error"});
 			});
 		}
 	});
@@ -305,27 +305,27 @@ module.exports = function(app, passport) {
 				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
 					if(wall) {
 						textPermission(req.params.id, req.user.id, function(textResult){
-							if(textResult == 'admin') {
+							if(textResult == "admin") {
 								wall.updateAttributes({
 									title: title,
 									isPrivate: isPrivate
-								}).success(function(){
-									res.send(200);
+								}).success(function(wall){
+									res.json(wall);
 								}).error(function(){
-									res.send(500);
+									res.send(500, {"error" : "internal server error"});
 								});
 							} else {
-								res.send(401);
+								res.send(401, {"error" : "unauthorized"});
 							}
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				}).error(function(){
-					res.send(500);
+					res.send(500, {"error" : "internal server error"});
 				})
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		});
 	});
@@ -336,24 +336,24 @@ module.exports = function(app, passport) {
 				Wall.find({ where: { id: req.params.id }, limit: 1}).success(function(wall){
 					if(wall){
 						textPermission(req.params.id, req.user.id, function(textResult){
-							if(textResult == 'admin') {
+							if(textResult == "admin") {
 								wall.destroy().success(function(){
-									res.send(200);
+									res.send(200, {"data" : "success"});
 								}).error(function(){
-									res.send(500);
+									res.send(500, {"error" : "internal server error"});
 								});
 							} else {
-								res.send(401);
+								res.send(401, {"error" : "unauthorized"});
 							}
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				}).error(function(){
-					res.send(500);
+					res.send(500, {"error" : "internal server error"});
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		});
 	});
@@ -399,14 +399,14 @@ module.exports = function(app, passport) {
 						}).success(function(post){
 							res.json(post);
 						}).error(function(){
-							res.send(500);
+							res.send(500, {"error" : "internal server error"});
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		});
 	});
@@ -433,28 +433,28 @@ module.exports = function(app, passport) {
 			hasPermission(post.wallId, req.user.id, function(result){
 				if(result) {
 					textPermission(post.wallId, req.user.id, function(textResult){
-						if(textResult != 'view'){
+						if(textResult != "view"){
 							post.updateAttributes({
 								col: col,
 								row: row,
 								text: text,
 								colour: colour,
 								fontSize: fontSize
-							}).success(function(){
-								res.send(200);
+							}).success(function(post){
+								res.json(post);
 							}).error(function(){
-								res.send(500);
+								res.send(500, {"error" : "internal server error"});
 							});
 						} else {
-							res.send(401);
+							res.send(401, {"error" : "unauthorized"});
 						}
 					});
 				} else {
-					res.send(401);
+					res.send(401, {"error" : "unauthorized"});
 				}
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -474,11 +474,11 @@ module.exports = function(app, passport) {
 						}
 					});
 				} else {
-					res.send(401);
+					res.send(401, {"error" : "unauthorized"});
 				}
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -503,16 +503,16 @@ module.exports = function(app, passport) {
 							colNum: colNum,
 							title: title
 						}).success(function(colname){
-							res.send(200);
+							res.json(colname);
 						}).error(function(){
-							res.send(500);
+							res.send(500, {"error" : "internal server error"});
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		});
 	});
@@ -530,25 +530,25 @@ module.exports = function(app, passport) {
 			hasPermission(colName.wallId, req.user.id, function(result){
 				if(result) {
 					textPermission(colName.wallId, req.user.id, function(textResult){
-						if(textResult != 'view'){
+						if(textResult != "view"){
 							colName.updateAttributes({
 								colNum: colNum,
 								title: title
-							}).success(function(){
-								res.send(200);
+							}).success(function(colName){
+								res.json(colName);
 							}).error(function(){
-								res.send(500);
+								res.send(500, {"error" : "internal server error"});
 							});
 						} else {
-							res.send(401);
+							res.send(401, {"error" : "unauthorized"});
 						}
 					});
 				} else {
-					res.send(401);
+					res.send(401, {"error" : "unauthorized"});
 				}
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -557,22 +557,22 @@ module.exports = function(app, passport) {
 			hasPermission(colName.wallId, req.user.id, function(result){
 				if(result) {
 					textPermission(colName.wallId, req.user.id, function(textResult){
-						if(textResult != 'view'){
+						if(textResult != "view"){
 							colName.destroy().success(function(){
-								res.send(200);
+								res.send(200, {"data" : "success"});
 							}).error(function(){
-								res.send(500);
+								res.send(500, {"error" : "internal server error"});
 							});
 						} else {
-							res.send(401);
+							res.send(401, {"error" : "unauthorized"});
 						}
 					});
 				} else {
-					res.send(401);
+					res.send(401, {"error" : "unauthorized"});
 				}
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -586,25 +586,25 @@ module.exports = function(app, passport) {
 			hasPermission(post.wallId, req.user.id, function(result){
 				if(result) {
 					textPermission(post.wallId, req.user.id, function(textResult){
-						if(textResult != 'view'){
+						if(textResult != "view"){
 							Vote.create({
 								postId: postId,
 								userId: req.user.id
 							}).success(function(vote){
-								res.send(200);
+								res.json(vote);
 							}).error(function(){
-								res.send(500);
+								res.send(500, {"error" : "internal server error"});
 							});
 						} else {
-							res.send(401);
+							res.send(401, {"error" : "unauthorized"});
 						}
 					});
 				} else {
-					res.send(401);
+					res.send(401, {"error" : "unauthorized"});
 				}
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 		
 	});
@@ -615,25 +615,25 @@ module.exports = function(app, passport) {
 				hasPermission(post.wallId, req.user.id, function(result){
 					if(result) {
 						textPermission(post.wallId, req.user.id, function(textResult){
-							if(textResult != 'view'){
+							if(textResult != "view"){
 								vote.destroy().success(function(){
-									res.send(200);
+									res.send(200, {"data" : "success"});
 								}).error(function(){
-									res.send(500);
+									res.send(500, {"error" : "internal server error"});
 								});
 							} else {
-								res.send(401);
+								res.send(401, {"error" : "unauthorized"});
 							}
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			}).error(function(){
-				res.send(500);
+				res.send(500, {"error" : "internal server error"});
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -649,22 +649,22 @@ module.exports = function(app, passport) {
 		hasPermission(wallId, req.user.id, function(result){
 			if(result) {
 				textPermission(wallId, req.user.id, function(textResult){
-					if(textResult != 'view'){
+					if(textResult != "view"){
 						ColName.create({
 							wallId: wallId,
 							colNum: colNum,
 							title: title
 						}).success(function(colname){
-							res.send(200);
+							res.json(colname);
 						}).error(function(){
-							res.send(500);
+							res.send(500, {"error" : "internal server error"});
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		});
 	});
@@ -680,27 +680,27 @@ module.exports = function(app, passport) {
 				hasPermission(post.wallId, req.user.id, function(result){
 					if(result){
 						textPermission(post.wallId, req.user.id, function(textResult){
-							if(textResult != 'view'){
+							if(textResult != "view"){
 								tag.updateAttributes({
 									title: title
-								}).success(function(){
-									res.send(200);
+								}).success(function(tag){
+									res.json(tag);
 								}).error(function(){
-									res.send(500);
+									res.send(500, {"error" : "internal server error"});
 								});
 							} else {
-								res.send(401);
+								res.send(401, {"error" : "unauthorized"});
 							}
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			}).error(function(){
-				res.send(500);
+				res.send(500, {"error" : "internal server error"});
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -710,25 +710,25 @@ module.exports = function(app, passport) {
 				hasPermission(post.wallId, req.user.id, function(result){
 					if(result){
 						textPermission(post.wallId, req.user.id, function(textResult){
-							if(textResult != 'view'){
+							if(textResult != "view"){
 								tag.destroy().success(function(){
-									res.send(200);
+									res.send(200, {"data" : "success"});
 								}).error(function(){
-									res.send(500);
+									res.send(500, {"error" : "internal server error"});
 								});
 							} else {
-								res.send(401);
+								res.send(401, {"error" : "unauthorized"});
 							}
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			}).error(function(){
-				res.send(500);
+				res.send(500, {"error" : "internal server error"});
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -747,22 +747,22 @@ module.exports = function(app, passport) {
 		hasPermission(wallId, req.user.id, function(result){
 			if(result) {
 				textPermission(wallId, req.user.id, function(textResult){
-					if(textResult != 'view'){
+					if(textResult != "view"){
 						WallUser.create({
 							userId: userId,
 							wallId: wallId,
 							permission: permission
 						}).success(function(colname){
-							res.send(200);
+							res.json(colname);
 						}).error(function(){
-							res.send(500);
+							res.send(500, {"error" : "internal server error"});
 						});
 					} else {
-						res.send(401);
+						res.send(401, {"error" : "unauthorized"});
 					}
 				});
 			} else {
-				res.send(401);
+				res.send(401, {"error" : "unauthorized"});
 			}
 		});
 	});
@@ -777,24 +777,24 @@ module.exports = function(app, passport) {
 			hasPermission(wallUser.wallId, req.user.id, function(result){
 				if(result) {
 					textPermission(wallUser.wallId, req.user.id, function(textResult){
-						if(textResult != 'view'){
+						if(textResult != "view"){
 							wallUser.updateAttributes({
 								permission: permission
-							}).success(function(){
-								res.send(200);
+							}).success(function(wallUser){
+								res.json(wallUser);
 							}).error(function(){
-								res.send(500);
+								res.send(500, {"error" : "internal server error"});
 							});
 						} else {
-							res.send(401);
+							res.send(401, {"error" : "unauthorized"});
 						}
 					});
 				} else {
-					res.send(401);
+					res.send(401, {"error" : "unauthorized"});
 				}
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 	
@@ -803,22 +803,22 @@ module.exports = function(app, passport) {
 			hasPermission(wallUser.wallId, req.user.id, function(result){
 				if(result) {
 					textPermission(wallUser.wallId, req.user.id, function(textResult){
-						if(textResult != 'view'){
+						if(textResult != "view"){
 							wallUser.destroy().success(function(){
-								res.send(200);
+								res.send(200, {"data" : "success"});
 							}).error(function(){
-								res.send(500);
+								res.send(500, {"error" : "internal server error"});
 							});
 						} else {
-							res.send(401);
+							res.send(401, {"error" : "unauthorized"});
 						}
 					});
 				} else {
-					res.send(401);
+					res.send(401, {"error" : "unauthorized"});
 				}
 			});
 		}).error(function(){
-			res.send(500);
+			res.send(500, {"error" : "internal server error"});
 		});
 	});
 };
