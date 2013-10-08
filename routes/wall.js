@@ -673,8 +673,6 @@ module.exports = function(app, passport) {
 		}).error(function(){
 			res.send(500, {"error" : "internal server error"});
 		});
-
-		});
 	});
 	
 	app.put('/api/tag/:id', function(req, res){
