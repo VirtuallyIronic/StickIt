@@ -58,17 +58,16 @@
 	else
 	{
 		var searchString = location.search;
-		var n=searchString.split("");
+		var n=searchString.split("?");
 		var test = parseInt(n[1]);
 		var wallID = test;
 		console.log('WALL ID IS: '+wallID);
 	}
 	/*--------------------------------*/
 	$(function(){
-	/*
+		
 		var initialData = wallGet(wallID);
-		initWall = initialData.data;		
-		*/
+		var evan_data = initialData.data;		
 		initWall = {"id": "eJU6kroyQ",
 					"title": "Console Wall",
 					"owner": "x1TzuEjk",
@@ -140,6 +139,7 @@
 							
 						]
 					};
+
 		modelInit();
 		enableItemView();
 
