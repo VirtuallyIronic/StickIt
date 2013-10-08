@@ -1,0 +1,26 @@
+<section>
+	<div id="container_demo" >
+		<div id="wrapper" class="wrapper" style="position: absolute; top: 230px; left: 30px; z-index:99;">
+			<div id="login" class="animate form" >
+				<form autocomplete="on"> 
+					<h1>Wall Settings</h1>
+					<p> 
+						<label for="wallTitle" class="uname">Wall Title: </label>
+						<input id="wallTitle" name="wallTitle" required="required" type="text" value="{{ title }}"/>
+					</p>
+					<p> 
+						<label for="isPrivateCheckbox">Make my Wall Private: </label>
+						<input type="checkbox" name="isPrivateCheckbox" id="isPrivateCheckbox" value="isPrivateCheckbox" /> 
+					</p>
+					<p class="login button"> 
+						<input type="submit" id="updateButton" value="Update Wall" /> 
+					</p>
+					<p class="change_link">
+						<a href="/permission/{{ id }}" class="to_register">Wall Users</a>&nbsp;
+						<a href="/wall.html?{{ id }}" class="to_register">Return to Wall</a>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>

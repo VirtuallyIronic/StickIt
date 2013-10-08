@@ -50,13 +50,6 @@
 
 		
     });
-
-// load the first settings menu.
-        function showSettings(field)
-        {
-       		$(field).show();
-             console.log( "test" );
-        }
 		
 		function wallNails(){
 			//<li class="thumbnail"><a href="wall.html"><img src="images/Wall-Sample.png" style="width:300px; height:300px;"></a></li>
@@ -73,6 +66,7 @@
 			}
 		}
 		
+		/**
 		function moreLanes()
 		{	
 			var wallNum = new Array();
@@ -101,7 +95,7 @@
 				}
 			});
 			return wallNum;
-		}
+		}**/
 
 		function showUserSettings(field, sender, placeBtn)
         {

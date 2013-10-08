@@ -16,10 +16,12 @@ define([
     'views/page/wallPermissionView',
     'views/page/successfulRegistrationView',
     'views/page/userListView',
+    'view/page/wallSettingsView',
     'models/CurrentUser',
     'models/WallPermission',
     'models/WallList',
-    'models/UserList'], 
+    'models/UserList',
+    'models/WallSetting'], 
 	function(
 		App,
 		Backbone,
@@ -38,10 +40,12 @@ define([
 		wallPermissionView,
 		successfulRegistrationView,
 		userListView,
+		wallSettingsView,
 		modelCurrentUser,
 		modelWallPermission,
 		modelWallList,
-		modelUserList
+		modelUserList,
+		modelWallSetting
 	){
 	var CurrentUser = new modelCurrentUser();
 	setInterval(function(){
@@ -108,6 +112,14 @@ define([
         	}, 2000);
         	App.mainRegion.show(new userListView({ model: UserList }));
         	UserList.fetch();
+        },
+        wallSetting: function(id){
+        	var WallSetting = new modelWallSetting({ id: id });
+        	setInterval(function(){
+        		WallSetting.fetch();
+        	}, 2000);
+        	WallSetting.fetch();
+        	App.mainRegion.show(new wallSettingsView({ model: WallSetting }));
         }
         
     });

@@ -105,7 +105,8 @@
 			
 			if (output.status == false)
 			{
-			output = {data:obj,status:false};
+				location.redirect('/home');
+				output = {data:obj,status:false};
 			}
 			console.log('output data');
 			console.log(output);
@@ -255,6 +256,17 @@
 				}
 			});
 		}
+	}
+	
+	function showSettings()
+	{
+		var modelData = ({wallId:initWall.id});
+		redirectToSettings(modelData);
+	}
+	
+	function redirectToSettings(model_data){
+		var url = "/wallsettings/" + model_data.wallId;
+		location.redirect(url);
 	}
 	
 	function colCreate(model_data)

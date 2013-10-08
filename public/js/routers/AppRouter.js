@@ -10,9 +10,12 @@ define(['marionette', 'controllers/Controller'], function(Marionette, Controller
            "home": "home",
            "wall": "home",
            "wall/:id": "wall",
+           "permission": "home",
            "permissions/:id": "wallPermission",
            "register/success": "successfulRegistration",
-           "users": "userList"
+           "users": "userList",
+           "wallsetting", "home",
+           "wallsettings/:id", "wallSetting"
        }
    });
 });
