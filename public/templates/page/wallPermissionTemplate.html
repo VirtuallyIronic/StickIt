@@ -27,9 +27,12 @@
 				{{#each permission}}
 				<p> 
 					{{ user.username }} is {{ permission }}
-					<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Make Viewer</a>&nbsp;
-					<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Make Poster</a>&nbsp;
-					<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Make Admin</a>
+					<p class="change_link">
+						<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Grant Viewer</a>&nbsp;
+						<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Grant Poster</a>&nbsp;
+						<a href="#" class="to_register" onclick="makeAdmin({{ id }})">Grant Admin</a>&nbsp;
+						<a href="#" class="to_register" onclick="removePermission({{ id }})">Remove Permission</a>
+					</p>
 				</p>
 				{{/each}}
 			</div>
