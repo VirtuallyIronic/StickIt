@@ -646,7 +646,7 @@ module.exports = function(app, passport) {
 		sanitize(title).xss();
 		sanitize(title).escape();
 		Post.find({ where: { id: postId }, limit: 1}).success(function(post){
-			if(post){
+			if(post) {
 				hasPermission(post.wallId, req.user.id, function(result){
 					if(result) {
 						textPermission(post.wallId, req.user.id, function(textResult){
@@ -666,6 +666,7 @@ module.exports = function(app, passport) {
 					} else {
 						res.send(401, {"error" : "unauthorized"});
 					}
+				});
 			} else {
 				res.send(401, {"error" : "unauthorized"});
 			}
