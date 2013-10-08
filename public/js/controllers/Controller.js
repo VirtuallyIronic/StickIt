@@ -102,7 +102,7 @@ define([
         	App.mainRegion.show(new successfulRegistrationView());
         },
         userList: function(){
-        	var UserList = new modelWallList();
+        	var UserList = new modelUserList();
         	setInterval(function(){
         		UserList.fetch();
         	}, 2000);
