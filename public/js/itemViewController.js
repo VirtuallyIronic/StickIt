@@ -6,11 +6,11 @@ function enableItemView() {
 			
 			// `ItemView`s now respond to two clickable actions for each `Item`: swap and delete.
 			events: {
-				'click button.deleteButton': 'remove',//'remove',
-				'click button.editButton': 'editMe',
-				'click button.expandButton': 'expanding',
-				'click button.voteButton': 'voting',
-				'click button.removeVoteButton': 'cancelVote'
+				'click img.deleteButton': 'remove',//'remove',
+				'click img.editButton': 'editMe',
+				'click img.expandButton': 'expanding',
+				'click img.voteButton': 'voting',
+				'click img.removeVoteButton': 'cancelVote'
 			},
 			
 			// `initialize()` now binds model change/removal to the corresponding handlers below.
@@ -143,7 +143,7 @@ function enableItemView() {
 					votes = (parseInt(votes)+1);//.toString();
 					this.model.set('votes',votes);
 					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-					$("<button class='removeVoteButton'> -1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+					$("<img class='removeVoteButton' src='images/icons/dislike-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
 				}				
 				else
@@ -193,7 +193,7 @@ function enableItemView() {
 					votes = (parseInt(votes)-1);//.toString();
 					this.model.set('votes',votes);
 					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-					$("<button class='voteButton'> +1 </button>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+					$("<img class='voteButton' src='images/icons/Like-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');					
 				}				
 				else

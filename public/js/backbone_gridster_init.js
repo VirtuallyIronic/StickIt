@@ -68,82 +68,9 @@
 		var initialData = wallGet(wallID);
 		evan_data = initialData.data;		
 		initWall = initialData.data;		
-		/*initWall = {"id": "eJU6kroyQ",
-					"title": "Console Wall",
-					"owner": "x1TzuEjk",
-					"isPrivate": true,
-					"permission": "admin",
-					"totalCols": 2,
-					"cols": [
-						{
-							"id": 1,
-							"wallId": "eJU6kroyQ",
-							"colNum": 1,
-							"title": "One"
-						},
-						{
-							"id": 2,
-							"wallId": "eJU6kroyQ",
-							"colNum": 2,
-							"title": "Two"
-						}
-					],
-					"posts":[
-							{
-								"id": 1,
-								"col": 1,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "vass",
-								"text": "blah",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [],
-								"tag": []
-							},
-							{
-								"id": 2,
-								"col": 2,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "kirk",
-								"text": "NOPE",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [{
-										'noteID': 2,
-										}
-								],
-								"tag": []
-							},
-														{
-								"id": 3,
-								"col": 1,
-								"row": 1,
-								"wallId": "eJU6kroyQ",
-								"username": "vass",
-								"text": "Preas",
-								"colour": "#FFFFFF",
-								"fontSize": 15,
-								"vote": [{
-										'noteID': 3,
-										},
-										{
-										'noteID': 3,
-										}],
-								"tag": [{
-										'noteID': 1,
-										'tagItem': 'TEXT TAG'
-										}]
-							}
-							
-						]
-					};
-		*/
+
 		modelInit();
 		enableItemView();
-
-
 		// Wall View Handler
 		ListView = Backbone.View.extend({
 			el: $('.wall'), // el attaches to existing element
@@ -592,8 +519,8 @@
 				}
 			}
 		}).data('gridster');
-		if (confirmLogin == false)// || permission == 'read')
+		/*if (confirmLogin == false)// || permission == 'read')
 		{
 			gridster.disable();
-		}
+		}*/
 	}

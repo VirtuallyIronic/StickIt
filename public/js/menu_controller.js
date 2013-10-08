@@ -83,11 +83,17 @@
 
 		$("<p>Colour</p>").appendTo("#sideBar");
 
-		var $colourSelect = jQuery('<select/>', {
+		var $colourSelect = jQuery('<div/>', {
 			id: 'colourDrop',
+			class:'colorpicker',
 		});
 		$colourSelect.appendTo("#sideBar");
 
+$("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6E6' title='White'></div><div onclick='colourChange(this)' class='colourOption' style='background:#A49381' title='Sand'></div><div onclick='colourChange(this)' class='colourOption' style='background:#CCCC00' title='Yellow'></div><div onclick='colourChange(this)' class='colourOption' style='background:#33CCFF' title='Blue'></div><div onclick='colourChange(this)' class='colourOption' style='background:#FF0000' title='Red'></div><div onclick='colourChange(this)' class='colourOption' style='background:#860e20' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#4246ce' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#5aa6c8' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#ee740e' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#1b5733' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#605d60' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#9717e5' title=''></div><div onclick='colourChange(this)'class='colourOption' style='background:#f4504a' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#f7fa53' title=''></div>").appendTo("#colourDrop");
+
+
+
+/*
 		$("<option value='#E6E6E6'>white</option>").appendTo("#colourDrop");
 		$("<option value='#CCCC00'>yellow</option>").appendTo("#colourDrop");
 		$("<option value='#33CCFF'>blue</option>").appendTo("#colourDrop");
@@ -105,6 +111,7 @@
 
 		//------------------------------------------------
 
+*/
 		$("<p>Font Size</p>").appendTo("#sideBar");
 
 		var $sizeSelect = jQuery('<select/>', {
@@ -121,7 +128,7 @@
 		if (edit == true)
 		{
 			$("#sizeDrop > [value='"+data.model.get('fontsize')+"']").attr("selected", "true");
-			$("#colourDrop > [value='"+data.model.get('color')+"']").attr("selected", "true");
+			document.getElementById('mainMenu').tempColour=data.model.get('colour-note');
 		}
 		
 		//------------------------------------------------
@@ -134,15 +141,15 @@
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		if (edit === true)
 		{
-			$("<button id='confirmEdit' >Confirm</button>").appendTo("#bottomBar");
+			$("<button id='confirmEdit' class='confirmEditBtn' >Confirm</button>").appendTo("#bottomBar");
 			$('#confirmEdit').on('click', data.processing);
 		}		
 		//if (edit === false)
 		else {
-			$("<button id='confirmPopup' >Confirm</button>").appendTo("#bottomBar");
+			$("<button id='confirmPopup' class='confirmEditBtn' >Confirm</button>").appendTo("#bottomBar");
 			$('#confirmPopup').on('click', data.prepareItem);
 		}
-		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
+		$("<button id='cancelPopup'class='cancelEditBtn' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
 				
 		$("<div id='newTags' class='newTagBar'></div>").appendTo("#bottomBar");
 		$("<div id='oldTags' class='oldTagBar'></div>").appendTo("#bottomBar");
@@ -224,8 +231,8 @@
 			};
 		}
 		
-		var newColour = document.getElementById('colourDrop').value;
-		var oldColour = field.model.get('color');
+		var newColour = document.getElementById('mainMenu').tempColour;
+		var oldColour = field.model.get('colour-note');
 		
 		var newFontSize = document.getElementById('sizeDrop').value;
 		var oldFontSize = field.model.get('fontsize');
@@ -298,8 +305,8 @@
 		var $note = jQuery('<div/>', {
 			class: 'cssnote',
 		});
-		var fontColour = getContrastYIQ(input.model.get('color'));
-		$(input.el).css("background-color", input.model.get('color'));
+		var fontColour = getContrastYIQ(input.model.get('colour-note'));
+		$(input.el).css("background-color", input.model.get('colour-note'));
 		$($note).appendTo($(input.el));
 		
 		var $db = jQuery('<div/>', {
@@ -332,7 +339,7 @@
 			class: 'toolbar',
 		});
 		$tb.appendTo($note);
-		var oldColour = input.model.get('color');
+		var oldColour = input.model.get('colour-note');
 		var colour = getTintedColor(oldColour, -75);
 		$($db).css("background-color", colour);
 		$($tb).css("background-color", colour);
@@ -343,18 +350,18 @@
 		
 		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+authorUser+"  </span>").appendTo($tb);
-		$("<span id='closespan'><button class='deleteButton'> Delete </button></span>").appendTo($tb);
-		$("<span id='editspan'><button class='editButton' > Edit </button></span>").appendTo($tb);
-		$("<span id='expandspan'><button class='expandButton'> Expand </button></span>").appendTo($tb);
+$("<span id='closespan'><img class='deleteButton' src='images/icons/delete-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
+		$("<span id='editspan'><img class='editButton' src='images/icons/edit-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
+		$("<span id='expandspan'><img class='expandButton' src='images/icons/Expand-icon.png' style='width: 30px;'>  </img></span>").appendTo($tb);
 
 		var checkVote = voteGet(1);
 		if (checkVote != false)
 		{
-			$("<span id='voteBtnspan'><button class='removeVoteButton'> -1 </button></span>").appendTo($tb);
+			$("<span id='voteBtnspan'><img class='removeVoteButton'> -1 </img></span>").appendTo($tb);
 		}
 		else
 		{
-			$("<span id='voteBtnspan'><button class='voteButton'> +1 </button></span>").appendTo($tb);
+			$("<span id='voteBtnspan'><img class='voteButton' src='images/icons/Like-button-transparent.png' style='width: 30px;'> </img></span>").appendTo($tb);
 		}
 	}
 
@@ -397,7 +404,7 @@
 	function expandNote(field)
 	{	
 		var fullText = field.model.get('text');
-		var fontColour = getContrastYIQ(field.model.get('color'));
+		var fontColour = getContrastYIQ(field.model.get('colour-note'));
 		//create a new div with all details of the original
 		$('#fullscreen').show();
 		var $exMenu = jQuery('<div/>', {
@@ -405,7 +412,7 @@
 		});
 		$($exMenu).appendTo("body");
 		
-		$($exMenu).css("background-color", field.model.get('color'));
+		$($exMenu).css("background-color", field.model.get('colour-note'));
 		$("<span id='expandTitle'>Note</span></br>").appendTo(".popupMenu");
 		$('#expandTitle').css("color", fontColour);
 		$("<div id='popupDetails'></div>").appendTo(".popupMenu");
@@ -436,6 +443,6 @@
 		{
 			$("<span class='taggedUser'>Tag: "+tagged[i]+"</span><br/>").appendTo("#bottomBar");
 		}		
-		$("<button id='cancelPopup' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
+		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
 		document.getElementById('cancelPopup').focus();
 	}

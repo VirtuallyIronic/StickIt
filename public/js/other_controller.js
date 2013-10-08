@@ -71,10 +71,10 @@
 		html2canvas($('.demo'), {
 			onrendered: function(canvas) {
 				var img = canvas.toDataURL("image/png");
-				window.location.href=img;
-				//var open = window.open('','','width=500,height=500')
-				//open.document.write('<img id="img" style="width="400">');
-				//open.document.getElementById('img').setAttribute('src', img);
+				//window.location.href=img;
+				var open = window.open('','','width=500,height=500')
+				open.document.write('<img id="img" style="width="400">');
+				open.document.getElementById('img').setAttribute('src', img);
 				//$(test.document.body).html(canvas);
 			}
 		});
