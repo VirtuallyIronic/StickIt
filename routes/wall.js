@@ -645,26 +645,34 @@ module.exports = function(app, passport) {
 		sanitize(postId).escape();
 		sanitize(title).xss();
 		sanitize(title).escape();
-		
-		hasPermission(wallId, req.user.id, function(result){
-			if(result) {
-				textPermission(wallId, req.user.id, function(textResult){
-					if(textResult != "view"){
-						Tag.create({
-							postId: postId,
-							title: title
-						}).success(function(tag){
-							res.json(tag);
-						}).error(function(){
-							res.send(500, {"error" : "internal server error"});
+		Post.find({ where: { id: postId }, limit: 1}).success(function(post){
+			if(post){
+				hasPermission(post.wallId, req.user.id, function(result){
+					if(result) {
+						textPermission(post.wallId, req.user.id, function(textResult){
+							if(textResult != "view"){
+								Tag.create({
+									postId: postId,
+									title: title
+								}).success(function(tag){
+									res.json(tag);
+								}).error(function(){
+									res.send(500, {"error" : "internal server error"});
+								});
+							} else {
+								res.send(401, {"error" : "unauthorized"});
+							}
 						});
 					} else {
 						res.send(401, {"error" : "unauthorized"});
 					}
-				});
 			} else {
 				res.send(401, {"error" : "unauthorized"});
 			}
+		}).error(function(){
+			res.send(500, {"error" : "internal server error"});
+		});
+
 		});
 	});
 	
