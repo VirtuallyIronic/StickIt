@@ -3,11 +3,12 @@ define([ 'backbone', 'text!templates/page/wallTemplate.html', 'models/Wall', 'tr
 		return Backbone.View.extend({
 			tag: 'div',
 			template: template,
-			modelEvents:{
-				"change": "render"
+			initialize: function(){
+				this.listenTo(this.model, "change", this.render);
 			},
-			onRender: function(){
-				console.log(this.model);
+			render: function(){
+			    this.$el.html(this.template(this.model.attributes));
+			    return this;
 			}
 		});
 	}
