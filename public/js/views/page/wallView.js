@@ -7,7 +7,7 @@ define([ 'marionette', 'handlebars', 'text!templates/page/wallTemplate.html', 'm
 				"change": "render"
 			},
 			onRender: function(){
-				console.log(this.model.posts);
+				console.log(this.model.attributes.posts);
 			}
 		});
 	}
