@@ -58,7 +58,7 @@ function enableItemView() {
 					{
 						var addTags = new taggedFormat();
 						addTags.set({
-							'tagID': Math.floor((Math.random()*100)+1),
+							'tagID': this.incTagData[k].get('tagID'),
 							'noteID': this.model.get('noteId'),
 							'tagItem': this.incTagData[k].get('tagItem'),
 							//'tags_note' :this.model

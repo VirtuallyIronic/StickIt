@@ -146,7 +146,7 @@ module.exports = function(app, passport) {
 			if(result){
 				textPermission(req.params.id, req.user.id, function(textResult){
 					if(textResult == "admin") {
-						WallUser.findAll({ where: { wallId: req.params.id }}).success(function(wallUsers){
+						WallUser.findAll({ where: { wallId: req.params.id }, include: [User]}).success(function(wallUsers){
 							res.json({
 								permission: wallUsers
 							});
@@ -639,12 +639,12 @@ module.exports = function(app, passport) {
 	
 	app.post('/api/tag', function(req, res){
 		var postId = req.body.postId
-		  , title = req.body.title;
+		  , text = req.body.text;
 		
 		sanitize(postId).xss();
 		sanitize(postId).escape();
-		sanitize(title).xss();
-		sanitize(title).escape();
+		sanitize(text).xss();
+		sanitize(text).escape();
 		Post.find({ where: { id: postId }, limit: 1}).success(function(post){
 			if(post) {
 				hasPermission(post.wallId, req.user.id, function(result){
@@ -653,7 +653,7 @@ module.exports = function(app, passport) {
 							if(textResult != "view"){
 								Tag.create({
 									postId: postId,
-									title: title
+									text: text
 								}).success(function(tag){
 									res.json(tag);
 								}).error(function(){
@@ -688,7 +688,7 @@ module.exports = function(app, passport) {
 						textPermission(post.wallId, req.user.id, function(textResult){
 							if(textResult != "view"){
 								tag.updateAttributes({
-									title: title
+									text: text
 								}).success(function(tag){
 									res.json(tag);
 								}).error(function(){

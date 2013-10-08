@@ -490,7 +490,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		var tagSize = _.size(tagged);
 		for (var i=0; i<tagSize; i++)
 		{
-			$("<span onclick='q(this)' value="+tagged[i].get('tagID')+" class='taggedUser'>Tag: "+tagged[i].get('tagItem')+"</span><br/>").appendTo("#bottomBar");
+			$('<span onclick="q(this)" value='+tagged[i].get('tagID')+' class="taggedUser">Tag: '+tagged[i].get("tagItem")+'</span><br/>').appendTo("#bottomBar");
 		}		
 		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
 		document.getElementById('cancelPopup').focus();
@@ -503,7 +503,23 @@ function confirmSettings() {
 }
 
 function q(ev) {
-	alert('');
+	var alertString = ev.textContent.split(':');
+	var r=confirm("Delete tag: "+alertString[1]);
+	if (r==true)
+	{
+		
+		tagid = ev.attributes[1].nodeValue;
+		//alert(tagid);
+		tagDelete(parseInt(tagid));
+		//tagid.destroy();
+		listView.trigger('RIPtag');
+		ev.remove();
+		
+	}
+	else
+	{
+		x="You pressed Cancel!";
+	} 
 	//var privacy=$('#privacySelect option:selected').text();    
 	//var wallSize=$('#wallSizeSelect option:selected').text();    
 }
