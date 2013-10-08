@@ -80,11 +80,12 @@ function enableItemView() {
 						this.voteObj.add(addVotes);
 					}
 				}
+
+				Note(this);
 				if (this.newNoteData == true)
 				{
 					newNotePost(this.model);
 				}
-				Note(this);
 				return this; // for chainable calls, like .render().el
 			},
 			

@@ -444,5 +444,10 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 	
 	function confirmSettings(ev)
 	{
-		alert(ev);
+		var qwe = $(ev).siblings();
+		var asd = qwe.length;
+		if (asd != 0)
+		{
+			var doathing = "!";
+		}
 	}
