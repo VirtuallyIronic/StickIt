@@ -102,6 +102,14 @@ define([
         	WallPermission.fetch();
         	App.mainRegion.show(new wallPermissionView({ model: WallPermission }));
         },
+        wallUpdateSettings: function(id){
+        	var WallSetting = new modelWallSetting({ id: id });
+        	setInterval(function(){
+        		WallSetting.fetch();
+        	}, 2000);
+        	WallSetting.fetch();
+        	App.mainRegion.show(new wallUpdateView({ model : WallSetting }));
+        },
         successfulRegistration: function(){
         	App.mainRegion.show(new successfulRegistrationView());
         },
@@ -112,14 +120,6 @@ define([
         	}, 2000);
         	App.mainRegion.show(new userListView({ model: UserList }));
         	UserList.fetch();
-        },
-        wallSetting: function(id){
-        	var WallSetting = new modelWallSetting({ id: id });
-        	setInterval(function(){
-        		WallSetting.fetch();
-        	}, 2000);
-        	WallSetting.fetch();
-        	App.mainRegion.show(new wallUpdateView({ model: WallSetting }));
         }
     });
 });
