@@ -5,7 +5,7 @@
 				<h1>User List</h1>
 				{{#each user}}
 				<p style="text-align: center;"> 
-					<b>{{ username }}</b>
+					<b>{{ username }}</b> has {{ role }} permission.
 					<p style="text-align: center;">
 						<a href="#" class="to_button" onclick="userMakeView({{ id }})">Grant Viewer</a>&nbsp;
 						<a href="#" class="to_button" onclick="userMakePost({{ id }})">Grant Poster</a>&nbsp;
@@ -15,6 +15,8 @@
 				</p>
 				<hr>
 				{{/each}}
+				<form autocomplete="on">
+				</form>
 			</div>
 		</div>
 	</div>
