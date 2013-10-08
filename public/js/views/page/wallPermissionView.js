@@ -9,6 +9,8 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallPermission
 				"click #addPermission": "addPermission"
 			},
 			addPermission: function(event){
+				event.stopPropagation();
+				event.preventDefault();
 				var formValues = {
 					wallId: $('#permissionWallId').val(),
 					username: $('#permissionAddUsername').val(),
