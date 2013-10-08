@@ -224,8 +224,8 @@ module.exports = function(app, passport) {
 	
 	app.put('/api/user/view/:id', function(req, res){
 		if(req.user){
-			User.find({ where: { id: req.user.id }, limit: 1}).success(function(user){
-				if(user.role == "admin") {
+			User.find({ where: { id: req.user.id }, limit: 1}).success(function(currentUser){
+				if(currentUser.role == "admin") {
 					User.find({ where: { id: req.params.id }, limit: 1 }).success(function(user){
 						user.updateAttributes({
 							role: "view"
@@ -254,8 +254,8 @@ module.exports = function(app, passport) {
 	
 	app.put('/api/user/post/:id', function(req, res){
 		if(req.user){
-			User.find({ where: { id: req.user.id }, limit: 1}).success(function(user){
-				if(user.role == "admin") {
+			User.find({ where: { id: req.user.id }, limit: 1}).success(function(currentUser){
+				if(currentUser.role == "admin") {
 					User.find({ where: { id: req.params.id }, limit: 1 }).success(function(user){
 						user.updateAttributes({
 							role: "post"
@@ -284,8 +284,8 @@ module.exports = function(app, passport) {
 	
 	app.put('/api/user/admin/:id', function(req, res){
 		if(req.user){
-			User.find({ where: { id: req.user.id }, limit: 1}).success(function(user){
-				if(user.role == "admin") {
+			User.find({ where: { id: req.user.id }, limit: 1}).success(function(currentUser){
+				if(currentUser.role == "admin") {
 					User.find({ where: { id: req.params.id }, limit: 1 }).success(function(user){
 						user.updateAttributes({
 							role: "admin"
@@ -309,6 +309,34 @@ module.exports = function(app, passport) {
 			})
 		} else {
 			res.send(401, {"error" : "unauthorized"});
-		}	
+		}
+	});
+	
+	app.delete('/api/user/:id', function(req, res){
+		if(req.user){
+			User.find({ where: { id: req.user.id }, limit: 1}).success(function(currentUser){
+				if(currentUser.role == "admin") {
+					User.find({ where: { id: req.params.id }, limit: 1 }).success(function(user){
+						user.destroy().success(function(user){
+							if(user){
+								res.json(200, {"data" : "success"});
+							} else {
+								res.send(401, {"error" : "unauthorized"});
+							}
+						}).error(function(){
+							res.send(500, {"error" : "internal server error"});
+						});
+					}).error(function(){
+						res.send(500, {"error" : "internal server error"});
+					});
+				} else {
+					res.send(401, {"error" : "unauthorized"});
+				}
+			}).error(function(){
+				res.send(500, {"error" : "internal server error"});
+			})
+		} else {
+			res.send(401, {"error" : "unauthorized"});
+		}
 	});
 };
