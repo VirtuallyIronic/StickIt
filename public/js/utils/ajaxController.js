@@ -2,6 +2,7 @@
 	/*-----------------------------WALL---------------------------------*/
 	function wallGet(wall_ID)
 	{
+		var output;
 		console.log("here in ajax");
 		$.ajax({ 
 			url: '/api/wall/'+wall_ID,
@@ -9,15 +10,15 @@
 			async: false,
 			success: function(data){
 				console.log('Wall obtained '+data);
-				var output = {data:data, status:true};
-				return output;
+				output = {data:data, status:true};
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
-				
-				//return output;
+				output = {data:'data', status:false};
 			}
 		});
+		console.log(output);
+		return output;
 	}
 	
 	function wallUpdate(wall_ID, title_data, isPrivate_data)
