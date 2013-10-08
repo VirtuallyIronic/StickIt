@@ -42,8 +42,10 @@
 	var notes;
 	var wallHeadings = new Array();
 	var globalData = {};
-	var online = true;
+	var initWall;
+	var online = false;
 	var admin = false;
+	var permission = 'read'
 	var confirmLogin = false;
 	var currentUser_ID = 0;
 	var currentUser = "";
@@ -63,8 +65,36 @@
 	}
 	/*--------------------------------*/
 	$(function(){
-		initCall();
-		var col = parseInt(lanes);
+		var initialData = wallGet(1);
+		if (initialData.status != false)
+		{
+			initWall = initialData.data;
+			confirmLogin == true;
+		}
+		else
+		{
+			initWall = initialData.data;
+			if (initWall.permission == 'admin')
+			{
+				admin = true;
+				confirmLogin = true;
+				permission = 'admin';
+			}
+			else if (initWall.permission == 'post')
+			{
+				admin = false;
+				confirmLogin = true;
+				permission = 'post'
+			}
+			else
+			{
+				admin = false;
+				confirmLogin = false;
+				permission = 'read'
+			}			
+		}
+		
+		var col = parseInt(initWall.totalCols);
 		gridster = $(".gridster ul").gridster({
 			//widget_selector: "li",
 			widget_margins: [20, 30], 
@@ -85,44 +115,20 @@
 				}
 			}
 		}).data('gridster');
-		if (confirmLogin == false)
+		if (confirmLogin == false || permission == 'read')
 		{
 			gridster.disable();
 		}
-
-		Backbone.sync = function(method, model) {
-			alert(method + ": " + JSON.stringify(model));
-			//model.id = 1;
-		};
-		
-		/*noteFormat = Backbone.RelationalModel.extend({
-			defaults: function(){
-				return {
-					'wallID': wallID,
-					'authorID': currentUser_ID,
-					'authorName': currentUser,
-					'col': '1',
-					'row': '1',
-					'text': '',
-					'votes': 0,
-					'voted': new Array(),
-					'tagged': new Array(),
-					'color': '#FFFFFF',
-					'fontsize': 18
-				}
-			}
-		});*/
-		
+				
 		noteFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: function(){
 				return {
-					'wallID': wallID,
-					'authorName': '',
+					'noteId': '',
+					'wallId': initWall.id,
+					'username': '',
 					'col': 1,
 					'row': 1,
-					'userId': '',
-					'userName': '',
 					'text': '',
 					'votes': 0,
 					/*REMOVE*/'voted': new Array(),
@@ -141,41 +147,42 @@
 					includeInJSON: '_id'
 					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
-			}],
-			url: 'http://localhost:8080/'
-			//http://localhost:8080/messages
+			}]
 		});
 
 		wallFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults:{
 					"title": 'NEW WALL',
-					'wallID': wallID,
-					'owner': currentUser_ID,
+					'wallID': initWall.id,
+					'owner': initWall.owner,
 					'cols': 5,
-					'headings': 'String,of,potato chips for lunch,for,headings'
-			},/*
+			}
+		});
+		
+		colFormat = Backbone.RelationalModel.extend({
+			idAttribute: '_id',
+			defaults: {
+					'wallID': initWall.id,
+					'colID': 0,
+					'heading': 'Lane :id'
+			},
 			relations: [{
-				type: Backbone.HasMany,
-				key: 'notes_related',
-				relatedModel: 'noteFormat',
-				collectionType: 'noteList',
+				type: Backbone.HasOne,
+				key: 'col_wall',
+				relatedModel: 'wallFormat',
+				collectionType: 'wallList',
 				reverseRelation: {
-					key: 'Note_Wall',
+					key: 'colKey',
 					includeInJSON: '_id'
 					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
-			}],//*/
-			url: '/api/wall/:id'
-			//http://localhost:8080/messages
+			}]
 		});
-		
 		voteFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
-					'userID': currentUser_ID,
 					'noteID': ''//noteID
-					//'voteTotal': 0
 			},
 			relations: [{
 				type: Backbone.HasOne,
@@ -187,16 +194,12 @@
 					includeInJSON: '_id'
 					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
-			}],
-			url: 'http://localhost:8080/'
-			//http://localhost:8080/messages
+			}]
 		});
 		taggedFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
-					//'userID': currentUser_ID,
 					'noteID': '',
-					//'wallID': wallID,
 					'tagItem': ''
 			},
 			relations: [{
@@ -209,15 +212,12 @@
 					includeInJSON: '_id'
 					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
-			}],
-			url: 'http://localhost:8080/'
-			//http://localhost:8080/messages
+			}]
 		});
 		permissionFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
-					'userID': currentUser_ID,
-					//'wallID': wallID,
+					'userID': '',
 					'permission': 'read',
 
 			},
@@ -231,32 +231,27 @@
 					includeInJSON: '_id'
 					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
-			}],
-			url: 'http://localhost:8080/'
-			//http://localhost:8080/messages
+			}]
 		});
 		
 		noteList = Backbone.Collection.extend({
-			model: noteFormat,
-			url: 'http://localhost:8080'
+			model: noteFormat
 		});			
 		wallList = Backbone.Collection.extend({
-			model: wallFormat,
-			url: 'http://localhost:8080'
-		});	
+			model: wallFormat
+		});
+		colList = Backbone.Collection.extend({
+			model: colFormat
+		});		
 		permissionList = Backbone.Collection.extend({
-			model: permissionFormat,
-			url: 'http://localhost:8080'
+			model: permissionFormat
 		});	
 		votingList = Backbone.Collection.extend({
-			model: voteFormat,
-			url: 'http://localhost:8080'
+			model: voteFormat
 		});
 		tagList = Backbone.Collection.extend({
-			model: taggedFormat,
-			url: 'http://localhost:8080'
+			model: taggedFormat
 		});
-
 
 		//------VIEW HANDLER FOR NOTES--------
 		ItemView = Backbone.View.extend({
@@ -281,16 +276,25 @@
 				this.voteObj = new options.voteModel;
 				this.tagging = new options.tagModel;
 				//this.newNoteStatus = 
-				if(options.newNoteInput == true)
+				if(options.newNoteInput == 'tv')
 				{
-					//alert('new tags');
 					this.incTagData = options.incTags;
-					//alert(this.incTagData);
+					this.incVoteData = options.incVotes;
+				}
+				else if(options.newNoteInput == 'tf')
+				{
+					this.incTagData = options.incTags;
+					this.incVoteData = false;
+				}
+				else if(options.newNoteInput == 'fv')
+				{
+					this.incTagData = false;
+					this.incVoteData = options.incVotes;
 				}
 				else
 				{
 					this.incTagData = false;
-					//alert('NO new tags');
+					this.incVoteData = false;
 				}
 
 				this.model.on('laneRemove', this.removenoprompt);
@@ -305,9 +309,7 @@
 					//alert(this.incTagData);
 					for (var k=0; k<this.incTagData.length; k++)
 					{
-						alert(this.incTagData[k]);
-						//var item = new noteFormat(notes[w]);
-						var addTags = new taggedFormat(/*this.incTagData[k]*/);
+						var addTags = new taggedFormat();
 						addTags.set({
 							'noteID': this.model.get('id'),
 							'tagItem': this.incTagData[k].get('tagItem')
@@ -315,6 +317,20 @@
 						this.tagging.add(addTags);
 					}
 				}
+				
+				if (this.incVoteData != false)
+				{
+					for (var k=0; k<this.incVoteData.length; k++)
+					{
+						var addVotes = new voteFormat();
+						addVotes.set({
+							'noteID': this.incVoteData[k].get('noteID'),
+							'votes_note': this.incVoteData[k].get('votes_note'),
+						});
+						this.voteObj.add(addVotes);
+					}
+				}
+				
 				Note(this);
 				return this; // for chainable calls, like .render().el
 			},
@@ -619,6 +635,7 @@
 				this.collection = new options.noteModel;//new noteList();
 				this.wallDetails = new options.wallModel;
 				this.permissionDetails = new options.permissionModel;
+				this.colDetails = new options.colModel;
 				this.collection.bind('add', this.appendItem); // collection event binder
 				this.collection.bind('updateServer', this.serverUpdate);
 				this.on('newNote', this.addItem);
@@ -631,29 +648,37 @@
 			render: function(){
 				var self = this;
 				//--------DEMO SETUP TODO-----------
-				testWall = new wallFormat();
-				testPer = new permissionFormat();
-							//	noteFormat wallFormat	
-				testWall.set({
-					"title": 'A WALL',
-					'wallID': 1,
-					'owner': 1,
-					'cols': col,
-					'headings': 'String,of,words,for,headings',
-					//'notes_related':[{text:"service1"},{text:"service2"},{text:"service3"},{text:"service4"}]
+				wallModel_current = new wallFormat();
+				wallModel_current.set({
+					"title": initWall.title,
+					'wallID': initWall.id,
+					'owner': initWall.owner,
+					'cols': initWall.totalCols,
 				});
-				this.wallDetails.add(testWall);
+				this.wallDetails.add(wallModel_current);
 				
-				testPer.set({
-					"userID": currentUser_ID,
-					'permission': 'admin',
-					'user_wall': testWall,
+				userPer = new permissionFormat();
+				userPer.set({
+					'permission': initWall.permission,
+					'user_wall': wallModel_current,
 				});
-				this.permissionDetails.add(testPer);
+				this.permissionDetails.add(userPer);
+				
+				for (var i=0; i<initWall.cols.length; i++)
+				{
+					wallColData = new colFormat();
+					wallColData.set({
+						'wallID': initWall.cols[i].wallId,
+						'colID': initWall.cols[i].id,
+						'heading': initWall.cols[i].title,
+						'col_wall': wallModel_current
+					});
+					this.colDetails.add(wallColData);
+				}
 				//-------------------------
-				document.title = testWall.get('title');
-				var n=testWall.get('headings').split(","); 
-				for (var i=0; i<testWall.get('cols'); i++)
+				document.title = wallModel_current.get('title');
+				//var n=wallModel_current.get('headings').split(","); 
+				for (var i=0; i<this.colDetails.length; i++)
 				{
 					var $laneHead = jQuery('<li/>', {
 						class: 'titleDisplay'
@@ -667,25 +692,17 @@
 					var $tSpan = jQuery('<span/>', {
 						class:'titleSpan',
 					});
-					$($tSpan).text(n[i]);
-					//$($tSpan).text(wallHeadings[i]);
+
+					$($tSpan).text(this.colDetails.models[i].get('heading'));
 					//--- attempt to put the title inside a <p> tag. ---
 					$("<p>").appendTo($headDetails);
 					
 					$($tSpan).appendTo($headDetails);
 					var varvar = i+1
-					//if (admin == true)
-					//{
-						$("<button value="+i+" onclick='deleteThisLane(this)' class='deleteLane'>DELETE LANES</button>").appendTo($headDetails);
-						$("<button value="+i+" onclick='editLane(this)' class='editLaneBut'>EDIT LANES</button>").appendTo($headDetails);
-						
-						//$('#confirmPopup').on('click', this.prepareItem);
-						//listView.trigger('newNote');
-						//$('#confirmPopup').on('click', this.prepareItem);
-						//listView.trigger('newNote');
-					//}
+					$("<button value="+this.colDetails.models[i].get('colID')+" onclick='deleteThisLane(this)' class='deleteLane'>DELETE LANES</button>").appendTo($headDetails);
+					$("<button value="+this.colDetails.models[i].get('colID')+" onclick='editLane(this)' class='editLaneBut'>EDIT LANES</button>").appendTo($headDetails);
 				}
-				if (testPer.get('permission') != 'admin')//false)
+				if (userPer.get('permission') != 'admin')//false)
 				{
 					$('.deleteLane').each(function(  ) {
 						$(this).hide();
@@ -695,34 +712,49 @@
 					});
 				}
 				//alert(this.//);
-				if (online == true){
-					for (var w=0; w<notes.length; w++)
+				var postObj = initWall.posts
+				tagObj = new Array;
+				voteObj = new Array;
+				for (var w=0; w<postObj.length; w++)
+				{				
+					var item = new noteFormat();
+					var objCount = 0;
+					for (var v=0; v<postObj[w].vote.length; v++)
 					{
-						var item = new noteFormat(notes[w]);
-						/*for (var e=0; e<votesInput.length; e++)
-						{
-							newVotes = new voteFormat;
-							newVotes.set({
-								'noteID': item.get.('id');
-							});
-							this.voting.add(newVotes);
-						}
-						for (var e=0; e<votesInput.length; e++)
-						{
-							newTags = new taggedFormat;
-							newTags.set({
-								'noteID': item.get.('id');
-							});
-							this.tags.add(newTags);
-						}
-						/*item.set({
-							'col': notes[w].col,
-							'row': notes[w].row,
-							'text': notes[w].text
-							// modify item defaults
-						});*/
-						this.collection.add(item);
+						var newVotes = new voteFormat();
+						newVotes.set({
+							'noteID': postObj[w].vote[v].noteID,
+							'votes_note': item
+						});
+						voteObj[objCount] = newVotes;
+						objCount++;
 					}
+					objCount = 0;
+					for (var t=0; t<postObj[w].tag.length; t++)
+					{
+						var newTags = new taggedFormat();
+						var test = postObj[w].tag[t];
+						newTags.set({
+							'noteID': postObj[w].tag[t].noteID,
+							'tagItem': postObj[w].tag[t].tagItem,
+							'tags_note': item
+						});
+						tagObj[objCount] = newTags;
+						objCount++;
+					}
+					item.set({
+						'col':postObj[w].col,
+						'row':postObj[w].row,
+						'noteId':postObj[w].id,
+						'wallId':postObj[w].wallId,
+						'username':postObj[w].username,
+						'text': postObj[w].text,
+						'votes': postObj[w].vote.length,
+						'color': postObj[w].colour,
+						'fontsize': postObj[w].fontSize,
+						'wall_connection': wallModel_current
+					});
+					this.collection.add(item);
 				}
 			},
 			
@@ -872,7 +904,7 @@
 						'color': colour,
 						'fontsize': fontsize,
 						//'taggedKey'
-						'wall_connection': testWall//.get('_id')
+						'wall_connection': wallModel_current//.get('_id')
 					});
 					tagObj = new Array;
 					var tagCount=0;
@@ -900,22 +932,32 @@
 			appendItem: function(item){
 				var col = item.get('col');
 				var row = item.get('row');
-				var objdata = true;
+				var objdata ='';
 				if (tagObj.length != 0)
 				{
-					alert(tagObj.length);
-					objdata = true;
+					//alert(tagObj.length);
+					objdata += 't';
 				}
 				else
 				{
-					objdata = false;
+					objdata += 'f';
+				}
+				if (voteObj.length != 0)
+				{
+					//alert(tagObj.length);
+					objdata += 'v';
+				}
+				else
+				{
+					objdata += 'f';
 				}
 				var itemView = new ItemView({
 					model: item,
 					voteModel: votingList,
 					tagModel: tagList,
 					newNoteInput: objdata,
-					incTags: tagObj
+					incTags: tagObj,
+					incVotes: voteObj
 				});
 				var newWidget = itemView.render().el;
 					
@@ -927,7 +969,8 @@
 		listView = new ListView({
 			noteModel: noteList, 
 			wallModel: wallList, 
-			permissionModel: permissionList
+			permissionModel: permissionList,
+			colModel: colList
 		});
 	});
 	

@@ -7,13 +7,88 @@
 			type: 'GET',
 			success: function(data){
 				console.log('Wall obtained '+data);
-				return data;
+				var output = {data:data, status:true};
+				return output;
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
-				return ({status:false});
+				
+				//return output;
 			}
 		});
+		var  obj = {"id": "eJU6kroyQ",
+					"title": "Console Wall",
+					"owner": "x1TzuEjk",
+					"isPrivate": true,
+					"permission": "admin",
+					"totalCols": 2,
+					"cols": [
+						{
+							"id": 1,
+							"wallId": "eJU6kroyQ",
+							"colNum": 1,
+							"title": "One"
+						},
+						{
+							"id": 2,
+							"wallId": "eJU6kroyQ",
+							"colNum": 2,
+							"title": "Two"
+						}
+					],
+					"posts":[
+							{
+								"id": 1,
+								"col": 1,
+								"row": 1,
+								"wallId": "eJU6kroyQ",
+								"username": "vass",
+								"text": "blah",
+								"colour": "#FFFFFF",
+								"fontSize": 15,
+								"vote": [],
+								"tag": []
+							},
+							{
+								"id": 2,
+								"col": 2,
+								"row": 1,
+								"wallId": "eJU6kroyQ",
+								"username": "kirk",
+								"text": "NOPE",
+								"colour": "#FFFFFF",
+								"fontSize": 15,
+								"vote": [{
+										'noteID': 1,
+										}
+								],
+								"tag": []
+							},
+														{
+								"id": 3,
+								"col": 1,
+								"row": 1,
+								"wallId": "eJU6kroyQ",
+								"username": "vass",
+								"text": "Preas",
+								"colour": "#FFFFFF",
+								"fontSize": 15,
+								"vote": [{
+										'noteID': 1,
+										},
+										{
+										'noteID': 1,
+										}],
+								"tag": [{
+										'noteID': 1,
+										'tagItem': 'TEXT TAG'
+										}]
+							}
+							
+						]
+					};
+		var output = {data:obj,status:false};
+		return output;
 	}
 	
 	function wallUpdate(wall_ID, title_data, isPrivate_data)
@@ -232,7 +307,6 @@
 				console.log('text status '+textStatus+', err '+err);
 			}
 		});
-
 	}
 	
 	function tagDelete(wall_ID)

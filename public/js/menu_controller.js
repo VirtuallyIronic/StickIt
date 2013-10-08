@@ -338,7 +338,7 @@
 		$($tb).css("background-color", colour);
 		
 		var voteScore = input.model.get('votes');
-		var authorUser = input.model.get('authorName');
+		var authorUser = input.model.get('username');
 		//var authorUser = input.model.get();
 		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+authorUser+"  </span>").appendTo($tb);
