@@ -117,7 +117,7 @@ module.exports = function(app, passport) {
 					admin: admin,
 					post: post,
 					view: view,
-					walls: walls
+					wall: walls
 				});
 			}).error(function(){
 				res.send(500, {"error" : "internal server error"});
