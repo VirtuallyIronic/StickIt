@@ -598,6 +598,9 @@ margin-bottom: 20px;
 overflow: visible;
 }
 .navbar-inner{
+margin-left: auto;
+margin-right: auto;
+text-align:center;
 min-height: 40px;
 padding-right: 20px;
 padding-left: 20px;
@@ -617,7 +620,23 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',end
 -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.065);
 box-shadow: 0 1px 4px rgba(0,0,0,0.065);
 }
-.nav ul{
+
+.navUl {
+
+list-style: none;
 padding: 0;
-margin: 0 0 10px 25px;
+
+
+}
+.navLi{
+padding-left: 10px;
+
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+border-width: 1px;
+border-color: #ffe #aaab9c #ccc #fff;
+border-style: solid;
+
+list-style: none;
+display: inline-block;
+
 }
