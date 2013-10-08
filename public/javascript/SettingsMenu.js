@@ -31,7 +31,7 @@
 				$('.wrapper-dropdown-5').removeClass('active');
 			});
 		});
-
+		/*
 		$(function() {
 			$( "#slider" ).slider({
 				value:100,
@@ -44,7 +44,7 @@
 			});
 			$( "#amount" ).val( $( "#slider" ).slider( "value" ) + " Lanes");
 		});
-		
+		*/
 		wallNails();
 
 
@@ -208,10 +208,11 @@
             }
            
         }
+		/*
 function confirmSettings() {
 	hideSettings();
 
-}
+}*/
 
     function colourChange(field){
     console.log("colour clicked");
