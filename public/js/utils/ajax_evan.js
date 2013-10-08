@@ -2,8 +2,8 @@
 	/*-----------------------------WALL---------------------------------*/
 	function wallGet(wall_ID)
 	{
-		var output;
-		console.log("here in ajax");
+		var output = {};// = {data:obj,status:false};
+		console.log(wall_ID);
 		$.ajax({ 
 			url: '/api/wall/'+wall_ID,
 			type: 'GET',
@@ -14,10 +14,86 @@
 			}, 
 			error: function(jqXHR, textStatus, err){
 				console.log('text status '+textStatus+', err '+err);
-				output = {data:'data', status:false};
+				output = {data: '', status:false};
+				//return output;
 			}
 		});
-		console.log(output);
+		
+		var  obj = {"id": "eJU6kroyQ",
+					"title": "Console Wall",
+					"owner": "x1TzuEjk",
+					"isPrivate": true,
+					"permission": "admin",
+					"totalCols": 2,
+					"cols": [
+						{
+							"id": 1,
+							"wallId": "eJU6kroyQ",
+							"colNum": 1,
+							"title": "One"
+						},
+						{
+							"id": 2,
+							"wallId": "eJU6kroyQ",
+							"colNum": 2,
+							"title": "Two"
+						}
+					],
+					"posts":[
+							{
+								"id": 1,
+								"col": 1,
+								"row": 1,
+								"wallId": "eJU6kroyQ",
+								"username": "vass",
+								"text": "blah",
+								"colour": "#FFFFFF",
+								"fontSize": 15,
+								"vote": [],
+								"tag": []
+							},
+							{
+								"id": 2,
+								"col": 2,
+								"row": 1,
+								"wallId": "eJU6kroyQ",
+								"username": "kirk",
+								"text": "NOPE",
+								"colour": "#FFFFFF",
+								"fontSize": 15,
+								"vote": [{
+										'noteID': 2,
+										}
+								],
+								"tag": []
+							},
+														{
+								"id": 3,
+								"col": 1,
+								"row": 1,
+								"wallId": "eJU6kroyQ",
+								"username": "vass",
+								"text": "Preas",
+								"colour": "#FFFFFF",
+								"fontSize": 15,
+								"vote": [{
+										'noteID': 3,
+										},
+										{
+										'noteID': 3,
+										}],
+								"tag": [{
+										'noteID': 1,
+										'tagItem': 'TEXT TAG'
+										}]
+							}
+							
+						]
+					};
+		if (output.status == false)
+		{
+			output = {data:obj,status:false};
+		}
 		return output;
 	}
 	
@@ -73,10 +149,10 @@
 		});
 	}
 	
-	function noteUpdate(wall_ID, model_data)
+	function noteUpdate(id, model_data)
 	{
 		$.ajax({ 
-			url: '/api/post/'+wall_ID,
+			url: '/api/post/'+id,
 			type: 'PUT',
 			data: JSON.stringify({	col: model_data.col, 
 									row: model_data.row,
@@ -96,10 +172,10 @@
 		});
 	}
 	
-	function noteDelete(wall_ID)
+	function noteDelete(id)
 	{
 		$.ajax({ 
-			url: '/api/post/'+wall_ID,
+			url: '/api/post/'+id,
 			type: 'DELETE',
 			success: function(data){
 				console.log('Note deleted: '+data);
@@ -132,10 +208,10 @@
 		});		
 	}
 	
-	function colUpdate(wall_ID, model_data)
+	function colUpdate(id, model_data)
 	{
 		$.ajax({ 
-			url: '/api/colname/'+wall_ID,
+			url: '/api/colname/'+id,
 			type: 'PUT',
 			data: JSON.stringify({	colNum: model_data.colNum, 
 									title: model_data.title
@@ -152,10 +228,10 @@
 		});
 	}
 	
-	function colDelete(wall_ID)
+	function colDelete(id)
 	{
 		$.ajax({ 
-			url: '/api/colname/'+wall_ID,
+			url: '/api/colname/'+id,
 			type: 'DELETE',
 			success: function(data){
 				console.log('col Deleted: '+data);
@@ -186,10 +262,27 @@
 		});		
 	}
 	
-	function voteDelete(wall_ID)
+	function voteGet(id)
 	{
 		$.ajax({ 
-			url: '/api/vote/'+wall_ID,
+			url: '/api/vote'+id,
+			type: 'GET',
+			success: function(data){
+				console.log('Get Vote');
+				console.log(data);
+				return data;
+			}, 
+			error: function(jqXHR, textStatus, err){
+				console.log('text status '+textStatus+', err '+err);
+			}
+		});	
+		return false;
+	}
+	
+	function voteDelete(id)
+	{
+		$.ajax({ 
+			url: '/api/vote/'+id,
 			type: 'DELETE',
 			success: function(data){
 				console.log('vote Deleted: '+data);
@@ -221,10 +314,10 @@
 		});	
 	}
 	
-	function tagUpdate(wall_ID, model_data)
+	function tagUpdate(id, model_data)
 	{
 		$.ajax({ 
-			url: '/api/tag/'+wall_ID,
+			url: '/api/tag/'+id,
 			type: 'PUT',
 			data: JSON.stringify({title: model_data.title}),
 			contentType: "application/json; charset=utf-8",
@@ -239,10 +332,10 @@
 		});
 	}
 	
-	function tagDelete(wall_ID)
+	function tagDelete(id)
 	{
 		$.ajax({ 
-			url: '/api/tag/'+wall_ID,
+			url: '/api/tag/'+id,
 			type: 'DELETE',
 			success: function(data){
 				console.log('tag Deleted: '+data);
