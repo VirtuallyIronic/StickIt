@@ -80,11 +80,12 @@ function enableItemView() {
 						this.voteObj.add(addVotes);
 					}
 				}
+
+				Note(this);
 				if (this.newNoteData == true)
 				{
 					newNotePost(this.model);
 				}
-				Note(this);
 				return this; // for chainable calls, like .render().el
 			},
 			
@@ -237,14 +238,8 @@ function enableItemView() {
 				this.model.set('row', newRow);
 				globalData = {};
 				
-				if (confirmLogin == true)
-				{
-					//noteUpdate(this.model.get('noteId'), this.model);
-				}
-				else
-				{
-					alert('PLEASE LOG IN');
-				}
+				noteUpdate(this.model.get('noteId'), this.model);
+
 			},
 			
 			//------AFTER EDIT, CHANGES MODEL DATA--------
@@ -256,6 +251,7 @@ function enableItemView() {
 					var colour = data[1];
 					var fontsize = data[2];
 					var tags = data[3];
+					colour = converstionCheck(colour);
 					this.$el.children('.cssnote').children('.edit').children(".editSpan").text(textEdit);
 					linkify(this.$el.children('.cssnote').children('.edit').children(".editSpan"));
 

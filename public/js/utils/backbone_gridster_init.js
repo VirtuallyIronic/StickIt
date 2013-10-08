@@ -82,13 +82,14 @@
 				'click button#confirmPopup': 'prepareItem',
 				'click button.deleteLane': 'removeLane',
 				//'click button.editLaneBut': 'editTitle'
-				'click button#editLB': 'editTitle'
+				'click button#editLB': 'editTitle',
+				'click button#newLaneBut': 'moreLanes'
 				//editLB
 			},
 			
 			//-------SETS UP ALL LISTENERS AND PROCESSES-------
 			initialize: function(options){
-				_.bindAll(this, 'render', 'addItem', 'purgeData', 'editTitle', 'serverUpdate', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
+				_.bindAll(this, 'render', 'addItem', 'moreLanes','purgeData', 'editTitle', 'serverUpdate', 'removeLane', 'appendItem','prepareItem'); // every function that uses 'this' as the current object should be in here
 				//this.collection = new noteList();
 				this.collection = new options.noteModel;//new noteList();
 				this.wallDetails = new options.wallModel;
@@ -221,6 +222,7 @@
 						tagObj[objCount] = newTags;
 						objCount++;
 					}
+					var newcolour = converstionCheck(postObj[w].colour);
 					item.set({
 						'col':postObj[w].col,
 						'row':postObj[w].row,
@@ -229,7 +231,7 @@
 						'username':postObj[w].username,
 						'text': postObj[w].text,
 						'votes': postObj[w].vote.length,
-						'color': postObj[w].colour,
+						'color': newcolour,
 						'fontsize': postObj[w].fontSize,
 						'wall_connection': wallModel_current
 					});
@@ -267,7 +269,10 @@
 					alert('PLEASE LOG IN');
 				}
 			},
-			
+			moreLanes: function(){
+				alert('');
+				addLanes();
+			},
 			//-------DELETES A COLUMN OF NOTES AND MOVES REST TO THE LEFT-------
 			removeLane: function(ev){
 				var a = 1;
@@ -322,9 +327,6 @@
 						//remove Heading  --  unneeded
 						$(ev).parent().children('.titleSpan').html("DELETED");
 						$(ev).remove();
-						
-						//AJAX: SET SERVER COL NUMBER TO 1 LESS
-						//l editWall();
 					}
 				}
 				else
@@ -355,6 +357,7 @@
 					var row = 1;
 					var text = document.getElementById('formText').value;
 					var colour = document.getElementById('mainMenu').tempColour;
+					colour = converstionCheck(colour);
 					var fontsize = document.getElementById('sizeDrop').value;
 					var tags = document.getElementById('newTags');
 					var tagged = new Array();

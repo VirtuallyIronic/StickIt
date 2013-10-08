@@ -98,7 +98,7 @@
 		<div class="sidebar" style=" ">
 		<div id="expand" style="margin:30px;">
 			<button  class="sliderButton" id="newNoteButton" onclick="clearWall()">Clear Wall</button>
-			<button  class="sliderButton" id="newLaneBut" onclick="moreLanes('0')">New Lane</button>
+			<button  class="sliderButton" id="newLaneBut" onclick="addLanes()">New Lane</button>
 			<button  class="sliderButton" id='add' onclick='newNoteWorkaround()'>New Note</button>		
 			<button  class="sliderButton" id="SettingsButton" onclick="showSettings(wrapper)">Settings</button>
 			<button  class="sliderButton" id="screenCap" onclick="screenCap()">Screenshot</button>
@@ -121,7 +121,7 @@
 				</h2>
 				<p>  
 
-				<button class="confirmBtn" onclick="confirmSettings()">Confirm</button>
+				<button class="confirmBtn" onclick="confirmSettings(this)">Confirm</button>
 				</p>
 			
 		</div>
@@ -138,7 +138,7 @@
 			<p> 
 
 
-				<button class="confirmBtn" onclick="confirmSettings()" style="width:100px">Confirm</button>                                         
+				<button class="confirmBtn" onclick="confirmSettings(this)" style="width:100px">Confirm</button>                                         
 					<span>Privacy</span>
 				<div class="styledSelect" style="width:200px;">
 				<select style="width:201px;">
@@ -162,7 +162,7 @@
 			</h2>  
 			<p>
 				<p>   
-				<button class="confirmBtn" onclick="confirmSettings()" style="width:100px">Confirm</button>                                         
+				<button class="confirmBtn" onclick="confirmSettings(this)" style="width:100px">Confirm</button>                                         
 					<span>Wall Size</span>
 				<div class="styledSelect" style="width:100px;">
 				<select style="width:101px;">
@@ -177,6 +177,27 @@
 				</div>
 			</p>
 		</div>
+		<!--
+		<div id="optionPaneThree" class="animate form" style="display:none;">
+			<div class="closeBtn" style="cursor:pointer;">
+				<img src="images/close-button.png " onclick="hideSettings(optionPaneThree),sideMenuOpen2()"/>
+			</div>
+			<h1 id="MainS" onclick="goToPane(optionPaneThree, mainSettings)">Settings</h1>
+			<h2>
+				<a class="SettingsBtn" onclick="goToPane(optionPaneThree, optionPaneOne)"> Privacy</a>
+				<a class="SettingsBtn" onclick="goToPane(optionPaneThree, optionPaneTwo)">  Wall Size</a>
+				<a class="SettingsBtn"> option pane3</a>
+			</h2>  
+			<p>    
+				Option Pane Three
+				<ul class="optionList">
+					<li>test</li>
+					<li><input type="radio" name="test"value="test">radiobtn </li>
+				</ul>
+			</p>
+		</div>
+		-->
+	
 </body>
 
 </html>
