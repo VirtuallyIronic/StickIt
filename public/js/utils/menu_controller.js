@@ -299,7 +299,6 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 	*/
 	function Note(input)
 	{	
-		//alert();
 		var x = input.model.get('text');
 		var lanePos = input.model.get('col');
 		
@@ -308,7 +307,6 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		});
 		var fontColour = getContrastYIQ(input.model.get('colour'));
 		$(input.el).css("background-color", input.model.get('colour'));
-		//$($note).css("background-color", input.model.get('colour'));
 		
 		$($note).appendTo($(input.el));
 		
@@ -320,13 +318,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		var $edit = jQuery('<div/>', {
 			class: 'edit'
 		});
-		/*
-		if (x.length>144)
-		{
-			x = x.substr(0, 140);
-			x += " ...";
-		};
-		*/
+
 		$edit.appendTo($note);
 		
 		var $eSpan = jQuery('<span/>', {
@@ -448,4 +440,9 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		}		
 		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
 		document.getElementById('cancelPopup').focus();
+	}
+	
+	function confirmSettings(ev)
+	{
+		alert(ev);
 	}
