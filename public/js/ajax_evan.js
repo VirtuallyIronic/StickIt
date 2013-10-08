@@ -95,6 +95,7 @@
 					],
 					"tag": [
 						{
+							'tagID': 0,
 							'noteID': 1,
 							'tagItem': 'TEXT TAG'
 						}
