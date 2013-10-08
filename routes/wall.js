@@ -462,15 +462,15 @@ module.exports = function(app, passport) {
 		Post.find({ where: { id: req.params.id }, limit: 1}).success(function(post){
 			hasPermission(post.wallId, req.user.id, function(result){
 				if(result) {
-					textPermission(wallId, req.user.id, function(textResult){
-						if(textResult != 'view'){
+					textPermission(post.wallId, req.user.id, function(textResult){
+						if(textResult != "view"){
 							post.destroy().success(function(){
-								res.send(200);
+								res.send(200, {"data" : "success"});
 							}).error(function(){
-								res.send(500);
+								res.send(500, {"error" : "internal server error"});
 							});
 						} else {
-							res.send(401);
+							res.send(401, {"error" : "unauthorized"});
 						}
 					});
 				} else {
