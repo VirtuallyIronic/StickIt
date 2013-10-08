@@ -141,6 +141,26 @@ module.exports = function(app, passport) {
 		});
 	});
 	
+	app.get('/api/wallpermissions/:id', function(req, res){
+		hasPermission(req.params.id, req.user.id, function(result){
+			if(result){
+				textPermission(req.params.id, req.user.id, function(textResult){
+					if(textResult == 'admin') {
+						WallUser.findAll({ where: { wallId: req.params.id }}).success(function(wallUsers){
+							res.json(wallUsers);
+						}).error(function(){
+							res.send(500);
+						})
+					} else {
+						res.send(401);
+					}
+				});
+			} else {
+				res.send(401);
+			}
+		});
+	});
+	
 	app.get('/api/post/:id', function(req, res){
 		Post.find({ where: { id: req.params.id }, include: [Vote, Tag]}).success(function(post){
 			if(post){
