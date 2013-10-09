@@ -9,6 +9,8 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 				"click #updateButton": "updateSettings"
 			},
 			updateSettings: function(){
+				event.stopPropagation();
+				event.preventDefault();
 				var formValues = {
 					title: $('#wallTitle').val(),
 					isPrivate: $('#isPrivateCheckbox').is(":checked")
