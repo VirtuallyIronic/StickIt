@@ -13,7 +13,24 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 					title: $('#wallTitle').val(),
 					isPrivate: $('#isPrivateCheckbox').is(":checked")
 				}
-				console.log(formValues);
+				var url = '/api/wall/' + this.model.id;
+				$.ajax({
+					url: url,
+					type: 'PUT',
+					dataType: 'json',
+					data: formValues,
+					success: function(data){
+						if(data.error){
+							console.log("error: " + data.error.text);
+						}
+						else {
+							window.location.reload();
+						}
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
 			}
 		});
 	}
