@@ -6,7 +6,8 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 				"change": "render"
 			},
 			events: {
-				"click #updateButton": "updateSettings"
+				"click #updateButton": "updateSettings",
+				"click #deleteButton": "deleteWall"
 			},
 			updateSettings: function(){
 				event.stopPropagation();
@@ -33,6 +34,33 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallSettingsTe
 						console.log(error);
 					}
 				});
+			},
+			deleteWall: function(){
+				event.stopPropagation();
+				event.preventDefault();
+				var r=confirm("Deleting a Wall is Permanent!");
+				if (r==true)
+				{
+					var url = '/api/wall/' + this.model.id;
+					$.ajax({
+						url: url,
+						type: 'DELETE',
+						dataType: 'json',
+						success: function(data){
+							if(data.error){
+								console.log("error: " + data.error.text);
+							}
+							else {
+								window.location.replace('/home');
+							}
+						},
+						error: function(error) {
+							console.log(error);
+						}
+					});
+				} else {
+					window.location.reload();
+				}
 			}
 		});
 	}
