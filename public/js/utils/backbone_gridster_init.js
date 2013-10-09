@@ -74,12 +74,7 @@
 		enableItemView();
 		
 		setInterval(function(){
-			initialData = wallGet(wallID);
-			evan_data = initialData.data;		
-			initWall = initialData.data;		
-
-			modelInit();
-			enableItemView();
+			location.reload();
 		}, 10000);
 		
 		// Wall View Handler
