@@ -17,6 +17,7 @@ define([
     'views/page/successfulRegistrationView',
     'views/page/userListView',
     'views/page/wallSettingsView',
+    'views/page/newWallView',
     'models/CurrentUser',
     'models/WallPermission',
     'models/WallList',
@@ -41,6 +42,7 @@ define([
 		successfulRegistrationView,
 		userListView,
 		wallUpdateView,
+		wallNewWallView,
 		modelCurrentUser,
 		modelWallPermission,
 		modelWallList,
@@ -120,6 +122,9 @@ define([
         	}, 2000);
         	App.mainRegion.show(new userListView({ model: UserList }));
         	UserList.fetch();
+        },
+        newWall: function(){
+        	App.mainRegion.show(new wallNewWallView());
         }
     });
 });
