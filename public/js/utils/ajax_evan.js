@@ -266,7 +266,8 @@
 	
 	function redirectToSettings(model_data){
 		var url = "/wallsettings/" + model_data.wallId;
-		location.redirect(url);
+		console.log(url);
+		window.location.redirect(url);
 	}
 	
 	function colCreate(model_data)
