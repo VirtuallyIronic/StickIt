@@ -16,7 +16,7 @@ var express = require('express')
   , sequelize = require('sequelize')
   , serve = require('./middleware/serve')
   , cons = require('consolidate')
-  , appVersion = "0.10.0";
+  , appVersion = "1.0.0";
 
 // configuration
 var config = require('config');

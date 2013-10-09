@@ -11,7 +11,7 @@
 
 // route version numbers
 var MODULE_NAME = 'WALL'
-  , MODULE_MAJOR_VERSION = '0'
+  , MODULE_MAJOR_VERSION = '1'
   , MODULE_MINOR_VERSION = '0'
   , MODULE_PATCH_VERSION = '0'
   , MODULE_VERSION_APPEND = null;

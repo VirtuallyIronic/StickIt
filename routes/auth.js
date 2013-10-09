@@ -11,9 +11,9 @@
 
 // route version numbers
 var MODULE_NAME = 'AUTH'
-  , MODULE_MAJOR_VERSION = '0'
-  , MODULE_MINOR_VERSION = '11'
-  , MODULE_PATCH_VERSION = '9'
+  , MODULE_MAJOR_VERSION = '1'
+  , MODULE_MINOR_VERSION = '0'
+  , MODULE_PATCH_VERSION = '0'
   , MODULE_VERSION_APPEND = null;
 
 // print route version for debugging and logging 
