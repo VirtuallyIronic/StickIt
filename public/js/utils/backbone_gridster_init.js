@@ -73,6 +73,15 @@
 		modelInit();
 		enableItemView();
 		
+		setInterval(function(){
+			initialData = wallGet(wallID);
+			evan_data = initialData.data;		
+			initWall = initialData.data;		
+
+			modelInit();
+			enableItemView();
+		}, 10000);
+		
 		// Wall View Handler
 		ListView = Backbone.View.extend({
 			el: $('.wall'), // el attaches to existing element
@@ -102,7 +111,6 @@
 				this.on('completeDelete', this.purgeData);
 				this.on('prepareLaneDelete', this.removeLane);
 				this.on('RIPtag', this.removeTag);
-				this.model.bind('change', this.render, this);
 				this.render();
 			},
 			
