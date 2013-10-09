@@ -157,7 +157,7 @@ function enableItemView() {
 					votes = (parseInt(votes)+1);//.toString();
 					this.model.set('votes',votes);
 					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-					$("<img class='removeVoteButton' src='images/icons/dislike-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+					$("<img class='removeVoteButton' src='images/dislike-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');
 				}				
 				else
@@ -207,7 +207,7 @@ function enableItemView() {
 					votes = (parseInt(votes)-1);//.toString();
 					this.model.set('votes',votes);
 					this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan").children().remove();
-					$("<img class='voteButton' src='images/icons/Like-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
+					$("<img class='voteButton' src='images/Like-button-transparent.png' style='width: 30px;'></img>").appendTo($(this.$el.children('.cssnote').children(".toolbar").children("#voteBtnspan")));
 					this.$el.children('.cssnote').children(".toolbar").children("#votespan").text('Votes: '+votes+'  .');					
 				}				
 				else
