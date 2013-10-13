@@ -1,0 +1,23 @@
+<section>
+	<div id="container_demo" >
+		<div id="wrapper" class="wrapper" style="position: absolute; top: 230px; left: 30px; z-index:99;">
+			<div id="login" class="animate form" >
+				<h1>User List</h1>
+				{{#each user}}
+				<p style="text-align: center;"> 
+					<b>{{ username }}</b> has {{ role }} permission.
+					<p style="text-align: center;">
+						<a href="#" class="to_button" onclick="userMakeView('{{ id }}')">Grant Viewer</a>&nbsp;
+						<a href="#" class="to_button" onclick="userMakePost('{{ id }}')">Grant Poster</a>&nbsp;
+						<a href="#" class="to_button" onclick="userMakeAdmin('{{ id }}')">Grant Admin</a>&nbsp;
+						<a href="#" class="to_button" onclick="removeUser('{{ id }}')">Remove User</a>
+					</p>
+				</p>
+				<hr>
+				{{/each}}
+				<form autocomplete="on">
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
