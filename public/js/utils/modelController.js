@@ -1,11 +1,12 @@
 	function modelInit()
 	{
-	noteFormat = Backbone.RelationalModel.extend({
+		//Note Model, handles what data each note contains
+		noteFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: function(){
 				return {
 					'noteId': '',
-					'wallId': '',//initWall.id,
+					'wallId': '',
 					'username': '',
 					'col': 1,
 					'row': 1,
@@ -23,25 +24,26 @@
 				reverseRelation: {
 					key: 'note_wall',
 					includeInJSON: '_id'
-					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
 			}]
 		});
-
+		
+		//Wall Model, handles what data the wall needs.
 		wallFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults:{
 					"title": 'NEW WALL',
-					'wallID': '',//initWall.id,
-					'owner': '',//initWall.owner,
+					'wallID': '',
+					'owner': '',
 					'cols': 5,
 			}
 		});
 		
+		//Column Model, handles data for each column heading.
 		colFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
-					'wallID':'',// initWall.id,
+					'wallID':'',
 					'colID': 0,
 					'heading': 'Lane :id'
 			},
@@ -53,15 +55,16 @@
 				reverseRelation: {
 					key: 'colKey',
 					includeInJSON: '_id'
-					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
 			}]
 		});
+		
+		//Vote Model, handles what each vote per note.
 		voteFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
 					'voteID': '',
-					'noteID': ''//noteID
+					'noteID': ''
 			},
 			relations: [{
 				type: Backbone.HasOne,
@@ -71,10 +74,11 @@
 				reverseRelation: {
 					key: 'voteKey',
 					includeInJSON: '_id'
-					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
 			}]
 		});
+		
+		//Tag Model, handles tag data per note.
 		taggedFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
@@ -90,10 +94,11 @@
 				reverseRelation: {
 					key: 'taggedKey',
 					includeInJSON: '_id'
-					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
 			}]
 		});
+		
+		//Permission Model, handles permission data for each user
 		permissionFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
 			defaults: {
@@ -109,11 +114,12 @@
 				reverseRelation: {
 					key: 'hasPermission',
 					includeInJSON: '_id'
-					// 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
 				}
 			}]
 		});
-		
+		/*
+		Collections for each Model data set.
+		*/
 		noteList = Backbone.Collection.extend({
 			model: noteFormat
 		});			

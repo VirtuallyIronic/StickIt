@@ -22,7 +22,9 @@ function enableItemView() {
 				this.voteObj = new options.voteModel;
 				this.tagging = new options.tagModel;
 				this.newNoteData = options.newNote;
-				//this.newNoteStatus = 
+
+				//CHECK THE DETAILS OF THE NOTE
+				//IF IT HAS VOTES OR TAGS
 				if(options.newNoteInput == 'tv')
 				{
 					this.incTagData = options.incTags;
@@ -84,7 +86,8 @@ function enableItemView() {
 						this.voteObj.add(addVotes);
 					}
 				}
-
+				//CREATES AND ATTACHES VOTE AND TAG MODELS IF ANY ON CREATION
+				//THEN MAKES THE NOTE ELEMENT
 				Note(this);
 				if (this.newNoteData == true)
 				{
@@ -99,6 +102,7 @@ function enableItemView() {
 				expandNote(this);
 			},
 
+			//CREATES THE TAG TEXT FOR THE NOTE
 			addNewTag: function(e){
 				var tags = this.model.get('tagged');
 				var tagName = $(e.target).parent().children('.userText').val();
