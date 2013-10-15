@@ -1,5 +1,13 @@
 /* jshint indent: 2 */
 
+/**
+ * Tag Model
+ * Model for SQL table.
+ * id: Integer, Primary Key, Auto Increment
+ * postId: Integer, Primary Key, References Id in Post Table
+ * text: String; the tag text displayed on a post
+ */
+
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Tag', {
 	id: {

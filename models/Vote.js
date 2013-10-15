@@ -1,5 +1,13 @@
 /* jshint indent: 2 */
 
+/**
+ * Vote Model
+ * Model for SQL table.
+ * id: Integer, Primary Key, Auto Increment
+ * userId: String(8) / VarChar(8), Primary Key; References the id in the User Model
+ * postId: Integer, Primary Key; References the id in the Post Model
+ */
+
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Vote', {
 	id: {

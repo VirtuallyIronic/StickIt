@@ -1,5 +1,14 @@
 /* jshint indent: 2 */
 
+/**
+ * Column Model
+ * Model for SQL table.
+ * id: Integer, Primary Key, Auto Increment
+ * wallId: String(12) / VarChar(12), Primary Key, References Id in Wall Table
+ * colNum: Integer
+ * title: String
+ */
+
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ColName', {
 	id: {

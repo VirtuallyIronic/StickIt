@@ -10,6 +10,9 @@ define([ 'marionette', 'handlebars', 'text!templates/widget/widgetTemplate.html'
 				"click #widgetLogoutButton": "logout"
 			},
 			login: function(event) {
+				// login function posts the username and password to the /auth/login api route
+				// successful return from the api call redirects the user to the /home route
+				// unsuccessful alerts the user via a popup dialog 
 				event.stopPropagation();
 				event.preventDefault();
 				var url = '/auth/login';
@@ -31,11 +34,12 @@ define([ 'marionette', 'handlebars', 'text!templates/widget/widgetTemplate.html'
 						}
 					},
 					error: function(error) {
-						window.location.replace('/login');
+						window.alert("Invalid Username or Password. Please try again.");
 					}
 				});
 			},
 			logout: function(event){
+				// directs the user to the /auth/logout route
 				event.stopPropagation();
 				event.preventDefault();
 				window.location.replace('/auth/logout');

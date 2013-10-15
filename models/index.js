@@ -2,7 +2,6 @@
 /**
  * StickIt by Virtually Ironic
  * Filename:		models/index.js
- * Date Last Mod:	6/9/13
  * Purpose:			Imports defined Sequelize models
  * Author:			Evan Scown
  * Contributors:	Evan Scown 
@@ -46,27 +45,33 @@ var sequelize = new Sequelize(
 // load models
 var models = ['User', 'Wall', 'WallUser', 'Post', 'ColName', 'Vote', 'Tag'];
 
+// export each model back to the application
 models.forEach(function(model){
 	module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
 
-
+// relations for User table
 module.exports.User.hasMany(module.exports.Wall, {foreignKey: 'owner'});
 module.exports.User.hasMany(module.exports.WallUser, {foreignKey: 'userId'});
 module.exports.User.hasMany(module.exports.Vote, {foreignKey: 'userId'});
 
+// relations for Wall table
 module.exports.Wall.hasMany(module.exports.Post, {foreignKey: 'wallId'});
 module.exports.Wall.hasMany(module.exports.WallUser, {foreignKey: 'wallId'});
 module.exports.Wall.hasMany(module.exports.ColName, {foreignKey: 'wallId'});
 
+// relations for Post table
 module.exports.Post.hasMany(module.exports.Vote, {foreignKey: 'postId'});
 module.exports.Post.hasMany(module.exports.Tag, {foreignKey: 'postId'});
 
+// relation for WallUser table
 module.exports.WallUser.belongsTo(module.exports.User, {foreignKey: 'userId'});
 
+// syncs all models
+// links database with application
 models.forEach(function(model){
 	module.exports[model].sync();
 });
 
-// export connection
+// export database connection
 module.exports.sequelize = sequelize;

@@ -1,5 +1,21 @@
 /* jshint indent: 2 */
 
+/**
+ * User Model
+ * Model for SQL table.
+ * id: String(8) / VarChar(8), Primary Key
+ * username: String; the Display Name of a user
+ * password: String; hashed with BCrypt
+ * email: String
+ * firstName, middleName, lastName: Strings; Real Name of a User
+ * role: 3 options: 'view', 'post', 'admin';
+ *  ** Roles are Global, all users can be assigned wall permissions
+ *  ** ** View: Cannot Create a Wall
+ *  ** ** Post: Can Create a Wall
+ *  ** ** Admin: Create Wall and Manage Users
+ *  ** Wall Permissions are controlled by the WallUser Model.
+ */
+
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('User', { 
     id: {

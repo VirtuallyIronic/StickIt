@@ -1,5 +1,18 @@
 /* jshint indent: 2 */
 
+/**
+ * Post Model
+ * Model for SQL table.
+ * id: Integer, Primary Key, Auto Increment
+ * wallId: String(12) / VarChar(12), Primary Key, References Id in Wall Table
+ * col: Integer; the column a post is displayed in on the wall
+ * row: Integer; the row a post is displayed in on the wall
+ * username: String; original creator of the post
+ * text: String; the text displayed on a post
+ * colour: String; Colour value displayed on a post
+ * fontSize: Integer; The size of a font displayed on the post
+ */
+
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Post', { 
     id: {
