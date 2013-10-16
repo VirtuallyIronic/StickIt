@@ -51,6 +51,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     fontSize: {
       type: DataTypes.INTEGER
+    },
+    tags: {
+      type: DataTypes.STRING
     }
   });
 };
