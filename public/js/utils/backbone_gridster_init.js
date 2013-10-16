@@ -206,6 +206,9 @@
 						voteObj[objCount] = newVotes;
 						objCount++;
 					}
+					//_----------------------------
+					//TODO
+					//MAKES A MODEL OF TAGS, CAN BE REWROTE FOR TEXT FIELD / STRING
 					objCount = 0;
 					for (var t=0; t<postObj[w].tag.length; t++)
 					{
@@ -220,6 +223,7 @@
 						tagObj[objCount] = newTags;
 						objCount++;
 					}
+					//_----------------------------
 					var newcolour = converstionCheck(postObj[w].colour);
 					item.set({
 						'col':postObj[w].col,
@@ -343,6 +347,8 @@
 					var colour = document.getElementById('mainMenu').tempColour;
 					colour = converstionCheck(colour);
 					var fontsize = document.getElementById('sizeDrop').value;
+					//_----------------------------
+					//TODO
 					var tags = document.getElementById('newTags');
 					var tagged = new Array();
 					var tagSize = $(tags).children().length;
@@ -353,7 +359,7 @@
 						tagged[count] = $(tags).children().eq(i).text();
 						count=count+1;
 					}
-					
+					//_----------------------------
 					while (gridster.is_widget(col,row))
 					{
 						++row;
@@ -371,6 +377,7 @@
 						'fontsize': fontsize,
 						'wall_connection': wallModel_current//.get('_id')
 					});
+					//_----------------------------
 					tagObj = new Array;
 					var tagCount=0;
 					for (var i=1; i<tagSize; i=i+3)
@@ -387,7 +394,7 @@
 						tagCount++;
 						//this.tagging.add(newNoteTags);
 					}
-					
+					//_----------------------------
 					this.collection.add(item);
 				}
 	
@@ -396,6 +403,7 @@
 			
 			//-------ADDS WIDGET TO GRIDSTER GRID-------
 			appendItem: function(item){
+				//TODO
 				var col = item.get('col');
 				var row = item.get('row');
 				var objdata ='';

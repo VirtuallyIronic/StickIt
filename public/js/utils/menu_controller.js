@@ -155,12 +155,18 @@
 			$('#confirmPopup').on('click', data.prepareItem);
 		}
 		$("<button id='cancelPopup'class='cancelEditBtn' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
-				
+				//TODO
+		/*
 		$("<div id='newTags' class='newTagBar'></div>").appendTo("#bottomBar");
 		$("<div id='oldTags' class='oldTagBar'></div>").appendTo("#bottomBar");
+		(*/
+		//CREATE TEXT BOX APPENDED TO BOTTOM BAR
 		//ADD PRE-EXISTING TAGS
 		if (edit === true)
 		{
+			//MODEL.GET(TAG TEXT)
+			//APPEND TO TEXT BOX
+			/*
 			//var tags = data.model.get('tagged');
 			//var tagName = $(e.target).parent().children('.userText').val();
 					//var tagged = field.model.get('tagged');
@@ -184,17 +190,20 @@
 				{
 					$("<span class='tagSpan' <span>TAGGED: </span><span class='taggedUser'> "+tags[i]+"</span> </span><br/>").appendTo(".oldTagBar");	
 				}	
-			}			
+			}
+			*/			
 		}
 	}
 	
 	/*
-	UNUSED(?): APPENDS TEXT TO NOTE TEXT BOX
+	 APPENDS TEXT TO NOTE TEXT BOX
 	*/
 	function addUserTag(field){
+		//TODO
 		var tagName = $(field).parent().children('.userText').val();
 		if (tagName != 'undefined' && tagName != '')
 		{
+			//APPEND TAGNAME VALUE TO NEW TEXT FIELD
 			$("<span class='tagRemoval' <span>New: </span><span class='taggedUser'> "+tagName+"</span> (click to remove)</span><br/>").appendTo(".newTagBar");	
 		}
 		var tagName = $(field).parent().children('.userText').val('');
@@ -213,7 +222,13 @@
 	*/
 	function confirmEdit(field)
 	{
+		//TODO
 		var tags = document.getElementById('newTags');
+		//TAGS NOW IS THE TEXT FIELD
+		//NEED SOME WAY OF CHECKING IF ITS DIFFERENT TO WHAT IS SAVED TO THE MODEL
+		//MODEL IS "FIELD"
+		//-------------------------
+		//REWRITE THIS
 		var tagged = new Array();
 		var tagSize = $(tags).children().length;
 		var count = 0;
@@ -222,7 +237,9 @@
 		{
 			tagged[count] = $(tags).children().eq(i).text();
 			count=count+1;
+			
 		}
+		//-------------------------
 		var checkSize = _.size(tagged);
 		var fullTextCurrent = field.model.get('text');
 		var fieldText = document.getElementById('formText').value;
@@ -253,6 +270,8 @@
 				output[0] = fieldText;
 				output[1] = newColour;
 				output[2] = newFontSize;
+				//TODO
+				//CHECKS IF TAGS NEEDS TO BE UPDATED
 				if (checkSize >0)
 				{
 					output[3] = tagged;
@@ -491,6 +510,9 @@
 		$("<br></br>").appendTo("#popupDetails");
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		
+		//-----------------------------
+		//TODO
+		//REWRITE TO HANDLE A SINGLE STRING RATHER THEN AN ARRAY
 		//var tagged = field.model.get('tagged');
 		var tagged = new Array();
 		//alert(field.tagging.length);
@@ -506,6 +528,7 @@
 		{
 			$('<span onclick="q(this)" value='+tagged[i].get('tagID')+' class="taggedUser">Tag: '+tagged[i].get("tagItem")+'</span><br/>').appendTo("#bottomBar");
 		}		
+		//-----------------------------
 		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
 		document.getElementById('cancelPopup').focus();
 	}
@@ -518,6 +541,7 @@ function confirmSettings() {
 
 //REMOVE TAGS FROM DATA MODEL
 //UNSURE IF WORKING
+//PROB USELESS ATM
 function q(ev) {
 	var alertString = ev.textContent.split(':');
 	var r=confirm("Delete tag: "+alertString[1]);
