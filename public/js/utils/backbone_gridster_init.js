@@ -348,7 +348,6 @@
 					var colour = document.getElementById('mainMenu').tempColour;
 					colour = converstionCheck(colour);
 					var fontsize = document.getElementById('sizeDrop').value;
-<<<<<<< HEAD
 					var stringtag = document.getElementById('formTags').value;
 					//_----------------------------
 					//TODO
@@ -363,11 +362,9 @@
 						count=count+1;
 					}
 					//_----------------------------
-=======
 					var tags = document.getElementById('formTags');
 					var count = 0;
 					
->>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 					while (gridster.is_widget(col,row))
 					{
 						++row;
@@ -383,16 +380,11 @@
 						'text': text,
 						'colour': colour,
 						'fontsize': fontsize,
-<<<<<<< HEAD
 						'stringtag': stringtag,
-=======
-						'tags': tags,
->>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 						'wall_connection': wallModel_current//.get('_id')
 					});
 					//_----------------------------
 					tagObj = new Array;
-<<<<<<< HEAD
 					var tagCount=0;
 					for (var i=1; i<tagSize; i=i+3)
 					{
@@ -409,9 +401,6 @@
 						//this.tagging.add(newNoteTags);
 					}
 					//_----------------------------
-=======
-					
->>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 					this.collection.add(item);
 				}
 	

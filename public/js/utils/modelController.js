@@ -17,11 +17,7 @@
 					'votes': 0,
 					'colour': '#FFFFFF',
 					'fontsize': 18,
-<<<<<<< HEAD
 					'stringtag': ''
-=======
-					'tags': 'na'
->>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 				}
 			},
 			relations: [{
