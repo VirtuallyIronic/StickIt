@@ -452,7 +452,7 @@ module.exports = function(app, passport) {
 		sanitize(isPrivate).xss();
 		sanitize(isPrivate).escape();
 		
-		if(isPrivate == true) {
+		if(isPrivate == 'true') {
 		    isPrivate = 1;
 		    console.log(isPrivate);
 		}
@@ -471,7 +471,6 @@ module.exports = function(app, passport) {
 									title: title,
 									isPrivate: isPrivate
 								}).success(function(wall){
-									console.log(wall);
 									res.json(wall);
 								}).error(function(){
 									res.send(500, {"error" : "internal server error"});
