@@ -77,7 +77,7 @@
 									text: model_data.get('text'),
 									colour: model_data.get('colour'),
 									fontSize: model_data.get('fontsize'),
-									stringtags: model_data.get('stringtag')
+									stringtag: model_data.get('stringtag')
 									}),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",

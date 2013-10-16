@@ -531,9 +531,6 @@ module.exports = function(app, passport) {
 		  , fontSize = req.body.fontSize
 		  , stringtag = req.body.stringtag;
 		
-		console.log(stringtag);
-		console.log(req.body);
-		
 		// sanitise and escape
 		sanitize(col).xss();
 		sanitize(col).escape();
