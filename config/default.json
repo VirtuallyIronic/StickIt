@@ -5,9 +5,9 @@
 	},
 	"database": {
 		"host":	"localhost",
-		"name": "DEV4StickIt",
-		"username":	"devuser",
-		"password": "Qwerty1!",
+		"name": "YOURDATABASE",
+		"username":	"YOURUSERNAME",
+		"password": "YOURPASSWORD",
 		"port":	"3306"
 	},
 	"databaseOptions": {
