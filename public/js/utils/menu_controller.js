@@ -135,7 +135,9 @@
 			document.getElementById('mainMenu').tempColour=data.model.get('colour');
 		}
 		
+		//------------------------------------------------
 		$("<p>TAG</p>").appendTo("#sideBar");
+<<<<<<< HEAD
 		//TEXT BOX
 		var $tagEdit = jQuery('<textarea/>', {
 			placeholder:"Your text goes here.",
@@ -149,6 +151,13 @@
 			//IF EDIT, ADD CURRENT TEXT
 			$tagEdit.val(data.model.get('tags'));
 		}		
+=======
+		// ADD TAG SECTION
+		$('<input class="userText" type="text" name="user" placeholder="e.g. Worked Well">').appendTo('#sideBar');
+		$("<button class='tagButton' onclick='addUserTag(this)'>Add Tag</button>").appendTo("#sideBar");
+		//------------------------------------------------
+		
+>>>>>>> parent of 007d7f4... comments part 3
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		if (edit === true)
 		{
@@ -162,6 +171,37 @@
 			$('#confirmPopup').on('click', data.prepareItem);
 		}
 		$("<button id='cancelPopup'class='cancelEditBtn' onclick='closeMenu()'>Cancel</button>").appendTo("#bottomBar");
+				
+		$("<div id='newTags' class='newTagBar'></div>").appendTo("#bottomBar");
+		$("<div id='oldTags' class='oldTagBar'></div>").appendTo("#bottomBar");
+		//ADD PRE-EXISTING TAGS
+		if (edit === true)
+		{
+			//var tags = data.model.get('tagged');
+			//var tagName = $(e.target).parent().children('.userText').val();
+					//var tagged = field.model.get('tagged');
+			var tags = new Array();
+			//alert(field.tagging.length);
+			var tagCount = 0;
+			data.tagging.each(function (obj){
+				//alert('test');
+				//alert(obj);
+				tags[tagCount] = obj.get('tagItem');
+				tagCount++;
+			},this);
+			var tagSize = _.size(tags);//.length;
+
+			if (!tags[0])
+			{
+			}
+			else
+			{
+				for (var i=0; i<tagSize; i++)
+				{
+					$("<span class='tagSpan' <span>TAGGED: </span><span class='taggedUser'> "+tags[i]+"</span> </span><br/>").appendTo(".oldTagBar");	
+				}	
+			}			
+		}
 	}
 	
 	/*
@@ -386,10 +426,22 @@
 		
 		//DETAIL SECTION
 		//VOTES, AUTHOR, BUTTONS
+		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+authorUser+"  </span>").appendTo($tb);
 		$("<span id='closespan'><img class='deleteButton' src='images/delete-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
 		$("<span id='editspan'><img class='editButton' src='images/edit-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
 		$("<span id='expandspan'><img class='expandButton' src='images/Expand-icon.png' style='width: 30px;'>  </img></span>").appendTo($tb);
+
+		var checkVote = false;
+		//ADD PROPER CHECK HERE LATER TODO
+		if (checkVote != false)
+		{
+			$("<span id='voteBtnspan'><img class='removeVoteButton'> -1 </img></span>").appendTo($tb);
+		}
+		else
+		{
+			$("<span id='voteBtnspan'><img class='voteButton' src='images/Like-button-transparent.png' style='width: 30px;'> </img></span>").appendTo($tb);
+		}
 	}
 
 	/*
@@ -455,7 +507,7 @@
 		$("<br></br>").appendTo("#popupDetails");
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		
-		var tags = field.model.get('tags');
+		var tags = field.model.get('text');
 		
 		$("<span class='taggedUser'> Tag: " + tags + "</span><br />").appendTo("#bottomBar");
 		/**
