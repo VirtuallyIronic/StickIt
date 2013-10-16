@@ -161,11 +161,16 @@
 		$("<div id='oldTags' class='oldTagBar'></div>").appendTo("#bottomBar");
 		(*/
 		//CREATE TEXT BOX APPENDED TO BOTTOM BAR
+		$("<textfield id='newTags' class='newTagBar'></textfield>").appendTo("#bottomBar");
 		//ADD PRE-EXISTING TAGS
 		if (edit === true)
 		{
+			//NEW
 			//MODEL.GET(TAG TEXT)
+			var tagText = data.get('tags');
 			//APPEND TO TEXT BOX
+			document.getElementById('newTags').text = tagText;
+			
 			/*
 			//var tags = data.model.get('tagged');
 			//var tagName = $(e.target).parent().children('.userText').val();
@@ -204,7 +209,8 @@
 		if (tagName != 'undefined' && tagName != '')
 		{
 			//APPEND TAGNAME VALUE TO NEW TEXT FIELD
-			$("<span class='tagRemoval' <span>New: </span><span class='taggedUser'> "+tagName+"</span> (click to remove)</span><br/>").appendTo(".newTagBar");	
+			//document.getElementById('newTags').text += " "+tagText;
+			//$("<span class='tagRemoval' <span>New: </span><span class='taggedUser'> "+tagName+"</span> (click to remove)</span><br/>").appendTo(".newTagBar");	
 		}
 		var tagName = $(field).parent().children('.userText').val('');
 	}
@@ -223,11 +229,19 @@
 	function confirmEdit(field)
 	{
 		//TODO
-		var tags = document.getElementById('newTags');
+		var tags = document.getElementById('newTags'); //should be fine
 		//TAGS NOW IS THE TEXT FIELD
 		//NEED SOME WAY OF CHECKING IF ITS DIFFERENT TO WHAT IS SAVED TO THE MODEL
 		//MODEL IS "FIELD"
 		//-------------------------
+		
+		//NEW
+		var checkSize = 0;
+		if (tags.text.length != field.model.get('tags').length)
+		{
+			checkSize = 1;
+		}
+		/*
 		//REWRITE THIS
 		var tagged = new Array();
 		var tagSize = $(tags).children().length;
@@ -237,10 +251,11 @@
 		{
 			tagged[count] = $(tags).children().eq(i).text();
 			count=count+1;
-			
 		}
-		//-------------------------
 		var checkSize = _.size(tagged);
+		*/
+		//-------------------------
+		
 		var fullTextCurrent = field.model.get('text');
 		var fieldText = document.getElementById('formText').value;
 		var subText = null;
@@ -274,7 +289,8 @@
 				//CHECKS IF TAGS NEEDS TO BE UPDATED
 				if (checkSize >0)
 				{
-					output[3] = tagged;
+					//NEW
+					output[3] = tags.text;
 				}
 				else
 				{
@@ -513,6 +529,14 @@
 		//-----------------------------
 		//TODO
 		//REWRITE TO HANDLE A SINGLE STRING RATHER THEN AN ARRAY
+		//NEW
+		$("<textfield id='newTags' class='newTagBar'></textfield>").appendTo("#bottomBar");
+		//MODEL.GET(TAG TEXT)
+		var tagText = data.get('tags');
+		//APPEND TO TEXT BOX
+		document.getElementById('newTags').text = tagText;
+			
+		/*
 		//var tagged = field.model.get('tagged');
 		var tagged = new Array();
 		//alert(field.tagging.length);
@@ -527,9 +551,13 @@
 		for (var i=0; i<tagSize; i++)
 		{
 			$('<span onclick="q(this)" value='+tagged[i].get('tagID')+' class="taggedUser">Tag: '+tagged[i].get("tagItem")+'</span><br/>').appendTo("#bottomBar");
-		}		
+		}*/		
 		//-----------------------------
 		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
+		
+		//PROB IGNORE
+		//special method to update tags if changed here on close (unlikely since they will prob be updated in the edit menu)
+		
 		document.getElementById('cancelPopup').focus();
 	}
 	
@@ -542,6 +570,7 @@ function confirmSettings() {
 //REMOVE TAGS FROM DATA MODEL
 //UNSURE IF WORKING
 //PROB USELESS ATM
+//UNUSED
 function q(ev) {
 	var alertString = ev.textContent.split(':');
 	var r=confirm("Delete tag: "+alertString[1]);

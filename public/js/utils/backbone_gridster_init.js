@@ -209,6 +209,7 @@
 					//_----------------------------
 					//TODO
 					//MAKES A MODEL OF TAGS, CAN BE REWROTE FOR TEXT FIELD / STRING
+					//prob remove
 					objCount = 0;
 					for (var t=0; t<postObj[w].tag.length; t++)
 					{
@@ -235,6 +236,8 @@
 						'votes': postObj[w].vote.length,
 						'color': newcolour,
 						'fontsize': postObj[w].fontSize,
+						//NEW TAGS
+						'tag': postObj[w].tags,
 						'wall_connection': wallModel_current
 					});
 					this.collection.add(item);
@@ -349,16 +352,22 @@
 					var fontsize = document.getElementById('sizeDrop').value;
 					//_----------------------------
 					//TODO
-					var tags = document.getElementById('newTags');
-					var tagged = new Array();
+					//var tags = document.getElementById('newTags');
+					//NEW
+					var tags = document.getElementById('newTags').text;
+					//var tagged = this.model.get('tags');
+					//----------
+					//ignore
 					var tagSize = $(tags).children().length;
 					var count = 0;
-
+					
+					
 					for (var i=1; i<tagSize; i=i+3)
 					{
 						tagged[count] = $(tags).children().eq(i).text();
 						count=count+1;
 					}
+					//----------
 					//_----------------------------
 					while (gridster.is_widget(col,row))
 					{
@@ -375,6 +384,8 @@
 						'text': text,
 						'colour': colour,
 						'fontsize': fontsize,
+						//NEW
+						'tags': tags,
 						'wall_connection': wallModel_current//.get('_id')
 					});
 					//_----------------------------
@@ -407,6 +418,8 @@
 				var col = item.get('col');
 				var row = item.get('row');
 				var objdata ='';
+				//---------------------
+				//prob remove
 				if (tagObj.length != 0)
 				{
 					//alert(tagObj.length);
@@ -416,6 +429,7 @@
 				{
 					objdata += 'f';
 				}
+				//-------------------------
 				if (voteObj.length != 0)
 				{
 					//alert(tagObj.length);
@@ -431,6 +445,7 @@
 					tagModel: tagList,
 					newNote: newNoteInc,
 					newNoteInput: objdata,
+					//prob remove
 					incTags: tagObj,
 					incVotes: voteObj
 				});

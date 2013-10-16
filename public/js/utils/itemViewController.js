@@ -60,6 +60,7 @@ function enableItemView() {
 				//TODO
 				//MAKES NEW MODEL. USELESS
 				//REWRITE TO BE STRING / TEXT FIELD
+				//prob remove, tags already saved to model by this stage
 				if (this.incTagData != false)
 				{
 					//alert(this.incTagData);
@@ -114,6 +115,7 @@ function enableItemView() {
 			//_----------------------------
 			//TODO
 			//REWRITE FOR STRING / TEXT FIELD
+			//prob remove
 			addNewTag: function(e){
 				var tags = this.model.get('tagged');
 				var tagName = $(e.target).parent().children('.userText').val();
@@ -271,6 +273,8 @@ function enableItemView() {
 					var fontsize = data[2];
 					//_----------------------------
 					//MARKED TODO
+					//TAGS NOW = STRING OF TEXT
+					//CHECK MENU CONTROLLER LINE 231 AND 292 FOR MORE INFO
 					var tags = data[3];
 					//_----------------------------
 					colour = converstionCheck(colour);
@@ -287,6 +291,7 @@ function enableItemView() {
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('color', fontColour);
 					//_----------------------------
 					//TODO
+					//remove
 					if (tags != 0)
 					{
 						for (var k=0; k<tags.length; k++)
@@ -303,12 +308,26 @@ function enableItemView() {
 					}
 					//_----------------------------
 					//REWRITE TO ADD NEW TAG TEXT
-					this.model.set({
-						'text': textEdit,
-						'fontsize': fontsize,
-						'colour': colour
-						// modify item defaults
-					});
+					if (tags != 0)
+					{
+						this.model.set({
+							'text': textEdit,
+							'fontsize': fontsize,
+							'colour': colour,
+							//NEW
+							'tags': tags,
+							// modify item defaults
+						});
+					}
+					else
+					{
+						this.model.set({
+							'text': textEdit,
+							'fontsize': fontsize,
+							'colour': colour,
+							// modify item defaults
+						});
+					}
 					//_----------------------------
 					noteUpdate(this.model.get('noteId'), this.model);
 					closeMenu();

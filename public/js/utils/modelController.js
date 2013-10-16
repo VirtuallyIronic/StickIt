@@ -16,7 +16,9 @@
 					'text': '',
 					'votes': 0,
 					'colour': '#FFFFFF',
-					'fontsize': 18
+					'fontsize': 18,
+					//NEW TAGS
+					'tags': ''
 				}
 			},
 			relations: [{
