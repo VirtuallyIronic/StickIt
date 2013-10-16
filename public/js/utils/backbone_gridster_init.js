@@ -45,7 +45,6 @@
 	if (location.search == "")
 	{
 		console.log('NO WALL ID');
-		var wallID = 'eJU6kroyQ';
 	}
 	else
 	{
