@@ -1,4 +1,3 @@
-
 /**
  * StickIt by Virtually Ironic
  * Filename:		routes/auth.js
@@ -118,7 +117,6 @@ module.exports = function(app, passport) {
 						return done(null, false, { message: 'Unknown user ' + username });
 					}
 					if(!bcrypt.compareSync(password, user.password)) {
-						console.log('Invalid password ' + password)
 						return done(null, false, { message: 'Invalid password' });
 					}
 					console.log(user);
