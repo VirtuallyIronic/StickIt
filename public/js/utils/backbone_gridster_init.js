@@ -353,7 +353,7 @@
 					var colour = document.getElementById('mainMenu').tempColour;
 					colour = converstionCheck(colour);
 					var fontsize = document.getElementById('sizeDrop').value;
-					var tags = document.getElementById('newTags');
+					var tags = document.getElementById('tags');
 					var tagged = new Array();
 					var tagSize = $(tags).children().length;
 					var count = 0;
@@ -379,6 +379,7 @@
 						'text': text,
 						'colour': colour,
 						'fontsize': fontsize,
+						'tags': tags,
 						'wall_connection': wallModel_current//.get('_id')
 					});
 					tagObj = new Array;
