@@ -66,7 +66,7 @@
 		
 		setInterval(function(){
 			location.reload();
-		}, 10000);
+		}, 60000);
 		
 		// Wall View Handler
 		ListView = Backbone.View.extend({
