@@ -517,19 +517,7 @@
 		//var tagged = field.model.get('tagged');
 		var tagged = new Array();
 		var stringtag = field.model.get('stringtag');
-		//alert(field.tagging.length);
-		var tagCount = 0;
-		field.tagging.each(function (obj){
-			//alert('test');
-			//alert(obj);
-			tagged[tagCount] = obj;
-			tagCount++;
-		},this);
-		var tagSize = _.size(tagged);
-		for (var i=0; i<tagSize; i++)
-		{
-			$('<span class="taggedUser">Tag: ' + stringtag + '</span><br />').appendTo("#bottomBar");
-		}		
+		$('<span class="taggedUser">Tag: ' + stringtag + '</span><br />').appendTo("#bottomBar");
 		//-----------------------------
 		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
 		document.getElementById('cancelPopup').focus();
