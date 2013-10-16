@@ -454,6 +454,7 @@ module.exports = function(app, passport) {
 		
 		if(isPrivate == true) {
 		    isPrivate = 1;
+		    console.log(isPrivate);
 		}
 		
 		// check the user access wall
