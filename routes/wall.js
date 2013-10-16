@@ -445,14 +445,16 @@ module.exports = function(app, passport) {
 		var title = req.body.title
 		  , isPrivate = req.body.isPrivate;
 		  
-		console.log(req.body);
-		console.log(req.body.isPrivate);
 		
 		// sanitize and escape submitted values
 		sanitize(title).xss();
 		sanitize(title).escape();
 		sanitize(isPrivate).xss();
 		sanitize(isPrivate).escape();
+		
+		if(isPrivate == true) {
+		    isPrivate = 1;
+		}
 		
 		// check the user access wall
 		hasPermission(req.params.id, req.user.id, function(result){
