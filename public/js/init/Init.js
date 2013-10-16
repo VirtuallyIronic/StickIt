@@ -1,3 +1,12 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/init/Init.js
+ * Purpose:			RequireJS Initialization of UI Application
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
 require.config({
     baseUrl:"js",
     paths:{
@@ -45,7 +54,7 @@ require.config({
     }
 });
 
-// Includes Desktop Specific JavaScript files here (or inside of your Desktop router)
+// Includes Specific JavaScript files here
 require(["App", "routers/AppRouter", "controllers/Controller",  "jquery"],
     function (App, AppRouter, Controller) {
         App.appRouter = new AppRouter({

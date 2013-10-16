@@ -353,16 +353,8 @@
 					var colour = document.getElementById('mainMenu').tempColour;
 					colour = converstionCheck(colour);
 					var fontsize = document.getElementById('sizeDrop').value;
-					var tags = document.getElementById('tags');
-					var tagged = new Array();
-					var tagSize = $(tags).children().length;
+					var tags = document.getElementById('formTags');
 					var count = 0;
-
-					for (var i=1; i<tagSize; i=i+3)
-					{
-						tagged[count] = $(tags).children().eq(i).text();
-						count=count+1;
-					}
 					
 					while (gridster.is_widget(col,row))
 					{
@@ -383,21 +375,6 @@
 						'wall_connection': wallModel_current//.get('_id')
 					});
 					tagObj = new Array;
-					var tagCount=0;
-					for (var i=1; i<tagSize; i=i+3)
-					{
-						var newNoteTags = new taggedFormat();
-						newNoteTags.set({
-							'tagID': Math.floor((Math.random()*100)+1),
-							'noteID': item.get('id'),
-							'tagItem': $(tags).children().eq(i).text(),
-							'tags_note': item,
-						});
-						
-						tagObj[tagCount]=newNoteTags;
-						tagCount++;
-						//this.tagging.add(newNoteTags);
-					}
 					
 					this.collection.add(item);
 				}
