@@ -140,7 +140,7 @@
 		var $tagEdit = jQuery('<textarea/>', {
 			placeholder:"Your text goes here.",
 			id: 'formTags',
-			rows: '5',
+			rows: '2',
 			cols: '15',
 		});
 		$tagEdit.appendTo("#sideBar");
