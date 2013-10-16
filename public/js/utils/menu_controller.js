@@ -189,7 +189,7 @@
 	*/
 	function confirmEdit(field)
 	{
-		var tags = document.getElementById('newTags');
+		var tags = document.getElementById('formTags');
 		var tagged = new Array();
 		var tagSize = $(tags).children().length;
 		var count = 0;
