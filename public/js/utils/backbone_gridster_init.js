@@ -235,7 +235,7 @@
 						'votes': postObj[w].vote.length,
 						'color': newcolour,
 						'fontsize': postObj[w].fontSize,
-						'stringtag': postObj[w].stringTags,
+						'stringtag': postObj[w].stringtag,
 						'wall_connection': wallModel_current
 					});
 					this.collection.add(item);
