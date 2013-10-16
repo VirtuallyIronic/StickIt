@@ -1,3 +1,12 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/views/page/registerView.js
+ * Purpose:			Marionette View Page for the Main Region, Registration Page.
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
 define([ 'marionette', 'handlebars', 'text!templates/page/registerTemplate.html'],
 	function (Marionette, Handlebars, template){  
 		return Marionette.ItemView.extend({
@@ -6,6 +15,9 @@ define([ 'marionette', 'handlebars', 'text!templates/page/registerTemplate.html'
 				"click #registerButton": "register"
 			},
 			register:function(event){
+				// register function makes a post request to the api
+				// takes form values and on success will redirect to the register/success page.
+				// a failure to register will alert the user via popup.
 				event.stopPropagation();
 				event.preventDefault();
 				var url = '/auth/register';
@@ -30,7 +42,7 @@ define([ 'marionette', 'handlebars', 'text!templates/page/registerTemplate.html'
 						}
 					},
 					error:function(error){
-						window.location.replace('/register');
+						window.alert("Registration was unsuccessful. Please ensure all fields are filled, a valid email is used and passwords match.");
 					}
 				});
 			}

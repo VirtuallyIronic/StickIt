@@ -1,8 +1,6 @@
 //--------------
 /*
-**	VERSION 3.3
-**	20/09/2013
-**	PRE-TESTING
+**	VERSION 1.0.0
 **
 **	--FEATURES--
 **		- CLOSE CURRENT MENU
@@ -33,10 +31,12 @@
 	{
 		var edit = true;
 		var bonusTry = data;
+		//CHECKS IF EDIT MENU OR NEW MENU
 		if (data.$el.selector == '.wall')
 		{
 			edit = false;
 		}
+		//CREATES MAIN MENU ELEMENT (BACKGROUND)
 		$('#fullscreen').show();
 		var $mainMenu = jQuery('<div/>', {
 			class: 'popupMenu',
@@ -50,6 +50,7 @@
 		
 		$("<div id='formDetails'></div>").appendTo("#popupDetails");
 		
+		//TEXT BOX
 		var $textEdit = jQuery('<textarea/>', {
 			placeholder:"Your text goes here.",
 			id: 'formText',
@@ -63,11 +64,13 @@
 
 		if (edit == true)
 		{
+			//IF EDIT, ADD CURRENT TEXT
 			$textEdit.val(data.model.get('text'));
 		}
 		//------------------------------------------------
 		if (edit != true)
 		{
+			//LANE SELECT
 			$("<p>Lane</p>").appendTo("#sideBar");
 			var $laneSelect = jQuery('<select/>', {
 				id: 'laneDrop',
@@ -81,7 +84,7 @@
 			}
 		}
 		//------------------------------------------------
-
+		//COLOUR SELECT
 		$("<p>Colour</p>").appendTo("#sideBar");
 
 		var $colourSelect = jQuery('<div/>', {
@@ -90,9 +93,7 @@
 		});
 		$colourSelect.appendTo("#sideBar");
 
-$("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6E6' title='White'></div><div onclick='colourChange(this)' class='colourOption' style='background:#A49381' title='Sand'></div><div onclick='colourChange(this)' class='colourOption' style='background:#CCCC00' title='Yellow'></div><div onclick='colourChange(this)' class='colourOption' style='background:#33CCFF' title='Blue'></div><div onclick='colourChange(this)' class='colourOption' style='background:#FF0000' title='Red'></div><div onclick='colourChange(this)' class='colourOption' style='background:#860e20' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#4246ce' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#5aa6c8' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#ee740e' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#1b5733' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#605d60' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#9717e5' title=''></div><div onclick='colourChange(this)'class='colourOption' style='background:#f4504a' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#f7fa53' title=''></div>").appendTo("#colourDrop");
-
-
+		$("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6E6' title='White'></div><div onclick='colourChange(this)' class='colourOption' style='background:#A49381' title='Sand'></div><div onclick='colourChange(this)' class='colourOption' style='background:#CCCC00' title='Yellow'></div><div onclick='colourChange(this)' class='colourOption' style='background:#33CCFF' title='Blue'></div><div onclick='colourChange(this)' class='colourOption' style='background:#FF0000' title='Red'></div><div onclick='colourChange(this)' class='colourOption' style='background:#860e20' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#4246ce' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#5aa6c8' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#ee740e' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#1b5733' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#605d60' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#9717e5' title=''></div><div onclick='colourChange(this)'class='colourOption' style='background:#f4504a' title=''></div><div onclick='colourChange(this)' class='colourOption' style='background:#f7fa53' title=''></div>").appendTo("#colourDrop");
 
 /*
 		$("<option value='#E6E6E6'>white</option>").appendTo("#colourDrop");
@@ -113,6 +114,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		//------------------------------------------------
 
 */
+		//FONT SIZE SELECTOR
 		$("<p>Font Size</p>").appendTo("#sideBar");
 
 		var $sizeSelect = jQuery('<select/>', {
@@ -128,13 +130,14 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		
 		if (edit == true)
 		{
+			//SET DEFAULT SETTINGS FOR COLOR AND FONT SIZE
 			$("#sizeDrop > [value='"+data.model.get('fontsize')+"']").attr("selected", "true");
 			document.getElementById('mainMenu').tempColour=data.model.get('colour');
 		}
 		
 		//------------------------------------------------
 		$("<p>TAG</p>").appendTo("#sideBar");
-
+		// ADD TAG SECTION
 		$('<input class="userText" type="text" name="user" placeholder="e.g. Worked Well">').appendTo('#sideBar');
 		$("<button class='tagButton' onclick='addUserTag(this)'>Add Tag</button>").appendTo("#sideBar");
 		//------------------------------------------------
@@ -142,11 +145,12 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		if (edit === true)
 		{
+			//CONFIRM EDIT BUTTON
 			$("<button id='confirmEdit' class='confirmEditBtn' >Confirm</button>").appendTo("#bottomBar");
 			$('#confirmEdit').on('click', data.processing);
 		}		
-		//if (edit === false)
 		else {
+			//CONFIRM NEW NOTE
 			$("<button id='confirmPopup' class='confirmEditBtn' >Confirm</button>").appendTo("#bottomBar");
 			$('#confirmPopup').on('click', data.prepareItem);
 		}
@@ -154,6 +158,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 				
 		$("<div id='newTags' class='newTagBar'></div>").appendTo("#bottomBar");
 		$("<div id='oldTags' class='oldTagBar'></div>").appendTo("#bottomBar");
+		//ADD PRE-EXISTING TAGS
 		if (edit === true)
 		{
 			//var tags = data.model.get('tagged');
@@ -238,6 +243,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		var newFontSize = document.getElementById('sizeDrop').value;
 		var oldFontSize = field.model.get('fontsize');
 		
+		//IF ANY NEW DATA DOES NOT MATCH OLD DATA, UPDATE THE NOTE AND MODEL.
 		if ((newColour != oldColour) || (subText != null) || (newFontSize != oldFontSize) || (checkSize>0))
 		{
 			var r=confirm("Confirm?");
@@ -316,6 +322,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		return (yiq >= 128) ? 'black' : 'white';
 	}
 	
+	//IF COLOR IS RGB, CONVERT TO HEX
 	function converstionCheck(color)
 	{	
 		if (color == null)
@@ -338,11 +345,13 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 			return color;
 		}
 	}
+	//CONVERTS INT TO HEX
 	function componentToHex(c) {
 		var hex = c.toString(16);
 		return hex.length == 1 ? "0" + hex : hex;
 	}
 
+	//CONVERTS TO HEX VALUE
 	function rgbToHex(r, g, b) {
 		return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 	}
@@ -355,6 +364,7 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		var x = input.model.get('text');
 		var lanePos = input.model.get('col');
 		
+		//MAIN NOTE
 		var $note = jQuery('<div/>', {
 			class: 'cssnote',
 		});
@@ -363,17 +373,20 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		
 		$($note).appendTo($(input.el));
 		
+		//TOP DRAG BAR
 		var $db = jQuery('<div/>', {
 			class: 'dragbar',
 		});
 		$db.appendTo($note);
 		
+		//MAIN EDIT SECTION
 		var $edit = jQuery('<div/>', {
 			class: 'edit'
 		});
 
 		$edit.appendTo($note);
 		
+		//BOTTOM STATUS BAR
 		var $eSpan = jQuery('<span/>', {
 			class:'editSpan',
 		});
@@ -394,8 +407,9 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		
 		var voteScore = input.model.get('votes');
 		var authorUser = input.model.get('username');
-		//var authorUser = input.model.get();
 		
+		//DETAIL SECTION
+		//VOTES, AUTHOR, BUTTONS
 		$("<span id='votespan'>Votes:"+voteScore+"   .</span>").appendTo($tb);
 		$("<span id='userspan'>Created by: "+authorUser+"  </span>").appendTo($tb);
 		$("<span id='closespan'><img class='deleteButton' src='images/delete-icon-transparent.png' style='width: 30px;'>  </img></span>").appendTo($tb);
@@ -477,6 +491,10 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		$("<br></br>").appendTo("#popupDetails");
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		
+		var tags = field.model.get('text');
+		
+		$("<span class='taggedUser'> Tag: " + tags + "</span><br />").appendTo("#bottomBar");
+		/**
 		//var tagged = field.model.get('tagged');
 		var tagged = new Array();
 		//alert(field.tagging.length);
@@ -490,8 +508,9 @@ $("<div onclick='colourChange(this)'class='colourOption' style='background:#E6E6
 		var tagSize = _.size(tagged);
 		for (var i=0; i<tagSize; i++)
 		{
-			$('<span onclick="q(this)" value='+tagged[i].get('tagID')+' class="taggedUser">Tag: '+tagged[i].get("tagItem")+'</span><br/>').appendTo("#bottomBar");
+			$('<span value='+tagged[i].get('tagID')+' class="taggedUser">Tag: '+tagged[i].get("tagItem")+'</span><br/>').appendTo("#bottomBar");
 		}		
+		**/
 		$("<button id='cancelPopup' class='cancelEditBtn' onclick='closeMenu()'>Close</button>").appendTo("#bottomBar");
 		document.getElementById('cancelPopup').focus();
 	}
@@ -502,6 +521,8 @@ function confirmSettings() {
 	hideSettings();
 }
 
+//REMOVE TAGS FROM DATA MODEL
+//UNSURE IF WORKING
 function q(ev) {
 	var alertString = ev.textContent.split(':');
 	var r=confirm("Delete tag: "+alertString[1]);
@@ -520,6 +541,4 @@ function q(ev) {
 	{
 		x="You pressed Cancel!";
 	} 
-	//var privacy=$('#privacySelect option:selected').text();    
-	//var wallSize=$('#wallSizeSelect option:selected').text();    
 }

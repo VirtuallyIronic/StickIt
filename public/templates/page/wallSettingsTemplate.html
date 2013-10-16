@@ -10,7 +10,11 @@
 					</p>
 					<p> 
 						<label for="isPrivateCheckbox">Make my Wall Private: </label>
-						<input type="checkbox" name="isPrivateCheckbox" id="isPrivateCheckbox"> 
+						{{#if isPrivate}}
+							<input type="checkbox" name="isPrivateCheckbox" id="isPrivateCheckbox" checked="yes">
+						{{else}}
+							<input type="checkbox" name="isPrivateCheckbox" id="isPrivateCheckbox">
+						{{/if}} 
 					</p>
 					<p class="login button"> 
 						<input type="submit" id="updateButton" value="Update Wall" /> 

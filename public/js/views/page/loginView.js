@@ -1,3 +1,12 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/views/page/loginView.js
+ * Purpose:			Marionette View Page for the Main Region. Login page functionality.
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
 define([ 'jquery', 'underscore', 'backbone', 'marionette', 'handlebars', 'text!templates/page/loginTemplate.html'],
 	function ($, _, Backbone, Marionette, Handlebars, template){  
 		return Marionette.ItemView.extend({
@@ -6,6 +15,9 @@ define([ 'jquery', 'underscore', 'backbone', 'marionette', 'handlebars', 'text!t
 				"click #loginButton": "login"
 			},
 			login: function(event) {
+				// login function posts the username and password to the /auth/login api route
+				// successful return from the api call redirects the user to the /home route
+				// unsuccessful alerts the user via a popup dialog 
 				event.stopPropagation();
 				event.preventDefault();
 				var url = '/auth/login';
@@ -28,8 +40,7 @@ define([ 'jquery', 'underscore', 'backbone', 'marionette', 'handlebars', 'text!t
 						}
 					},
 					error: function(error) {
-						console.log(error);
-						//window.location.replace('/login');
+						window.alert("Invalid Username or Password. Please try again.");
 					}
 				});
 			}

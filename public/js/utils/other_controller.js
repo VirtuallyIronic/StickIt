@@ -1,14 +1,12 @@
 //--------------
 /*
-**	VERSION 3.3
-**	20/09/2013
-**	PRE-TESTING
+**	VERSION 1.0.0
 **
 **	--FEATURES--
-**		- DELETE ALL NOTES FROM THE WALL
+**		** (?) DELETE ALL NOTES FROM THE WALL
 **		- CREATE AN IMG OF THE WALL
 **		- REMOVE A SINGLE NOTE
-**		- ADMIN CHECK
+**		** (?) ADMIN CHECK
 **		
 */
 //--------------
@@ -21,6 +19,7 @@
 	/*
 	CHECKS IF CURRENT USER IS AN ADMIN
 	MISSING SERVER REQUEST FOR DATA
+	**UNUSED (?)
 	*/
 function adminCheck()
 	{

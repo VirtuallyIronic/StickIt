@@ -1,3 +1,12 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/views/page/wallPermissionView.js
+ * Purpose:			Marionette View Page for the Main Region, Wall Permissions Page.
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
 define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallPermissionTemplate.html', 'transit', 'settingsmenu', 'utils/permissionsPageController'],
 	function (Marionette, Handlebars, json2, template, transit, settingsMenu, permissionsPageController){  
 		return Marionette.ItemView.extend({
@@ -9,6 +18,9 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallPermission
 				"click #addPermission": "addPermission"
 			},
 			addPermission: function(event){
+				// addPermission function does a POST request to the server to add a user.
+				// successful returns will refresh the page showing the new user
+				// unsuccessful alerts will redirect the user to an error page 
 				event.stopPropagation();
 				event.preventDefault();
 				var formValues = {
@@ -30,7 +42,7 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallPermission
 						}
 					},
 					error: function(error) {
-						console.log(error);
+						window.location.replace('/error');
 					}
 				});
 			}

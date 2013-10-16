@@ -1,3 +1,12 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/App.js
+ * Purpose:			Core UI Application File. Creates Marionette Application Object, adds regions and starts router.
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
 define(['jquery', 'backbone', 'marionette', 'backbone-relational', 'underscore', 'handlebars'],
     function ($, Backbone, Marionette, Relational, _, Handlebars) {
 		// instantiate the application

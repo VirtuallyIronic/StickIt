@@ -1,3 +1,13 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/utils/permissionsPageController.js
+ * Purpose:			Contains form functionality for the Wall Permissions page.
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
+//makes a PUT ajax request for a walluser entry to revert to an admin
 function makeAdmin(id){
 	var url = '/api/walluser/' + id;
 	var formValues = {
@@ -17,11 +27,12 @@ function makeAdmin(id){
 			}
 		},
 		error: function(error) {
-			window.location.replace('/login');
+			window.location.replace('/error');
 		}
 	});
 }
-		
+
+//makes a PUT ajax request for a walluser entry to revert to a poster
 function makePost(id){
 	var url = '/api/walluser/' + id;
 	var formValues = {
@@ -41,11 +52,12 @@ function makePost(id){
 			}
 		},
 		error: function(error) {
-			window.location.replace('/login');
+			window.location.replace('/error');
 		}
 	});
 }
 
+//makes a PUT ajax request for a walluser entry to revert to a viwer
 function makeView(id){
 	var url = '/api/walluser/' + id;
 	var formValues = {
@@ -65,11 +77,12 @@ function makeView(id){
 			}
 		},
 		error: function(error) {
-			window.location.replace('/login');
+			window.location.replace('/error');
 		}
 	});
 }		
 
+//makes a DELETE ajax request to remove a specific walluser entry
 function removePermission(id){
 	var url = '/api/walluser/' + id;
 	$.ajax({

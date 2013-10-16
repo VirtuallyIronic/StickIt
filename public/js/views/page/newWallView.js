@@ -1,3 +1,12 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/views/page/newWallView.js
+ * Purpose:			Marionette View Page for the Main Region, New Wall Page.
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
 define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallNewTemplate.html', 'transit', 'settingsmenu', 'utils/permissionsPageController'],
 	function (Marionette, Handlebars, json2, template, transit, settingsMenu, permissionsPageController){  
 		return Marionette.ItemView.extend({
@@ -9,6 +18,9 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallNewTemplat
 				"click #createButton": "createWall",
 			},
 			createWall: function(){
+				// createWall function will take form values and submit a post request to the api
+				// successful will redirect to the home route where the user will see their new wall  
+				// failure will redirect the user to the error page
 				event.stopPropagation();
 				event.preventDefault();
 				var formValues = {
@@ -30,7 +42,7 @@ define([ 'marionette', 'handlebars', 'json2','text!templates/page/wallNewTemplat
 						}
 					},
 					error: function(error) {
-						console.log(error);
+						window.location.replace('/error');
 					}
 				});
 			}

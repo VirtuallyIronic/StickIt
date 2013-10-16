@@ -1,3 +1,12 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/views/widget/widgetView.js
+ * Purpose:			Marionette View Page for the Widget Region. Controls the Widget's Login / Logout functionality.
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
 define([ 'marionette', 'handlebars', 'text!templates/widget/widgetTemplate.html', 'models/CurrentUser', 'transit', 'settingsmenu'],
 	function (Marionette, Handlebars, template, CurrentUser, Transit, SettingsMenu){  
 		return Marionette.ItemView.extend({
