@@ -420,9 +420,6 @@ module.exports = function(app, passport) {
 			// require viewer and privacy option
 			var title = req.body.title
 			  , isPrivate = req.body.isPrivate;
-			  
-			console.log(req.body);
-			console.log(req.body.isPrivate);
 			
 			// make wall id
 			var wallId = shortId.generate(12);
@@ -447,6 +444,9 @@ module.exports = function(app, passport) {
 		// require wall title and privacy option
 		var title = req.body.title
 		  , isPrivate = req.body.isPrivate;
+		  
+		console.log(req.body);
+		console.log(req.body.isPrivate);
 		
 		// sanitize and escape submitted values
 		sanitize(title).xss();
