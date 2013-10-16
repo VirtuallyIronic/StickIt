@@ -528,7 +528,8 @@ module.exports = function(app, passport) {
 		  , username = req.user.username
 		  , text = req.body.text
 		  , colour = req.body.colour
-		  , fontSize = req.body.fontSize;
+		  , fontSize = req.body.fontSize
+		  , stringtag = req.body.stringtag;
 		
 		// sanitise and escape
 		sanitize(col).xss();
@@ -545,6 +546,8 @@ module.exports = function(app, passport) {
 		sanitize(colour).escape();
 		sanitize(fontSize).xss();
 		sanitize(fontSize).escape();
+		sanitize(stringtag).xss();
+		sanitize(stringtag).escape();
 		
 		// check user has permission
 		hasPermission(wallId, req.user.id, function(result){
@@ -561,7 +564,8 @@ module.exports = function(app, passport) {
 							username: username,
 							text: text,
 							colour: colour,
-							fontSize: fontSize
+							fontSize: fontSize,
+							stringtag: stringtag
 						}).success(function(post){
 							res.json(post);
 						}).error(function(){
@@ -584,7 +588,8 @@ module.exports = function(app, passport) {
 		  , row = req.body.row
 		  , text = req.body.text
 		  , colour = req.body.colour
-		  , fontSize = req.body.fontSize;
+		  , fontSize = req.body.fontSize
+		  , stringtag = req.body.stringtag;
 		
 		// sanitize and escape
 		sanitize(col).xss();
@@ -597,6 +602,8 @@ module.exports = function(app, passport) {
 		sanitize(colour).escape();
 		sanitize(fontSize).xss();
 		sanitize(fontSize).escape();
+		sanitize(stringtag).xss();
+		sanitize(stringtag).escape();
 		
 		// find post object
 		Post.find({ where: { id: req.params.id }, limit: 1}).success(function(post){
@@ -613,7 +620,8 @@ module.exports = function(app, passport) {
 								row: row,
 								text: text,
 								colour: colour,
-								fontSize: fontSize
+								fontSize: fontSize,
+								stringtag: stringtag
 							}).success(function(post){
 								res.json(post);
 							}).error(function(){

@@ -1,3 +1,12 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/contollers/Controller.js
+ * Purpose:			Marionette Controller for the AppRouter.
+ * Author:			Evan Scown
+ * Contributors:	Evan Scown 
+ */
+
 define([
     'App',
     'backbone',

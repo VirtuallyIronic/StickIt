@@ -1,3 +1,10 @@
+
+/**
+ * StickIt by Virtually Ironic
+ * Filename:		public/js/models/Model.js
+ * Purpose:			Default Model for Refernce or Dummy Needs 
+ */
+
 define(["jquery", "backbone"],
     function ($, Backbone) {
         // Creates a new Backbone Model class object

@@ -1,5 +1,8 @@
 	function modelInit()
 	{
+		//_----------------------------
+		//TODO
+		//REWRITE FOR NEW DATA ENRTY
 		//Note Model, handles what data each note contains
 		noteFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',
@@ -13,7 +16,8 @@
 					'text': '',
 					'votes': 0,
 					'colour': '#FFFFFF',
-					'fontsize': 18
+					'fontsize': 18,
+					'stringtag': ''
 				}
 			},
 			relations: [{
@@ -27,7 +31,7 @@
 				}
 			}]
 		});
-		
+		//_----------------------------
 		//Wall Model, handles what data the wall needs.
 		wallFormat = Backbone.RelationalModel.extend({
 			idAttribute: '_id',

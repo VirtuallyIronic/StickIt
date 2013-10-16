@@ -1,15 +1,6 @@
 //--------------
 /*
-**	VERSION 3.3
-**	23/09/2013
-**	PRE-TESTING
-**
-
-/*
-	TODO!!!
-	CREATE APPROPRIATE MODELS TO INTERACT WITH NEW AJAX COMMANDS
-
-*-----
+**	VERSION 1.0.0
 
 **	--FEATURES--
 **		GRIDSTER INITIALISATION
@@ -75,7 +66,7 @@
 		
 		setInterval(function(){
 			location.reload();
-		}, 60000);
+		}, 10000);
 		
 		// Wall View Handler
 		ListView = Backbone.View.extend({
@@ -215,6 +206,9 @@
 						voteObj[objCount] = newVotes;
 						objCount++;
 					}
+					//_----------------------------
+					//TODO
+					//MAKES A MODEL OF TAGS, CAN BE REWROTE FOR TEXT FIELD / STRING
 					objCount = 0;
 					for (var t=0; t<postObj[w].tag.length; t++)
 					{
@@ -229,6 +223,7 @@
 						tagObj[objCount] = newTags;
 						objCount++;
 					}
+					//_----------------------------
 					var newcolour = converstionCheck(postObj[w].colour);
 					item.set({
 						'col':postObj[w].col,
@@ -240,6 +235,7 @@
 						'votes': postObj[w].vote.length,
 						'color': newcolour,
 						'fontsize': postObj[w].fontSize,
+						'stringtag': postObj[w].stringTags,
 						'wall_connection': wallModel_current
 					});
 					this.collection.add(item);
@@ -352,6 +348,9 @@
 					var colour = document.getElementById('mainMenu').tempColour;
 					colour = converstionCheck(colour);
 					var fontsize = document.getElementById('sizeDrop').value;
+					var stringtag = document.getElementById('formTags').value;
+					//_----------------------------
+					//TODO
 					var tags = document.getElementById('newTags');
 					var tagged = new Array();
 					var tagSize = $(tags).children().length;
@@ -362,7 +361,7 @@
 						tagged[count] = $(tags).children().eq(i).text();
 						count=count+1;
 					}
-					
+					//_----------------------------
 					while (gridster.is_widget(col,row))
 					{
 						++row;
@@ -378,8 +377,10 @@
 						'text': text,
 						'colour': colour,
 						'fontsize': fontsize,
+						'stringtag': stringtag,
 						'wall_connection': wallModel_current//.get('_id')
 					});
+					//_----------------------------
 					tagObj = new Array;
 					var tagCount=0;
 					for (var i=1; i<tagSize; i=i+3)
@@ -396,7 +397,7 @@
 						tagCount++;
 						//this.tagging.add(newNoteTags);
 					}
-					
+					//_----------------------------
 					this.collection.add(item);
 				}
 	
@@ -405,6 +406,7 @@
 			
 			//-------ADDS WIDGET TO GRIDSTER GRID-------
 			appendItem: function(item){
+				//TODO
 				var col = item.get('col');
 				var row = item.get('row');
 				var objdata ='';

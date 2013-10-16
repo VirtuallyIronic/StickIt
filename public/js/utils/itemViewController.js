@@ -23,6 +23,9 @@ function enableItemView() {
 				this.tagging = new options.tagModel;
 				this.newNoteData = options.newNote;
 
+				//_----------------------------
+				//TODO
+				//PROB SAFE BUT MARKED
 				//CHECK THE DETAILS OF THE NOTE
 				//IF IT HAS VOTES OR TAGS
 				if(options.newNoteInput == 'tv')
@@ -45,7 +48,7 @@ function enableItemView() {
 					this.incTagData = false;
 					this.incVoteData = false;
 				}
-
+				//_----------------------------
 				this.model.on('laneRemove', this.removenoprompt);
 				this.model.on('moveNote', this.moveNote);
 				$(this.$el).on('custom', this.updatePos);
@@ -53,6 +56,10 @@ function enableItemView() {
 			
 			//------CREATES A NEW NOTE--------
 			render: function(){
+				//_----------------------------
+				//TODO
+				//MAKES NEW MODEL. USELESS
+				//REWRITE TO BE STRING / TEXT FIELD
 				if (this.incTagData != false)
 				{
 					//alert(this.incTagData);
@@ -73,6 +80,7 @@ function enableItemView() {
 						}
 					}
 				}
+				//_----------------------------
 				if (this.incVoteData != false)
 				{
 					for (var k=0; k<this.incVoteData.length; k++)
@@ -103,6 +111,9 @@ function enableItemView() {
 			},
 
 			//CREATES THE TAG TEXT FOR THE NOTE
+			//_----------------------------
+			//TODO
+			//REWRITE FOR STRING / TEXT FIELD
 			addNewTag: function(e){
 				var tags = this.model.get('tagged');
 				var tagName = $(e.target).parent().children('.userText').val();
@@ -118,7 +129,7 @@ function enableItemView() {
 				this.model.set('tagged',tags);
 				$("<span>TAGGED: </span><span class='taggedUser'> "+tags[tagSize]+"</span><br/>").appendTo(".popupMenu");
 			},
-			
+			//_----------------------------
 			//------+1 Vote--------
 			voting: function(){
 				if (confirmLogin == true)
@@ -258,7 +269,10 @@ function enableItemView() {
 					var textEdit = data[0];
 					var colour = data[1];
 					var fontsize = data[2];
+					//_----------------------------
+					//MARKED TODO
 					var tags = data[3];
+					//_----------------------------
 					colour = converstionCheck(colour);
 					this.$el.children('.cssnote').children('.edit').children(".editSpan").text(textEdit);
 					linkify(this.$el.children('.cssnote').children('.edit').children(".editSpan"));
@@ -271,6 +285,8 @@ function enableItemView() {
 					this.$el.children('.cssnote').children('.toolbar').css('background-color', newColour);
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('fontSize', fontsize+"px");
 					this.$el.children('.cssnote').children('.edit').children('.editSpan').css('color', fontColour);
+					//_----------------------------
+					//TODO
 					if (tags != 0)
 					{
 						for (var k=0; k<tags.length; k++)
@@ -285,14 +301,15 @@ function enableItemView() {
 							tagNew(addTags);
 						}
 					}
-					
+					//_----------------------------
+					//REWRITE TO ADD NEW TAG TEXT
 					this.model.set({
 						'text': textEdit,
 						'fontsize': fontsize,
 						'colour': colour
 						// modify item defaults
 					});
-					
+					//_----------------------------
 					noteUpdate(this.model.get('noteId'), this.model);
 					closeMenu();
 				}
