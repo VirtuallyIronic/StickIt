@@ -348,7 +348,7 @@
 					var colour = document.getElementById('mainMenu').tempColour;
 					colour = converstionCheck(colour);
 					var fontsize = document.getElementById('sizeDrop').value;
-					var stringtag = document.getElementById('formTags').value;
+					var stringtag = document.getElementById('stringtag').value;
 					//_----------------------------
 					//TODO
 					var tags = document.getElementById('newTags');
