@@ -137,6 +137,21 @@
 		
 		//------------------------------------------------
 		$("<p>TAG</p>").appendTo("#sideBar");
+<<<<<<< HEAD
+		//TEXT BOX
+		var $tagEdit = jQuery('<textarea/>', {
+			placeholder:"Your text goes here.",
+			id: 'formTags',
+			rows: '2',
+			cols: '15',
+		});
+		$tagEdit.appendTo("#sideBar");
+		if (edit == true)
+		{
+			//IF EDIT, ADD CURRENT TEXT
+			$tagEdit.val(data.model.get('tags'));
+		}		
+=======
 		// ADD TAG SECTION
 		//TEXT BOX
 		var $stringTagEdit = jQuery('<textarea/>', {
@@ -154,6 +169,7 @@
 		}
 		//------------------------------------------------
 		
+>>>>>>> parent of 007d7f4... comments part 3
 		$("<div id='bottomBar'></div>").appendTo("#popupDetails");
 		if (edit === true)
 		{
@@ -234,6 +250,7 @@
 	*/
 	function confirmEdit(field)
 	{
+<<<<<<< HEAD
 		//TODO
 		var tags = document.getElementById('newTags');
 		//TAGS NOW IS THE TEXT FIELD
@@ -241,6 +258,9 @@
 		//MODEL IS "FIELD"
 		//-------------------------
 		//REWRITE THIS
+=======
+		var tags = document.getElementById('formTags');
+>>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 		var tagged = new Array();
 		var tagSize = $(tags).children().length;
 		var count = 0;

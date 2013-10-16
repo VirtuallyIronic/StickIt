@@ -529,7 +529,11 @@ module.exports = function(app, passport) {
 		  , text = req.body.text
 		  , colour = req.body.colour
 		  , fontSize = req.body.fontSize
+<<<<<<< HEAD
 		  , stringtag = req.body.stringtag;
+=======
+		  , tags = req.body.tags;
+>>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 		
 		// sanitise and escape
 		sanitize(col).xss();
@@ -546,8 +550,13 @@ module.exports = function(app, passport) {
 		sanitize(colour).escape();
 		sanitize(fontSize).xss();
 		sanitize(fontSize).escape();
+<<<<<<< HEAD
 		sanitize(stringtag).xss();
 		sanitize(stringtag).escape();
+=======
+		sanitize(tags).xss();
+		sanitize(tags).escape();
+>>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 		
 		// check user has permission
 		hasPermission(wallId, req.user.id, function(result){
@@ -565,7 +574,11 @@ module.exports = function(app, passport) {
 							text: text,
 							colour: colour,
 							fontSize: fontSize,
+<<<<<<< HEAD
 							stringtag: stringtag
+=======
+							tags: tags
+>>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 						}).success(function(post){
 							res.json(post);
 						}).error(function(){
@@ -589,7 +602,11 @@ module.exports = function(app, passport) {
 		  , text = req.body.text
 		  , colour = req.body.colour
 		  , fontSize = req.body.fontSize
+<<<<<<< HEAD
 		  , stringtag = req.body.stringtag;
+=======
+		  , tags = req.body.tags;
+>>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 		
 		// sanitize and escape
 		sanitize(col).xss();
@@ -602,8 +619,13 @@ module.exports = function(app, passport) {
 		sanitize(colour).escape();
 		sanitize(fontSize).xss();
 		sanitize(fontSize).escape();
+<<<<<<< HEAD
 		sanitize(stringtag).xss();
 		sanitize(stringtag).escape();
+=======
+		sanitize(tags).xss();
+		sanitize(tags).escape();
+>>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 		
 		// find post object
 		Post.find({ where: { id: req.params.id }, limit: 1}).success(function(post){
@@ -621,7 +643,11 @@ module.exports = function(app, passport) {
 								text: text,
 								colour: colour,
 								fontSize: fontSize,
+<<<<<<< HEAD
 								stringtag: stringtag
+=======
+								tags: tags
+>>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
 							}).success(function(post){
 								res.json(post);
 							}).error(function(){

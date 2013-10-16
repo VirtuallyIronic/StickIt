@@ -52,7 +52,11 @@ module.exports = function(sequelize, DataTypes) {
     fontSize: {
       type: DataTypes.INTEGER
     },
+<<<<<<< HEAD
     stringtag: {
+=======
+    tags: {
+>>>>>>> 01b6ce1d32e6f0112c13bc1394b484d1962823cc
       type: DataTypes.STRING
     }
   });
