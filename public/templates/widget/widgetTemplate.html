@@ -1,0 +1,29 @@
+<div>
+	<div id="menuwidgetShow"  onclick="showUserSettings(menuSettings, menuwidgetShow, menuwidgetHide)"><img src="images/widgets_alt_badge.png"></div>
+    <div id="menuwidgetHide"  onclick="hideUserSettings(menuSettings, menuwidgetHide, menuwidgetShow)" style="display:none;"><img src="images/widgets_alt_badge.png"></div>
+    <div id="loginWrapper" class="wrapper" style="margin-top:100px; position: absolute; margin-right:80px; width:350px; height: 200px; z-index:99;">
+		<div id="menuSettings" class="animate form" style="display:none; margin-top: -60px; height:200px; padding-bottom:100;">
+			<h1 id="MainS">Login</h1>
+			{{#if id}}
+			<form autocomplete="on">
+				<p>Hello, {{ username }}</p>
+				<p class="login button"> 
+					<input type="submit" id="widgetLogoutButton" value="Logout" /> 
+				</p>
+			</form>
+			{{else}}
+			<form autocomplete="on"> 
+				<p> 
+					<input id="usernameWidget" name="usernameWidget" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+				</p>
+				<p> 
+					<input id="passwordWidget" name="passwordWidget" required="required" type="password" placeholder="eg. X8df!90EO" /> 
+				</p>
+				<p class="login button"> 
+					<input type="submit" id="widgetLoginButton" value="Login" /> 
+				</p>
+			</form>
+			{{/if}}
+		</div>
+	</div>
+</div>

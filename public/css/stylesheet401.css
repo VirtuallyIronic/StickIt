@@ -1,0 +1,660 @@
+/*
+design template CSS sheet.
+29/07/2013
+*/
+
+{
+  margin:0;
+  padding:0;
+  height:100%; 
+  width:100%;
+}
+
+.titleDisplay { 
+	padding-top: 10px;
+	min-height:20px;
+	overflow:hidden;
+}
+
+.to_button{
+	display: inline-block;
+	font-weight: bold;
+	background: rgb(247, 248, 241);
+	padding: 2px 6px;
+	color: rgb(29, 162, 193);
+	text-decoration: none;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: 1px solid rgb(203, 213, 214);
+	-webkit-transition: all 0.4s linear;
+	-moz-transition: all 0.4s linear;
+	-o-transition: all 0.4s linear;
+	-ms-transition: all 0.4s linear;
+	transition: all 0.4s linear;
+}
+
+.titleDisplay ul{ 
+    
+	overflow:hidden;
+	width: 2000%;
+}
+
+.titleDisplay li{
+    display: inline;
+	list-style-type: none;
+	padding-right: 20px;
+	margin-right: 15px;
+	overflow-y: hidden;
+}
+
+  
+.laneTitle {  
+	opacity: .9;
+	border-radius: 15px;
+	background-color: rgb(225, 233, 170);
+	width: 200px;  
+	min-height: 40px;  
+	border: solid 2px #ccc; 
+	display: inline-block;
+	overflow-y: visible;
+	text-align: center;
+} 
+/* new                     addition*/
+
+.itemsList {
+	white-space: nowrap; 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0 0 2.5em; 
+	float: left;
+	margin-right: 10px; 
+	overflow: hidden;
+	background-color: rgb(255, 240, 200);
+	min-width: 205px;
+	min-height: 255px;
+	display: inline;
+}
+
+.list_title{
+	text-align:center;
+}
+
+.item{
+	margin: 0 5px 5px 5px; 
+	padding: 5px; 
+	font-size: 1.2em; 
+	width: 205px; 
+	height: 255px; 
+}
+
+body{
+  font-family:arial,sans-serif;
+  font-size:100%;
+  margin-left:0em;
+  margin-right: 0em;
+  margin-top: 0em;
+  background-color:#427580;
+  border-radius: 15px; 
+}
+
+#fullscreen {
+	display:none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:9999;
+	background-color:#C0C0C0;
+	opacity:0.4;
+}
+
+#expandFulltext{
+	display:inline-block;
+	outline: none;
+	width: 95%;
+	height: auto;
+	padding-left: 5px;
+	overflow: hidden;
+	text-wrap:normal;
+	white-space:pre-wrap;
+}
+
+.popupMenu {
+    position: absolute;
+    top: 300px;
+    left: 50%;
+    margin-top: 0px;
+    margin-left: -200px;
+	opacity:1.0;
+	background-color: rgb(255, 240, 70);
+	min-height: 400px;
+    height: auto;
+    width: 450px;
+	padding: 10px;
+	z-index:99999;
+	border-style:solid;
+	border-width:2px;
+    -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+	word-wrap:break-word;
+}
+
+#formDetails{
+	width: 100%;
+	height: 205px;
+}
+
+#colourDrop{
+    width: 180px;
+}
+
+
+#formText{
+	resize: none;
+}
+
+#popBox{
+	width: 190px;
+	height: 200px;
+}
+
+#titlebar{
+  font-family:arial,sans-serif;
+  font-size:100%;
+  background-color:#999;
+  color:#fff;
+}
+
+h2,p{
+  font-size:100%;
+  font-weight:normal;
+}
+
+.topmenu  {
+  width: 100%;
+  height: 200px;
+  margin-right:auto;
+  margin-left:auto;
+  position: relative;
+  border-bottom: 1px solid #0758AF;
+  background-color: #0758AF;
+}
+
+.topmenu img{
+ 
+}
+
+.topmenu span{
+ 
+  text-align: center;
+  margin: auto;
+   z-index: 100;
+}
+
+.menu {
+	width:33px;
+	height:33px;
+	position:absolute;
+	background:#0F0;
+	overflow:hidden;
+	z-index:3;
+	transition: width 1s;
+	-moz-transition: width 1s;
+	-webkit-transition: width 1s;
+	-o-transition: width 1s;
+	right:49%;
+}
+
+.menu:hover {
+	width:180px;
+}
+
+
+
+.wall {
+	position:absolute;
+	display: inline;
+	width: 100%;
+	height: 100%;
+}
+
+.note {
+    background-color: rgb(255, 240, 70);
+    height: 250px;
+    position: absolute;
+    width: 200px;
+	border-style:solid;
+	border-width:2px;
+    -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.edit {
+    outline: none;
+	width: 199px;
+	overflow: hidden;
+	word-break: break-all;
+	padding-top:27px;
+}
+
+.editSpan {
+	display:inline-block;
+	outline: none;
+	width: 200px;
+	padding-top: 4px;
+	min-height: 150px;
+	max-height: 165px;
+	line-height: 100%;
+	padding-left: 5px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space:pre-wrap;
+}
+
+.lane {
+	display: inline-block;
+	position: absolute;
+	background: url(../images/mooning.png) repeat bottom left;
+	height: 400px;
+	width: 10px;
+	background-color: red;
+}
+
+.dragbar{
+    position: absolute;
+	left: 0px;
+    right: 0px;
+    top: 0px;
+	height: 25px;
+    background-color: #db0;
+    border-top: 1px solid #a80;
+    padding: 2px 4px;
+    text-align: right;
+}
+
+.toolbar{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    font-size: 9px;
+    background-color: #db0;
+    color: white;
+    border-top: 1px solid #a80;
+    padding: 2px 4px;
+    text-align: right;
+	height: 55px;
+}
+
+#loginlogo{
+	-webkit-border-radius: 0em 0em 5em 5em;
+	width: 100%;
+	min-height: 100px;
+	max-height: 200px;
+	border: 1px solid #071e3c;
+	background-color: #071e3c; 
+	text-align: left;
+}
+
+#loginlogo img{ 
+  min-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+#titlebar{ 
+	font-family:arial,sans-serif;
+	font-size:100%;
+	background-color:#999;
+	color:#fff;
+}
+
+.footer{
+	bottom: 0;
+	position: fixed;
+	font-style: italic;
+	font-size: 70%;
+}
+#menuwidgetShow{
+	float: right;
+	margin-right: 90px;
+	width: 40px;
+	height: 40px;
+	border-radius: 15px;
+	cursor: pointer;
+}
+#menuwidgetHide{
+	float: right;
+	margin-right: 90px;
+	width: 40px;
+	height: 40px;
+	border-radius: 15px;
+	cursor: pointer;
+}
+
+.userSettings {
+	position: absolute;
+	top: 40px;
+	width: 300px;	
+	height: 300px;	
+	padding: 18px 6% 60px 6%;
+	margin: 0 0 35px 0;
+	background: rgb(247, 247, 247);
+	border: 1px solid rgba(147, 184, 189,0.8);
+	-webkit-box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+	   -moz-box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+	        box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+	-webkit-box-shadow: 5px;
+	-moz-border-radius: 5px;
+		 border-radius: 5px;
+}
+/*
+lane btns.
+*/  
+.deleteLane,
+.editLaneBut {
+	color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    font-size: 70%;
+}
+.deleteLane{
+	 background: rgb(202, 60, 60); /* this is a maroon */
+}
+.editLaneBut{
+	background: rgb(66, 184, 221); /* this is a light blue */
+}
+/*
+Note btns.
+*/
+.sliderButton,
+.deleteButton,
+.editButton,
+.expandButton,
+.tagButton,
+.continueBtn
+.confirmBtn,
+.confirmEditBtn,
+.cancelEditBtn,
+.voteButton{
+	color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+.sliderButton{
+	font-size: 130%;
+background: rgb(66, 184, 221); /* this is a light blue */
+}
+.deleteButton{
+background-color: transparent;	
+ /*background: rgb(202, 60, 60); /* this is a maroon */
+}
+.editButton{
+	background-color: transparent;	
+ /*background: #045cdc; /* this is a light blue */
+}
+.expandButton{
+	background-color: transparent;	
+/*background: rgb(66, 184, 221); /* this is a light blue */
+ 
+}
+.voteButton{
+	background-color: transparent;	
+/*background: rgb(66, 184, 221); /* this is a light blue */
+ 
+}
+.continueBtn{
+	float: right;
+	font-size: 130%;
+background: rgb(66, 184, 221); /* this is a light blue */
+ 
+}
+.cancelEditBtn{
+	position: absolute;
+	right: 100px;
+	bottom: 0px;
+	font-size: 130%;
+	background: rgb(66, 184, 221); /* this is a light blue */
+}
+.confirmEditBtn{
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	font-size: 130%;
+	background: rgb(66, 184, 221); /* this is a light blue */
+}
+
+.confirmBtn{
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	font-size: 130%;
+background: rgb(66, 184, 221); /* this is a light blue */
+ 
+ 
+}
+
+.tagButton{
+	width:70px;
+	margin-bottom: 12px;
+background: #045cdc; /* this is a light blue */	
+}
+#colourSelect{
+    width: 140px;
+    height: 34px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+	
+}
+#colourSelect select{
+	background: white;
+   width: 138px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+}
+
+#sizeDrop{
+	background: white;
+   width: 138px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+
+}
+#laneDrop{
+	background: white;
+   width: 138px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+
+}
+.userText{
+background: white;
+   width: 128px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+	
+}
+
+.tag {
+	font-style: italic;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+/* note bar*/
+#bottomBar{
+	
+	position: absolute;
+	bottom: 5px;
+	width: 450px;
+}
+
+#wallCreationBtn{
+	position: absolute;
+	right: 10px;
+	top: 400px;
+	color: white;
+	width: 150px;
+	height: 70px;
+
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+ 	background: rgb(202, 60, 60); /* this is a maroon */    
+}
+.sidemenuwrapper{
+	position: absolute;
+	right:0;
+	bottom: 10px;
+	
+	
+}
+.settingsWrapper{
+	position: absolute;
+	top: 300px;
+	left: 50px;
+}
+#loginWrapper{
+	width: 60%;
+	right: 0px;
+	min-height: 560px;	
+	margin: 0px auto;	
+	width: 500px;
+	position: relative;	
+}
+#sidemenu {
+	/* the menu is fixed to under the wall starting point.*/
+	position: absolute;
+	right:0;
+	bottom: 10px;
+	width: 100px;
+	height: 50px;
+	padding-top: 22px;
+	padding-left: 10px;
+	background-color: red;
+	border-bottom-left-radius:10px;
+	border-top-left-radius: 10px;  
+	opacity: 0.4;
+	cursor: pointer;
+	z-index:97; 
+}
+/*note creation sidebar */
+#sideBar{
+position: absolute;
+top: 10px;
+right: 0px;
+}
+/*wall settings slider btn*/
+#sidebarSlider{
+
+}
+.sidebar {
+	position: absolute;
+	top:-70px;
+	opacity: 1.0;
+  	display:none;
+  	float: right;
+  	display: inline-block;
+  	border-bottom-left-radius:10px;
+  	border-top-left-radius: 10px;  	
+    position: relative;
+	border: 1px solid #071e3c;
+  	background-color: #071e3c;
+}
+
+.closeBtn{
+	position: absolute;
+	right: 5px;	
+	top: 5px;
+}
+.styledSelect{
+   width: 240px;
+   height: 34px;
+   overflow: hidden;
+   background: url(../images/new-arrow-down.jpg) no-repeat right #ddd;
+   border: 1px solid #ccc;
+}
+.styledSelect select{
+	background: transparent;
+    width: 240px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 34px;
+    -webkit-appearance: none;
+
+}
+
+#userMenu{
+	position: absolute;
+	z-index: 99;
+	right: 0px;
+	top: 160px;
+}
+
+.navbar{
+margin-bottom: 20px;
+overflow: visible;
+}
+.navbar-inner{
+margin-left: auto;
+margin-right: auto;
+text-align:center;
+min-height: 40px;
+padding-right: 20px;
+padding-left: 20px;
+background-color: #fafafa;
+background-image: -moz-linear-gradient(top,#fff,#f2f2f2);
+background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#f2f2f2));
+background-image: -webkit-linear-gradient(top,#fff,#f2f2f2);
+background-image: -o-linear-gradient(top,#fff,#f2f2f2);
+background-image: linear-gradient(to bottom,#fff,#f2f2f2);
+background-repeat: repeat-x;
+border: 1px solid #d4d4d4;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#fff2f2f2',GradientType=0);
+-webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+-moz-box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+}
+
+.navUl {
+
+list-style: none;
+padding: 0;
+
+
+}
+.navLi{
+padding-left: 10px;
+
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+border-width: 1px;
+border-color: #ffe #aaab9c #ccc #fff;
+border-style: solid;
+
+list-style: none;
+display: inline-block;
+
+}

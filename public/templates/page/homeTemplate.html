@@ -1,0 +1,29 @@
+<section>
+	<div class="container">
+		<div id="ThumbnailWrapper">
+			<p style="width:500px; margin-left:auto; margin-right:auto; text-align: center;">
+				<b>Accessable Walls</b>
+			</p>
+			{{#if post}}
+				<a href="/newwall">
+					<button id="wallCreationBtn" onclick="/newwall">Don't have a wall yet? Click here to create one now!</button>
+				</a>
+			{{/if}}
+			<ul class="multiLine">
+				{{#each wall}}	
+				<li class="thumbnail">
+					<b>{{ title }}</b><br>
+					<a href="/wall.html?{{ id }}"><img src="images/Wall-Sample.png" style="width:300px; height:300px;"></a>
+					<a href="/permissions/{{ id }}">Manage Wall Users</a><br>
+					<a href="/wallsettings/{{ id }}">Update Wall Settings</a>
+				</li>
+				{{/each}}
+			</ul>
+			{{#if admin}}
+				<p style="width:500px; margin-left:auto; margin-right:auto; text-align: center;">
+					<a href="/users">Manage Users</a>
+				</p>
+			{{/if}}		
+		</div>
+	</div>
+</section>

@@ -1,14 +1,21 @@
 {
-  "name": "StickIt",
-  "version": "0.0.3",
+  "name": "stickit",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.2.3",
-    "mysql": "2.0.0-alpha8",
-    "node-uuid" : "1.4.0",
-    "shortid" : "1.0.8"
+    "express": "3.*.*",
+    "css": "*",
+    "passport": "0.1.17",
+    "passport-local": "0.1.6",
+    "sequelize": "1.7.0-beta.0",
+    "mysql": "~2.0.0-alpha8",
+    "validator": "1.5.1",
+    "bcrypt": "0.7.7",
+    "shortid": "2.0.0",
+    "random-string": "0.1.1",
+    "config": "0.4.30"
   }
 }
