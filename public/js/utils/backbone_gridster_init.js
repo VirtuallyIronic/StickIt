@@ -240,7 +240,8 @@
 						'votes': postObj[w].vote.length,
 						'color': newcolour,
 						'fontsize': postObj[w].fontSize,
-						'wall_connection': wallModel_current
+						'wall_connection': wallModel_current,
+						'tags': postObj[w].tags
 					});
 					this.collection.add(item);
 				}
