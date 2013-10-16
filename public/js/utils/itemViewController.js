@@ -269,6 +269,7 @@ function enableItemView() {
 					var textEdit = data[0];
 					var colour = data[1];
 					var fontsize = data[2];
+					var stringtag = data[4];
 					//_----------------------------
 					//MARKED TODO
 					var tags = data[3];
@@ -306,7 +307,8 @@ function enableItemView() {
 					this.model.set({
 						'text': textEdit,
 						'fontsize': fontsize,
-						'colour': colour
+						'colour': colour,
+						'stringtag': stringtag
 						// modify item defaults
 					});
 					//_----------------------------
